@@ -121,7 +121,7 @@ rtsgame.ChatProtocol = function() {
 rtsgame.ChatProtocol.prototype.streamStarted = function(stream) {
 	this.stream_ = stream;
 	rtsgame.logger.info('streamStarted');
-	this.stream_.sendStrings(['begin_chat']);
+	this.stream_.sendStrings(['subprotocol:rtsgame']);
 };
 
 rtsgame.ChatProtocol.prototype.streamReset = function(reasonString, applicationLevel) {

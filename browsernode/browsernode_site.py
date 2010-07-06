@@ -19,7 +19,7 @@ from minerva.newlink import (
 from minerva.website import (
 	CsrfTransportFirewall, NoopTransportFirewall, CsrfStopper)
 
-from browsernode.rtsgame import RTSGame
+from browsernode.rtsgame import RTSGame, RTSFactory
 
 from webmagic.untwist import (
 	CookieInstaller, BetterResource, BetterFile, HelpfulNoResource,
@@ -27,79 +27,76 @@ from webmagic.untwist import (
 
 
 
-class DemoProtocol(BasicMinervaProtocol):
+class UnknownSubprotocol(Exception):
+	pass
 
-	counter = 0
+
+
+class BrowserNodeProtocol(BasicMinervaProtocol):
 
 	def __init__(self, clock):
 		self._clock = clock
 		self._reset = False
-		self._chatting = False
-		self._id = DemoProtocol.counter
-		self.chatting = False
-		DemoProtocol.counter += 1
+		self._childProtocol = None
+		self.stream = None
+		self._stringCounter = -1
+
+
+	def _createSubprotocol(self, name):
+		subfactory = self.factory.getSubfactory(name)
+		if subfactory is None:
+			raise UnknownSubprotocol("%r" % (name,))
+		self._childProtocol = subfactory.buildProtocol()
+		self._childProtocol.streamStarted(self.stream)
+
+
+	def streamStarted(self, stream):
+		self.stream = stream
 
 
 	def stringsReceived(self, strings):
 		# Remember, we cannot raise an exception here.
 		##print "stringsReceived", strings
 
-		send = []
+		if self._childProtocol is not None:
+			self._stringCounter += len(strings)
+			self._childProtocol.stringsReceived(strings)
+			return
+
 		for s in strings:
 			s = str(s) # StringFragment -> str
-			if s.startswith('echo:'):
-				send.append(s.replace('echo:', '', 1))
-
-			elif s.startswith('echo_twice:'):
-				payload = s.split(':', 1)[1]
-				send.append(payload)
-				self._clock.callLater(0, lambda: self.stream.sendStrings([payload]))
-
-			elif s.startswith('reset_me:'):
-				reasonString = s.split(':', 1)[1]
-				self.stream.reset(reasonString)
-
-			elif s.startswith('string_then_reset_me:'):
-				reasonString = s.split(':', 1)[1]
-				# Send a string which will effectively close a long-polling
-				# primary transport. In this case, the client will usually
-				# not see a ResetFrame.
-				self.stream.sendStrings(["about to reset with reasonString " + reasonString])
-				self.stream.reset(reasonString)
-
-			elif s == 'begin_chat':
-				self.chatting = True
-				self.factory.chatters.add(self)
-
-			elif s.startswith('broadcast:'):
-				text = s.split(':', 1)[1]
-				for c in self.factory.chatters:
-					# We assume text contains only characters in the " " - "~" range.
-					c.stream.sendStrings(["TEXT|" + str(self._id) + '|' + text])
-
+			self._stringCounter += 1
+			if self._stringCounter == 0 and s.startswith('subprotocol:'):
+				_, subprotocolName = s.split(':', 1)
+				try:
+					self._createSubprotocol(subprotocolName)
+				except UnknownSubprotocol:
+					self.stream.reset("unknown subprotocol")
+			elif self._childProtocol is not None:
+				self._childProtocol.stringsReceived(s)
 			else:
-				send.append('unknown_message_type')
-
-			# else ignore other boxes
-
-		if send:
-			self.stream.sendStrings(send)
+				self.stream.reset("no subprotocol; send a subprotocol:... string first")
 
 
 	def streamReset(self, reasonString, applicationLevel):
 		self._reset = True
+		del self.stream
 		log.msg("Stream reset: %r, %r" % (reasonString, applicationLevel))
-		if self.chatting:
-			self.factory.chatters.remove(self)
+		if self._childProtocol:
+			self._childProtocol.streamReset(reasonString, applicationLevel)
 
 
 
-class DemoFactory(BasicMinervaFactory):
-	protocol = DemoProtocol
+class BrowserNodeFactory(BasicMinervaFactory):
+	protocol = BrowserNodeProtocol
 
-	def __init__(self, clock):
+	def __init__(self, clock, subfactories):
 		self._clock = clock
-		self.chatters = set()
+		self._subfactories = subfactories
+
+
+	def getSubfactory(self, name):
+		return self._subfactories.get(name, None)
 
 
 	def buildProtocol(self):
@@ -210,7 +207,8 @@ def makeMinervaAndHttp(reactor, csrfSecret, domain):
 
 	csrfStopper = CsrfStopper(csrfSecret)
 	firewall = CsrfTransportFirewall(NoopTransportFirewall(), csrfStopper)
-	tracker = StreamTracker(reactor, clock, DemoFactory(clock))
+	tracker = StreamTracker(reactor, clock, BrowserNodeFactory(
+		clock, subfactories={'rtsgame': RTSFactory(clock)}))
 
 	httpFace = HttpFace(clock, tracker, firewall)
 	socketFace = SocketFace(clock, tracker, firewall, policyString=policyString)
