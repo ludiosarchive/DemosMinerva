@@ -39,7 +39,7 @@ class BrowserNodeProtocol(BasicMinervaProtocol):
 		self._reset = False
 		self._childProtocol = None
 		self.stream = None
-		self._stringCounter = -1
+		self._stringsReceived = 0
 
 
 	def _createSubprotocol(self, name):
@@ -59,14 +59,15 @@ class BrowserNodeProtocol(BasicMinervaProtocol):
 		##print "stringsReceived", strings
 
 		if self._childProtocol is not None:
-			self._stringCounter += len(strings)
+			self._stringsReceived += len(strings)
 			self._childProtocol.stringsReceived(strings)
 			return
 
 		for s in strings:
 			s = str(s) # StringFragment -> str
-			self._stringCounter += 1
-			if self._stringCounter == 0 and s.startswith('subprotocol:'):
+			received = self._stringsReceived
+			self._stringsReceived += 1
+			if received == 0 and s.startswith('subprotocol:'):
 				_, subprotocolName = s.split(':', 1)
 				try:
 					self._createSubprotocol(subprotocolName)
