@@ -19,6 +19,8 @@ from minerva.newlink import (
 from minerva.website import (
 	CsrfTransportFirewall, NoopTransportFirewall, CsrfStopper)
 
+from browsernode.rtsgame import RTSGame
+
 from webmagic.untwist import (
 	CookieInstaller, BetterResource, BetterFile, HelpfulNoResource,
 	ConnectionTrackingSite, DisplayConnections)
@@ -163,7 +165,7 @@ goog.require('cw.net.XHRSlave');
 
 
 
-class Root(BetterResource):
+class BrowserNodeRoot(BetterResource):
 
 	def __init__(self, reactor, httpFace, csrfStopper, cookieInstaller, domain):
 		import cwtools
@@ -187,9 +189,8 @@ class Root(BetterResource):
 		testres_Coreweb = FilePath(cwtools.__path__[0]).child('testres').path
 		self.putChild('@testres_Coreweb', BetterFile(testres_Coreweb))
 
-		# Also used by tests
 		self.putChild('httpface', httpFace)
-
+		self.putChild('rtsgame', RTSGame(csrfStopper, cookieInstaller, domain))
 		self.putChild('xdrframe', XDRFrame(domain))
 
 
@@ -214,7 +215,7 @@ def makeMinervaAndHttp(reactor, csrfSecret, domain):
 	httpFace = HttpFace(clock, tracker, firewall)
 	socketFace = SocketFace(clock, tracker, firewall, policyString=policyString)
 
-	root = Root(reactor, httpFace, csrfStopper, cookieInstaller, domain)
+	root = BrowserNodeRoot(reactor, httpFace, csrfStopper, cookieInstaller, domain)
 
 	try:
 		# Twisted z9trunk can take a clock argument
