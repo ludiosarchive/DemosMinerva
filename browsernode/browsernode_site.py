@@ -14,7 +14,7 @@ from mypy import randgen
 from mypy.objops import strToNonNegLimit
 
 from minerva.newlink import (
-	BasicMinervaProtocol, BasicMinervaFactory, StreamTracker, HttpFace, SocketFace)
+	SuperFactory, StreamTracker, HttpFace, SocketFace)
 
 from minerva.website import (
 	CsrfTransportFirewall, NoopTransportFirewall, CsrfStopper)
@@ -24,86 +24,6 @@ from browsernode.rtsgame import RTSGame, RTSFactory
 from webmagic.untwist import (
 	CookieInstaller, BetterResource, BetterFile, HelpfulNoResource,
 	ConnectionTrackingSite, DisplayConnections)
-
-
-
-class UnknownSubprotocol(Exception):
-	pass
-
-
-
-class BrowserNodeProtocol(BasicMinervaProtocol):
-
-	def __init__(self, clock):
-		self._clock = clock
-		self._reset = False
-		self._childProtocol = None
-		self.stream = None
-		self._stringsReceived = 0
-
-
-	def _createSubprotocol(self, name):
-		subfactory = self.factory.getSubfactory(name)
-		if subfactory is None:
-			raise UnknownSubprotocol("%r" % (name,))
-		self._childProtocol = subfactory.buildProtocol()
-		self._childProtocol.streamStarted(self.stream)
-
-
-	def streamStarted(self, stream):
-		self.stream = stream
-
-
-	def stringsReceived(self, strings):
-		# Remember, we cannot raise an exception here.
-		##print "stringsReceived", strings
-
-		if self._childProtocol is not None:
-			self._stringsReceived += len(strings)
-			self._childProtocol.stringsReceived(strings)
-			return
-
-		for s in strings:
-			s = str(s) # StringFragment -> str
-			received = self._stringsReceived
-			self._stringsReceived += 1
-			if received == 0 and s.startswith('subprotocol:'):
-				_, subprotocolName = s.split(':', 1)
-				try:
-					self._createSubprotocol(subprotocolName)
-				except UnknownSubprotocol:
-					self.stream.reset("unknown subprotocol")
-			elif self._childProtocol is not None:
-				self._childProtocol.stringsReceived(s)
-			else:
-				self.stream.reset("no subprotocol; send a subprotocol:... string first")
-
-
-	def streamReset(self, reasonString, applicationLevel):
-		self._reset = True
-		del self.stream
-		log.msg("Stream reset: %r, %r" % (reasonString, applicationLevel))
-		if self._childProtocol:
-			self._childProtocol.streamReset(reasonString, applicationLevel)
-
-
-
-class BrowserNodeFactory(BasicMinervaFactory):
-	protocol = BrowserNodeProtocol
-
-	def __init__(self, clock, subfactories):
-		self._clock = clock
-		self._subfactories = subfactories
-
-
-	def getSubfactory(self, name):
-		return self._subfactories.get(name, None)
-
-
-	def buildProtocol(self):
-		stream = self.protocol(self._clock)
-		stream.factory = self
-		return stream
 
 
 
@@ -208,7 +128,7 @@ def makeMinervaAndHttp(reactor, csrfSecret, domain):
 
 	csrfStopper = CsrfStopper(csrfSecret)
 	firewall = CsrfTransportFirewall(NoopTransportFirewall(), csrfStopper)
-	tracker = StreamTracker(reactor, clock, BrowserNodeFactory(
+	tracker = StreamTracker(reactor, clock, SuperFactory(
 		clock, subfactories={'rtsgame': RTSFactory(clock)}))
 
 	httpFace = HttpFace(clock, tracker, firewall)
