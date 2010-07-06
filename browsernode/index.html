@@ -1,0 +1,156 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Comet server, WebSocket | BrowserNode</title>
+<style>
+/*@font-face {
+	font-family: Calibri;
+	src: url("calibrib.ttf");
+}*/
+* {
+	font-family: Verdana, sans-serif;
+}
+body, html {
+	background: #ddd;
+}
+div#main {
+	background: #fff;
+	max-width: 1000px;
+	margin: 0 auto 0 auto;
+	padding: 1em;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	border-radius: 4px;
+}
+ul li {
+	line-height: 150%;
+	margin-bottom: 0.2em;
+}
+p {
+	line-height: 150%;
+}
+h1 {
+	font-size: 1em;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+}
+h2 {
+/*	font-family: Calibri, Tahoma, serif;*/
+	font-family: "Trebuchet MS", Arial, sans-serif;
+	font-weight: bold;
+	font-size: 1.25em;
+	margin: 0;
+	padding: 0 0 0 4px;
+	background-color: #e4cff4;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	border-radius: 4px;
+}
+h2.notfirst {
+	padding-top: 0.5em;
+}
+hr {
+	border: 0;
+	height: 2px;
+	background-color: #ccc;
+}
+
+pre {
+	font-family: Consolas, "Courier New", monospace;
+	font-size: 13px;
+	line-height: 14px;
+}
+
+li b {
+	font-weight: normal;
+	background-color: #f7f7f7;
+}
+
+code {
+	font-family: "Courier New", Consolas, monospace;
+}
+
+/*a {
+	color: purple;
+}
+a:visited {
+	color: purple;
+}*/
+</style>
+</head>
+
+<body>
+
+<div id="main">
+
+
+<a style="float:right" href="mailto:ivan@browsernode.com">Contact us.</a>
+
+<h1><b>BrowserNode</b><span id="tagline"> &mdash; superior web technology</span></h1>
+<hr>
+
+
+<p id="intro">
+We're working on Minerva, a Comet client/server, to give web applications the same connectivity that desktop applications enjoy.
+<a href="mailto:ivan@browsernode.com">Tell us</a> what you're looking for in a Comet server.  We're launching
+a demo by July 9, 2010.  Stay tuned.
+</p>
+
+<h2>Minerva</h2>
+
+<p>
+Minerva establishes reliable two-way “Comet” (HTTP push) connections to an application server.
+Both client and server can send strings over the connection at any time.
+</p>
+<p>
+Minerva was built for JavaScript-heavy websites that need to push data to users,
+while using the minimum amount of client and network resources. It is intended as
+a complete replacement (or complement) to “AJAX” requests.
+
+</p>
+<p>
+Minerva does the heavy lifting required to connect any browser to a Python/<a href="http://twistedmatrix.com/">Twisted</a> server.
+We are exploring a variety of options to integrate it with non-Python stacks.
+</p>
+
+<p>Benefits:</p>
+
+<ul>
+<li><b>Supports many transports</b>: long polling, XHR streaming, IE htmlfile, Flash socket, WebSocket. Minerva automatically picks and upgrades to better transports.</li>
+<li>Better than “long-polling”: <b>uses streaming connections</b> when possible, saving bandwidth and CPU time.</li>
+<li><b>High reliability</b>: disconnects, hung connections, and broken HTTP proxies won't destroy the connection. This means your application
+can assume connection reliability, even if the internet connection is unreliable.</li>
+<li><b>Supports all common browsers</b>: IE6-9, Firefox 2.0-4.0 nightlies, Chrome 5-6, Safari 3-5, iPhone, Opera 9-10.60</li>
+<li><b>Supports any usage pattern</b>: high or low-volume updates, large or small message sizes.</li>
+<li>Extremely <b>fast and light client code</b>, &lt; 8 KB compressed.</li>
+
+<li><b>No waiting</b>: ~50 milliseconds from page load to a reliable connection.</li>
+<li><b>No loading spinners</b>: connections do not show “loading indicators” in any browser.</li>
+<li><b>No memory leaks</b> or excessive CPU use in any browser.</li>
+<li>Full support for both HTTP and HTTPS.</li>
+<li><b>We've thought about security</b>: Minerva makes CSRF and cross-site data stealing impossible.</li>
+</ul>
+
+<p>We're working on:</p>
+<ul>
+<li><b>Connection multiplexing</b>: one Minerva connection can span multiple tabs/windows.
+<ul><li>Simple multiplexing: each tab thinks it has a connection.</li></ul>
+<ul><li>Multiplexing to save bandwidth: for example, each tab can subscribe to similar data.</li></ul>
+</li>
+</ul>
+
+<hr>
+
+<a style="float:right" href="mailto:ivan@browsernode.com">Contact us.</a>
+
+Copyright &copy; 2010 Ludios Networks
+
+
+</div>
+
+<script src="/_shared/lycomp.js" async defer></script>
+</body>
+</html>
