@@ -1,12 +1,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Comet server, WebSocket | BrowserNode</title>
+<title>BrowserNode</title>
 <style>
-/*@font-face {
-	font-family: Calibri;
-	src: url("calibrib.ttf");
-}*/
 * {
 	font-family: Verdana, sans-serif;
 }
@@ -87,67 +83,43 @@ a:visited {
 <div id="main">
 
 
-<a style="float:right" href="mailto:ivan@browsernode.com">Contact us.</a>
+<a style="float:right" href="mailto:ivan@browsernode.com">Contact us</a>
 
-<h1><b>BrowserNode</b><span id="tagline"> &mdash; superior web technology</span></h1>
+<h1><b>BrowserNode</b><span id="tagline"> &mdash; next-gen web technology</span></h1>
 <hr>
 
 
 <p id="intro">
-We're working on Minerva, a Comet client/server, to give web applications the same connectivity that desktop applications enjoy.
-<a href="mailto:ivan@browsernode.com">Tell us</a> what you're looking for in a Comet server.  We're launching
-a demo by July 9, 2010.  Stay tuned.
+BrowserNode is currently building the next generation of highly personalized real-time web applications.
 </p>
-
-<h2>Minerva</h2>
 
 <p>
-Minerva establishes reliable two-way “Comet” (HTTP push) connections to an application server.
-Both client and server can send strings over the connection at any time.
+You can contact the founder of BrowserNode, Ivan Kozik, directly at <a href="mailto:ivan@browsernode.com">ivan@browsernode.com</a>.
 </p>
+
 <p>
-Minerva was built for JavaScript-heavy websites that need to push data to users,
-while using the minimum amount of client and network resources. It is intended as
-a complete replacement (or complement) to “AJAX” requests.
-
-</p>
-<p>
-Minerva does the heavy lifting required to connect any browser to a Python/<a href="http://twistedmatrix.com/">Twisted</a> server.
-We are exploring a variety of options to integrate it with non-Python stacks.
-</p>
-
-<p>Benefits:</p>
-
+We have:
 <ul>
-<li><b>Supports many transports</b>: long polling, XHR streaming, IE htmlfile, Flash socket, WebSocket. Minerva automatically picks and upgrades to better transports.</li>
-<li>Better than “long-polling”: <b>uses streaming connections</b> when possible, saving bandwidth and CPU time.</li>
-<li><b>High reliability</b>: disconnects, hung connections, and broken HTTP proxies won't destroy the connection. This means your application
-can assume connection reliability, even if the internet connection is unreliable.</li>
-<li><b>Supports all common browsers</b>: IE6-9, Firefox 2.0-4.0 nightlies, Chrome 5-6, Safari 3-5, iPhone, Opera 9-10.60</li>
-<li><b>Supports any usage pattern</b>: high or low-volume updates, large or small message sizes.</li>
-<li>Extremely <b>fast and light client code</b>, &lt; 8 KB compressed.</li>
-
-<li><b>No waiting</b>: ~50 milliseconds from page load to a reliable connection.</li>
-<li><b>No loading spinners</b>: connections do not show “loading indicators” in any browser.</li>
-<li><b>No memory leaks</b> or excessive CPU use in any browser.</li>
-<li>Full support for both HTTP and HTTPS.</li>
-<li><b>We've thought about security</b>: Minerva makes CSRF and cross-site data stealing impossible.</li>
+	<li>A state-of-the-art Comet server and client (codename “Minerva”). Our applications use its reliable TCP-like
+		abstraction, built on top of HTTP requests, Flash Socket, and WebSocket.
+		Minerva works equally well over HTTP as it does over sockets.
+		It works in worst-case conditions:
+		ancient web browsers, broken HTTP proxies, mobile connections
+		with frequent disconnects, and locked-down environments that can
+		only make HTTP requests. The quality and correctness of our implementation,
+		two years in development, surpasses anything you can get from a vendor.</li>
+	<li>Extensive server-side programming experience, especially with the Twisted framework.</li>
+	<li>Extensive client-side programming experience. We have written
+		software to make large-scale JavaScript development go smoothly.
+		We are a human encyclopedia of browser bugs.</li>
 </ul>
+</p>
 
-<p>We're working on:</p>
-<ul>
-<li><b>Connection multiplexing</b>: one Minerva connection can span multiple tabs/windows.
-<ul><li>Simple multiplexing: each tab thinks it has a connection.</li></ul>
-<ul><li>Multiplexing to save bandwidth: for example, each tab can subscribe to similar data.</li></ul>
-</li>
-</ul>
-
+Please contact us if you wish to learn more.
+<br><br>
 <hr>
 
-<a style="float:right" href="mailto:ivan@browsernode.com">Contact us.</a>
-
-Copyright &copy; 2010 Ludios Networks
-
+Copyright &copy; 2010 BrowserNode
 
 </div>
 
