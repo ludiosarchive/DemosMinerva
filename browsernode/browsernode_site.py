@@ -19,6 +19,8 @@ from minerva.newlink import (
 from minerva.website import (
 	CsrfTransportFirewall, NoopTransportFirewall, CsrfStopper)
 
+from minerva.minervasite import XDRFrame
+
 from browsernode.rtsgame import RTSGame, RTSFactory
 
 from webmagic.untwist import (
@@ -27,60 +29,7 @@ from webmagic.untwist import (
 
 
 
-class XDRFrame(BetterResource):
-	"""
-	A page suitable for loading into an iframe.  It sets a document.domain
-	so that it can communicate with the parent page (which must also set
-	document.domain).  It is capable of making XHR requests.
-
-	Note: in production code, this could be a static page with static JavaScript
-	(maybe even the same .js file as the main page.)  Client-side code can
-	extract ?id= instead of the server.
-	"""
-	isLeaf = True
-
-	def __init__(self, domain):
-		self.domain = domain
-
-
-	def render_GET(self, request):
-		frameIdStr = request.args['id'][0]
-		# 2**53 is the largest integral number that can be represented
-		# in JavaScript.
-		frameId = strToNonNegLimit(frameIdStr, 2**53)
-
-		# Note: for the __XDRFrame_loaded call to work, document.domain
-		# on parent page must be set *before* the browser starts executing
-		# code in the iframe.
-		return """\
-<!doctype html>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>XDRFrame</title>
-</head>
-<body>
-<script src="/JSPATH/closure/goog/base.js"></script>
-<script src="/JSPATH/nongoog_deps.js"></script>
-<script>
-goog.require('cw.net.XHRSlave');
-</script>
-<script>
-	document.domain = %s;
-	function notifyParent() {
-		try {
-			parent.__XDRFrame_loaded(%s);
-		} catch(err) {
-			throw Error("could not call __XDRFrame_loaded on parent, " +
-				"perhaps document.domain not set? err: " + err.message);
-		}
-	}
-	window.onload = notifyParent;
-</script>
-</body>
-</html>
-""" % (simplejson.dumps(self.domain), frameId)
-
+# TODO: CompiledXDRFrame that loads compiled JS code
 
 
 class BrowserNodeRoot(BetterResource):

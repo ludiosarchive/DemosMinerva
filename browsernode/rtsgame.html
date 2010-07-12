@@ -40,31 +40,21 @@ messages because log messages in the iframes are not sent to this parent window.
 </table>
 
 <script>
-	window.CSRF_TOKEN = {{ dumps(token) }};
-	document.domain = {{ dumps(domain) }};
-	var __XDRFrame_loaded = function(id) {
-		__XDRFrame_loaded.done.push(id);
-	};
-	__XDRFrame_loaded.done = [];
-	// We expect location.port to be an empty string if no :port is in
-	// the URL.  If there is an explicit port, we need to load the iframe
-	// with that port, even if it's the default port (80 or 443), because
-	// a mismatch of "explicit port" and "implicit port" may prevent
-	// cross-subdomain interaction from working in some browsers.
-	__XDRFrame_loaded.portString = location.port ? ':' + location.port : "";
-	__XDRFrame_loaded.url1 = location.protocol + '//{{ sub1 }}.{{ domain }}' +
-		__XDRFrame_loaded.portString + '/';
-	__XDRFrame_loaded.url2 = location.protocol + '//{{ sub2 }}.{{ domain }}' +
-		__XDRFrame_loaded.portString + '/';
-	document.write(
-		'<iframe width=16 height=16 src="' + __XDRFrame_loaded.url1 +
-			'xdrframe/?id=1" id="xdrframe-1"></iframe>' +
-		'<iframe width=16 height=16 src="' + __XDRFrame_loaded.url2 +
-			'xdrframe/?id=2" id="xdrframe-2"></iframe>');
+// Use just one preamble <script> to reduce page load time.
+
+// Don't define variables on "window" to avoid possible IE stack limit of 12
+// when calling through window.
+CSRF_TOKEN = {{ dumps(token) }};
+__XDRSetup = {
+	domain: {{ dumps(domain) }},
+	sub1: {{ dumps(sub1) }},
+	sub2: {{ dumps(sub2) }}
+};
 </script>
+<!-- Note: in production, this script should be dumped onto the page. -->
+<script src="/JSPATH/cw/net/bootstrap_XDRSetup.js"></script>
 
 <div id="FlashConnectorSwf"></div>
-
 <div id="log"></div>
 
 <script src="/JSPATH/closure/goog/base.js"></script>
