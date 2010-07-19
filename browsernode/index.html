@@ -100,18 +100,19 @@ You can contact the founder of BrowserNode, Ivan Kozik, directly at <a href="mai
 <p>
 We have:
 <ul>
-	<li>A state-of-the-art Comet server and client (codename “Minerva”). Our applications use its reliable TCP-like
-		abstraction, built on top of HTTP requests, Flash Socket, and WebSocket.
-		Minerva works equally well over HTTP as it does over sockets.
+	<li>A Comet server and client (codename “Minerva”) that actually works. Our applications
+		use its reliable TCP-like abstraction, built on top of HTTP requests, Flash Socket,
+		and WebSocket.  Unlike most implementations, the connection is always reliable
+		and ordered in both directions, even when running over HTTP.<br>
+
 		It works in worst-case conditions:
-		ancient web browsers, broken HTTP proxies, mobile connections
-		with frequent disconnects, and locked-down environments that can
-		only make HTTP requests. The quality and correctness of our implementation,
+		old web browsers, broken HTTP proxies, mobile connections
+		with frequent disconnects, and locked-down environments where browsers
+		can only make HTTP requests.  The quality and correctness of our implementation,
 		two years in development, surpasses anything you can get from a vendor.</li>
 	<li>Extensive server-side programming experience, especially with the Twisted framework.</li>
-	<li>Extensive client-side programming experience. We have written
-		software to make large-scale JavaScript development go smoothly.
-		We are a human encyclopedia of browser bugs.</li>
+	<li>Extensive client-side programming experience, and plenty of custom software
+		for building large JavaScript applications.</li>
 </ul>
 </p>
 
