@@ -68,11 +68,11 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 		self.factory.counter += 1
 		self._id = self.factory.counter
 		self.stream = stream
-		self.factory.streams.add(self)
+		self.factory.protos.add(self)
 
 
 	def streamReset(self, reasonString, applicationLevel):
-		self.factory.streams.remove(self)
+		self.factory.protos.remove(self)
 		del self.stream
 
 
@@ -86,7 +86,15 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 			if len(payload) == 2:
 				msgType = payload[0]
 				body = payload[1]
-				###
+				if msgType == 1: # new circle
+					for proto in self.factory.protos:
+						if proto == self:
+							# Client who told us about this circle already drew it,
+							# no need to echo it back to them.
+							continue
+						# TODO: it's not very safe to just send any body back to the client.
+						# Need to validate first.
+						proto.stream.sendStrings([simplejson.dumps([1, body])])
 
 
 
@@ -96,7 +104,7 @@ class WhiteboardFactory(BasicMinervaFactory):
 	def __init__(self, clock):
 		self._clock = clock
 		self.counter = 0
-		self.streams = set()
+		self.protos = set()
 
 
 	def buildProtocol(self):
