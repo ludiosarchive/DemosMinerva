@@ -41,6 +41,9 @@ __XDRSetup = {
 }
 
 #drawArea {
+	/* position: relative is needed to make offsetX/Y work properly
+	in Firefox. See http://www.reloco.com.ar/mozilla/compat.html */
+	position: relative;
 	border: 1px solid #aaa;
 	width: 800px;
 	height: 600px;
@@ -258,13 +261,8 @@ whiteboard.drawCircleAt = function(x, y) {
 
 whiteboard.handleClick = function(ev) {
 	var patchedEv = new goog.events.BrowserEvent(ev);
-	if(goog.userAgent.GECKO) {
-		var x = patchedEv.offsetX - whiteboard._drawAreaDiv.offsetLeft;
-		var y = patchedEv.offsetY - whiteboard._drawAreaDiv.offsetTop;
-	} else {
-		var x = patchedEv.offsetX;
-		var y = patchedEv.offsetY;
-	}
+	var x = patchedEv.offsetX;
+	var y = patchedEv.offsetY;
 	whiteboard.drawCircleAt(x, y);
 	whiteboard.lastProto.sendCircle(x, y);
 };
