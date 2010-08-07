@@ -14,9 +14,9 @@
 <body>
 <!-- note: this file is mostly a copy/paste of rtsgame.html -->
 
-<div id="doc">
-This page supports options ?mode=http, ?mode=flash, ?useSub=0, ?useSub=1, ?httpStreaming=1, ?logging=1
-(which can be combined).
+<div id="doc-no-lame-css">
+<b>Whiteboard demo</b><br>
+This page supports options ?mode=http, ?mode=flash, ?useSub=0, ?useSub=1, ?httpStreaming=1, ?logging=1 (which can be combined).
 </div>
 
 <script>
@@ -33,10 +33,24 @@ __XDRSetup = {
 </script>
 <!-- Note: in production, this script should be dumped onto the page. -->
 <div id="minerva-xdrframes"></div>
+<style>
+#minerva-xdrframes iframe {
+	width: 1px;
+	height: 1px;
+	border: 0;
+}
+
+#drawArea {
+	border: 1px solid #aaa;
+	width: 800px;
+	height: 600px;
+}
+</style>
 <script src="/JSPATH/cw/net/bootstrap_XDRSetup.js"></script>
 
+<div id="drawArea"></div>
 <div id="FlashConnectorSwf"></div>
-<div id="log">Logging disabled.</div>
+<div id="log"></div>
 
 <script src="/JSPATH/closure/goog/base.js"></script>
 <script src="/JSPATH/nongoog_deps.js"></script>
@@ -49,6 +63,7 @@ goog.require('goog.debug.Logger');
 goog.require('goog.debug.LogManager');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
+goog.require('goog.graphics');
 goog.require('goog.Uri');
 goog.require('cw.eventual');
 goog.require('cw.string');
@@ -63,7 +78,7 @@ goog.require('cw.string');
 
 <script>
 whiteboard._queryData = new goog.Uri(document.location).getQueryData();
-whiteboard.useLogging = Boolean(Number(queryData.get('logging', '0')));
+whiteboard.useLogging = Boolean(Number(whiteboard._queryData.get('logging', '0')));
 
 if(whiteboard.useLogging) {
 	goog.debug.LogManager.getRoot().setLevel(goog.debug.Logger.Level.ALL);
@@ -113,10 +128,12 @@ whiteboard.WhiteboardProtocol.prototype.handleString_ = function(s) {
 		whiteboard.logger.severe('Could not handle string: ' + cw.repr.repr(s));
 	}
 
-	// TODO: do somethins safer
-	var dec = eval('(' + s + ')');
+	// TODO: do something safer
+	var payload = eval('(' + s + ')');
+	var msgType = payload[0];
+	var body = payload[1];
 
-	//////
+
 };
 
 whiteboard.WhiteboardProtocol.prototype.stringsReceived = function(strings) {
@@ -218,6 +235,29 @@ whiteboard.sendText = function(text) {
 };
 
 
+whiteboard.drawRandomStuff = function() {
+	var fill = new goog.graphics.SolidFill('yellow');
+	var stroke = new goog.graphics.Stroke(2, 'green');
+	var rectElement = whiteboard.lastDrawArea.drawRect(30, 10, 100, 80, stroke, fill);
+};
+
+
+whiteboard.handleClick = function(ev) {
+	alert('clicked');
+};
+
+
+whiteboard.setupDrawArea = function() {
+	var graphics = goog.graphics.createGraphics();
+	graphics.setSize(800, 600);
+	var drawArea = document.getElementById('drawArea');
+	graphics.render(drawArea);
+	goog.events.listen(drawArea, goog.events.EventType.CLICK, whiteboard.handleClick);
+	whiteboard.lastDrawArea = graphics;
+};
+
+whiteboard.setupDrawArea();
+whiteboard.drawRandomStuff();
 whiteboard.startStream();
 
 </script>
