@@ -61,6 +61,7 @@ goog.require('cw.autoTitle');
 goog.require('goog.debug.DivConsole');
 goog.require('goog.debug.Logger');
 goog.require('goog.debug.LogManager');
+goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.events.BrowserEvent');
@@ -257,17 +258,21 @@ whiteboard.drawCircleAt = function(x, y) {
 
 whiteboard.handleClick = function(ev) {
 	var patchedEv = new goog.events.BrowserEvent(ev);
-	var x = patchedEv.offsetX - whiteboard._drawAreaDiv.offsetLeft;
-	var y = patchedEv.offsetY - whiteboard._drawAreaDiv.offsetTop;
+	if(goog.userAgent.GECKO) {
+		var x = patchedEv.offsetX - whiteboard._drawAreaDiv.offsetLeft;
+		var y = patchedEv.offsetY - whiteboard._drawAreaDiv.offsetTop;
+	} else {
+		var x = patchedEv.offsetX;
+		var y = patchedEv.offsetY;
+	}
 	whiteboard.drawCircleAt(x, y);
 	whiteboard.lastProto.sendCircle(x, y);
 };
 
 
 whiteboard.setupDrawArea = function() {
-	var graphics = goog.graphics.createGraphics();
-	graphics.setSize(800, 600);
-	whiteboard._drawAreaDiv = document.getElementById('drawArea');
+	var graphics = goog.graphics.createGraphics(800, 600);
+	whiteboard._drawAreaDiv = goog.dom.getElement('drawArea');
 	graphics.render(whiteboard._drawAreaDiv);
 	goog.events.listen(whiteboard._drawAreaDiv, goog.events.EventType.CLICK, whiteboard.handleClick, false);
 	whiteboard.lastDrawArea = graphics;
