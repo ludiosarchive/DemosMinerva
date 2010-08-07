@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="charset" content="text/html; charset=utf-8">
+	<title></title>
+	<style>
+		{{ getTestPageCSS() }}
+
+		#controls tr td {
+			padding: 0.5em 0 0.5em 0;
+		}
+	</style>
+</head>
+<body>
+<!-- note: this file is mostly a copy/paste of rtsgame.html -->
+
+<div id="doc">
+This page supports options ?mode=http, ?mode=flash, ?useSub=0, ?useSub=1, ?httpStreaming=1, ?logging=1
+(which can be combined).
+</div>
+
+<script>
+// Use just one preamble <script> to reduce page load time.
+
+// Don't define variables on "window" to avoid possible IE stack limit of 12
+// when calling through window.
+CSRF_TOKEN = {{ dumps(token) }};
+__XDRSetup = {
+	domain: {{ dumps(domain) }},
+	sub1: {{ dumps(sub1) }},
+	sub2: {{ dumps(sub2) }}
+};
+</script>
+<!-- Note: in production, this script should be dumped onto the page. -->
+<div id="minerva-xdrframes"></div>
+<script src="/JSPATH/cw/net/bootstrap_XDRSetup.js"></script>
+
+<div id="FlashConnectorSwf"></div>
+<div id="log">Logging disabled.</div>
+
+<script src="/JSPATH/closure/goog/base.js"></script>
+<script src="/JSPATH/nongoog_deps.js"></script>
+<script>
+goog.provide('whiteboard');
+
+goog.require('cw.autoTitle');
+goog.require('goog.debug.DivConsole');
+goog.require('goog.debug.Logger');
+goog.require('goog.debug.LogManager');
+goog.require('goog.events');
+goog.require('goog.events.EventType');
+goog.require('goog.Uri');
+goog.require('cw.eventual');
+goog.require('cw.string');
+goog.require('cw.net.Stream');
+goog.require('cw.net.IMinervaProtocol');
+goog.require('cw.net.HttpStreamingMode');
+goog.require('cw.net.demo.getEndpoint');
+goog.require('cw.net.demo.makeCredentialsData');
+goog.require('cw.repr');
+goog.require('cw.string');
+</script>
+
+<script>
+whiteboard._queryData = new goog.Uri(document.location).getQueryData();
+whiteboard.useLogging = Boolean(Number(queryData.get('logging', '0')));
+
+if(whiteboard.useLogging) {
+	goog.debug.LogManager.getRoot().setLevel(goog.debug.Logger.Level.ALL);
+	var logDiv = document.getElementById('log');
+	var divConsole = new goog.debug.DivConsole(logDiv);
+	divConsole.setCapturing(true);
+} else {
+	goog.debug.LogManager.getRoot().setLevel(goog.debug.Logger.Level.OFF);
+}
+
+whiteboard.logger = goog.debug.Logger.getLogger('whiteboard.logger');
+whiteboard.logger.info('Logger works.');
+
+
+window.onerror = function(msg, url, lineNumber) {
+	whiteboard.logger.severe('window.onerror: message: ' + cw.repr.repr(msg) +
+		'\nURL: ' + url + '\nLine Number: ' + lineNumber)
+};
+
+
+function byId(o) {
+	return document.getElementById(o);
+}
+
+/**
+ * @implements {cw.net.IMinervaProtocol}
+ * @constructor
+ */
+whiteboard.WhiteboardProtocol = function() {
+
+};
+
+whiteboard.WhiteboardProtocol.prototype.streamStarted = function(stream) {
+	this.stream_ = stream;
+	whiteboard.logger.info('streamStarted');
+	this.stream_.sendStrings(['subprotocol:whiteboard']);
+};
+
+whiteboard.WhiteboardProtocol.prototype.streamReset = function(reasonString, applicationLevel) {
+	whiteboard.logger.info(
+		'streamReset: reasonString=' + cw.repr.repr(reasonString) +
+		', applicationLevel=' + applicationLevel);
+};
+
+whiteboard.WhiteboardProtocol.prototype.handleString_ = function(s) {
+	function fail() {
+		whiteboard.logger.severe('Could not handle string: ' + cw.repr.repr(s));
+	}
+
+	// TODO: do somethins safer
+	var dec = eval('(' + s + ')');
+
+	//////
+};
+
+whiteboard.WhiteboardProtocol.prototype.stringsReceived = function(strings) {
+	for(var i=0; i < strings.length; i++) {
+		var s = strings[i];
+		this.handleString_(s);
+	}
+};
+
+/**
+ * @param {string} reason
+ */
+whiteboard.WhiteboardProtocol.prototype.reset = function(reason) {
+	whiteboard.logger.info('resetting with reason: ' + reason);
+	this.stream_.reset(reason);
+};
+
+whiteboard.WhiteboardProtocol.prototype.sendText = function(text) {
+	whiteboard.logger.info('sendText: ' + text);
+	this.stream_.sendStrings(["broadcast:" + text]);
+};
+
+
+/**
+ * @type {?whiteboard.WhiteboardProtocol}
+ */
+whiteboard.lastProto = null;
+
+
+whiteboard.callQueue = new cw.eventual.CallQueue(goog.global['window']);
+
+
+whiteboard.idleFired = function() {
+	whiteboard.resetStream("idle timeout fired");
+	whiteboard.lastProto = null;
+};
+
+
+whiteboard.idleTimeout = null;
+
+
+whiteboard.activityDetected = function(ev) {
+	if(whiteboard.idleTimeout != null) {
+		whiteboard.callQueue.clock.clearTimeout(whiteboard.idleTimeout);
+	}
+
+	// Only need a timeout if we have an active Stream
+	if(whiteboard.lastProto) {
+		whiteboard.idleTimeout = whiteboard.callQueue.clock.setTimeout(
+			whiteboard.idleFired, 600 * 1000);
+	}
+};
+
+
+/**
+ * @type {!Array.<!goog.events.EventType>}
+ */
+whiteboard.activityEvents = [
+	goog.events.EventType.CLICK,
+	goog.events.EventType.FOCUS,
+	goog.events.EventType.KEYDOWN,
+	goog.events.EventType.KEYPRESS];
+whiteboard.clickListen = goog.events.listen(
+	goog.global, whiteboard.activityEvents, whiteboard.activityDetected, true);
+
+
+whiteboard.startStream = function() {
+	var streamPolicy = new cw.net.demo.DemoStreamPolicy(
+		cw.net.HttpStreamingMode.NO_STREAMING);
+	whiteboard.lastProto = new whiteboard.WhiteboardProtocol();
+	whiteboard.activityDetected();
+	var endpointD = cw.net.demo.getEndpoint(whiteboard.callQueue);
+	endpointD.addCallback(function(endpoint) {
+		var stream = new cw.net.Stream(
+			whiteboard.callQueue, whiteboard.lastProto, endpoint, streamPolicy);
+		stream.start();
+	});
+};
+
+
+/**
+ * @param {string} reason
+ */
+whiteboard.resetStream = function(reason) {
+	whiteboard.lastProto.reset(reason);
+};
+
+
+whiteboard.reconnectStream = function() {
+	if(whiteboard.lastProto) {
+		whiteboard.lastProto.reset('because user clicked reconnect button');
+	}
+	whiteboard.startStream();
+};
+
+
+whiteboard.sendText = function(text) {
+	whiteboard.lastProto.sendText(text);
+};
+
+
+whiteboard.startStream();
+
+</script>
+
+</body>
+</html>

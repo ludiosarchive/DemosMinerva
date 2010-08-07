@@ -22,6 +22,7 @@ from minerva.website import (
 from minerva.minervasite import XDRFrame
 
 from browsernode.rtsgame import RTSGame, RTSFactory
+from browsernode.whiteboard import WhiteboardResource, WhiteboardFactory
 
 from webmagic.untwist import (
 	CookieInstaller, BetterResource, BetterFile, HelpfulNoResource,
@@ -58,6 +59,7 @@ class BrowserNodeRoot(BetterResource):
 
 		self.putChild('httpface', httpFace)
 		self.putChild('rtsgame', RTSGame(csrfStopper, cookieInstaller, domain))
+		self.putChild('whiteboard', WhiteboardResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('xdrframe', XDRFrame(domain))
 
 
@@ -78,7 +80,9 @@ def makeMinervaAndHttp(reactor, csrfSecret, domain):
 	csrfStopper = CsrfStopper(csrfSecret)
 	firewall = CsrfTransportFirewall(NoopTransportFirewall(), csrfStopper)
 	tracker = StreamTracker(reactor, clock, SuperFactory(
-		clock, subfactories={'rtsgame': RTSFactory(clock)}))
+		clock, subfactories={
+			'rtsgame': RTSFactory(clock),
+			'whiteboard': WhiteboardFactory(clock)}))
 
 	httpFace = HttpFace(clock, tracker, firewall)
 	socketFace = SocketFace(clock, tracker, firewall, policyString=policyString)
