@@ -2,6 +2,7 @@ import jinja2
 import simplejson
 import random
 
+from twisted.python import log
 from twisted.python.filepath import FilePath
 from twisted.web import resource, static
 
@@ -64,11 +65,22 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 		self._clock = clock
 
 
+	def _sendAllCircles(self):
+		"""
+		Send all existing circles to the client.
+		"""
+		strings = []
+		for x, y in self.factory.circles:
+			strings.append(simplejson.dumps([1, [x, y]]))
+		self.stream.sendStrings(strings)
+
+
 	def streamStarted(self, stream):
 		self.factory.counter += 1
 		self._id = self.factory.counter
 		self.stream = stream
 		self.factory.protos.add(self)
+		self._sendAllCircles()
 
 
 	def streamReset(self, reasonString, applicationLevel):
@@ -76,25 +88,34 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 		del self.stream
 
 
+	def _handleNewCircle(self, body):
+		x, y = body
+		self.factory.circles.add((x, y))
+		for proto in self.factory.protos:
+			if proto == self:
+				# Client who told us about this circle already drew it,
+				# no need to echo it back to them.
+				continue
+			# TODO: it's not very safe to just send any body back to the client.
+			# Need to validate first.
+			proto.stream.sendStrings([simplejson.dumps([1, [x, y]])])
+
+
 	def stringsReceived(self, strings):
 		"""
 		Note: C{strings} may be a mix of C{str}s and C{StringFragment}s.
 		"""
-		for s in strings:
-			s = str(s) # maybe StringFragment -> str
-			payload = strictDecodeOne(s)
-			if len(payload) == 2:
-				msgType = payload[0]
-				body = payload[1]
-				if msgType == 1: # new circle
-					for proto in self.factory.protos:
-						if proto == self:
-							# Client who told us about this circle already drew it,
-							# no need to echo it back to them.
-							continue
-						# TODO: it's not very safe to just send any body back to the client.
-						# Need to validate first.
-						proto.stream.sendStrings([simplejson.dumps([1, body])])
+		try:
+			for s in strings:
+				s = str(s) # maybe StringFragment -> str
+				payload = strictDecodeOne(s)
+				if len(payload) == 2:
+					msgType = payload[0]
+					body = payload[1]
+					if msgType == 1: # new circle
+						self._handleNewCircle(body)
+		except:
+			log.err()
 
 
 
@@ -105,6 +126,7 @@ class WhiteboardFactory(BasicMinervaFactory):
 		self._clock = clock
 		self.counter = 0
 		self.protos = set()
+		self.circles = set()
 
 
 	def buildProtocol(self):
