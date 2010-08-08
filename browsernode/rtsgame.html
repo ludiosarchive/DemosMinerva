@@ -206,8 +206,7 @@ rtsgame.clickListen = goog.events.listen(
 
 
 rtsgame.startStream = function() {
-	var streamPolicy = new cw.net.demo.DemoStreamPolicy(
-		cw.net.HttpStreamingMode.NO_STREAMING);
+	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
 	rtsgame.lastProto = new rtsgame.ChatProtocol();
 	rtsgame.activityDetected();
 	var endpointD = cw.net.demo.getEndpoint(rtsgame.callQueue);

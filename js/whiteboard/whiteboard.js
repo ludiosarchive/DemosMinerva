@@ -154,8 +154,7 @@ whiteboard.clickListen = goog.events.listen(
 
 
 whiteboard.startStream = function() {
-	var streamPolicy = new cw.net.demo.DemoStreamPolicy(
-		cw.net.HttpStreamingMode.NO_STREAMING);
+	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
 	whiteboard.lastProto = new whiteboard.WhiteboardProtocol();
 	// Uncomment to enable the idle timeout.
 	//whiteboard.activityDetected();
@@ -181,11 +180,6 @@ whiteboard.reconnectStream = function() {
 		whiteboard.lastProto.reset('because user clicked reconnect button');
 	}
 	whiteboard.startStream();
-};
-
-
-whiteboard.sendText = function(text) {
-	whiteboard.lastProto.sendText(text);
 };
 
 
