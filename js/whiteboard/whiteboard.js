@@ -5,6 +5,7 @@
 goog.provide('whiteboard');
 
 goog.require('cw.autoTitle');
+goog.require('goog.asserts');
 goog.require('goog.debug.DivConsole');
 goog.require('goog.debug.Logger');
 goog.require('goog.debug.LogManager');
@@ -72,6 +73,9 @@ whiteboard.WhiteboardProtocol.prototype.streamReset = function(reasonString, app
 		', applicationLevel=' + applicationLevel);
 };
 
+/**
+ * @param {string} s
+ */
 whiteboard.WhiteboardProtocol.prototype.handleString_ = function(s) {
 	function fail() {
 		whiteboard.logger.severe('Could not handle string: ' + cw.repr.repr(s));
@@ -89,6 +93,9 @@ whiteboard.WhiteboardProtocol.prototype.handleString_ = function(s) {
 	}
 };
 
+/**
+ * @param {!Array.<string>} strings
+ */
 whiteboard.WhiteboardProtocol.prototype.stringsReceived = function(strings) {
 	for(var i=0; i < strings.length; i++) {
 		var s = strings[i];
@@ -104,6 +111,10 @@ whiteboard.WhiteboardProtocol.prototype.reset = function(reason) {
 	this.stream_.reset(reason);
 };
 
+/**
+ * @param {number} x
+ * @param {number} y
+ */
 whiteboard.WhiteboardProtocol.prototype.sendCircle = function(x, y) {
 	whiteboard.logger.info('telling server about circle at: ' + x + ', ' + y);
 	this.stream_.sendStrings([goog.json.serialize([1, [x, y]])]);
@@ -150,7 +161,7 @@ whiteboard.activityEvents = [
 	goog.events.EventType.KEYDOWN,
 	goog.events.EventType.KEYPRESS];
 whiteboard.clickListen = goog.events.listen(
-	goog.global, whiteboard.activityEvents, whiteboard.activityDetected, true);
+	window, whiteboard.activityEvents, whiteboard.activityDetected, true);
 
 
 whiteboard.startStream = function() {
@@ -160,6 +171,7 @@ whiteboard.startStream = function() {
 	//whiteboard.activityDetected();
 	var endpointD = cw.net.demo.getEndpoint(whiteboard.callQueue);
 	endpointD.addCallback(function(endpoint) {
+		goog.asserts.assert(whiteboard.lastProto, 'lastProto falsy?');
 		var stream = new cw.net.Stream(
 			whiteboard.callQueue, whiteboard.lastProto, endpoint, streamPolicy);
 		stream.start();
