@@ -8,10 +8,11 @@
 }
 body, html {
 	background: #ddd;
+	font-size: 0.95em;
 }
 div#main {
 	background: #fff;
-	max-width: 1000px;
+	max-width: 820px;
 	margin: 0 auto 0 auto;
 	padding: 1em;
 	-moz-border-radius: 4px;
@@ -20,8 +21,8 @@ div#main {
 	border-radius: 4px;
 }
 ul li {
-	line-height: 150%;
-	margin-bottom: 0.2em;
+	line-height: 140%;
+	margin: 0.3em 0 0.3em 0;
 }
 p {
 	line-height: 150%;
@@ -69,6 +70,10 @@ code {
 	font-family: "Courier New", Consolas, monospace;
 }
 
+.copyright {
+	color: #777;
+}
+
 /*a {
 	color: purple;
 }
@@ -90,29 +95,44 @@ a:visited {
 
 
 <p id="intro">
-BrowserNode is currently building the next generation of highly personalized real-time web applications.
+BrowserNode is currently building some interesting web applications.  You can contact the founder of BrowserNode, Ivan Kozik, directly at <a href="mailto:ivan@browsernode.com">ivan@browsernode.com</a>.
 </p>
 
 <p>
-You can contact the founder of BrowserNode, Ivan Kozik, directly at <a href="mailto:ivan@browsernode.com">ivan@browsernode.com</a>.
-</p>
-
-<p>
-We have:
+We currently have:
 <ul>
-	<li>A Comet server and client (codename “Minerva”) that actually works. Our applications
-		use its reliable TCP-like abstraction, built on top of HTTP requests, Flash Socket,
-		and WebSocket.  Unlike most implementations, the connection is always reliable
-		and ordered in both directions, even when running over HTTP.<br>
-
-		It works in worst-case conditions:
-		old web browsers, broken HTTP proxies, mobile connections
-		with frequent disconnects, and locked-down environments where browsers
-		can only make HTTP requests.  The quality and correctness of our implementation,
-		two years in development, surpasses anything you can get from a vendor.</li>
+	<li>A Comet server and client (codename “Minerva”) that actually works.  Minerva...
+	<ul>
+		<li>works over HTTP long-polling, HTTP streaming (optional), and Flash Socket (optional).</li>
+		<li>allows you send a stream of strings in both directions.  It works more like TCP
+			than like pub-sub.</li>
+		<li>is completely decoupled from any non-networking code: you're not required to use JSON,
+			XML, RPC, or any client-side GUI stack.</li>
+		<li>works even when the user has many tabs open to your application.</li>
+		<li>ACKs messages in both directions, meaning your messages do
+			not get lost or re-ordered.  Most Comet systems get this wrong, usually
+			by lacking ACK logic or having it only in the server-&gt;client direction.</li>
+		<li>has robust timeout logic at the transport and Minerva-stream levels,
+			mitigating bad connectivity.</li>
+		<li>is designed to work with the worst HTTP proxies and anti-virus products.</li>
+		<li>loads quickly.  Your users don't have to know there's Comet involved.</li>
+		<li>can be completely integrated on the server-side with your own Python
+			code, and on the client-side with your own JavaScript.  Even our
+			optional Flash code can be compiled into your own Flash applet.  If you
+			don't like Python, you can relay messages to another application server.</li>
+		<li>works over both HTTP and HTTPS (wildcard cert may be required).</li>
+		<li>is tested in old and new versions of the five major browsers.</li>
+		<li>is written by security-conscious programmers.  We review our code
+			when we learn of a new class of attack.</li>
+		<li>Upcoming improvements:</li>
+		<ul>
+			<li>Cross-tab connection-sharing, even in browsers without a <code>SharedWorker</code>.</li>
+			<li>Full WebSocket support, after the protocol stabilizes.</li>
+		</ul>
+	</ul>
 	<li>Extensive server-side programming experience, especially with the Twisted framework.</li>
 	<li>Extensive client-side programming experience, and plenty of custom software
-		for building large JavaScript applications.</li>
+		to help build large JavaScript applications.</li>
 </ul>
 </p>
 
@@ -120,7 +140,7 @@ Please contact us if you wish to learn more.
 <br><br>
 <hr>
 
-Copyright &copy; 2010 BrowserNode
+<center class="copyright">Copyright &copy; 2009-2010 BrowserNode</center>
 
 </div>
 
