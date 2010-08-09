@@ -22,7 +22,7 @@ from minerva.website import (
 from minerva.minervasite import XDRFrame
 
 from browsernode.rtsgame import RTSGame, RTSFactory
-from browsernode.whiteboard import WhiteboardResource, WhiteboardFactory
+from browsernode.whiteboard import WhiteboardResource, WhiteboardDevResource, WhiteboardFactory
 
 from webmagic.untwist import (
 	CookieInstaller, BetterResource, BetterFile, HelpfulNoResource,
@@ -59,7 +59,7 @@ class BrowserNodeRoot(BetterResource):
 
 		self.putChild('httpface', httpFace)
 		self.putChild('rtsgame', RTSGame(csrfStopper, cookieInstaller, domain))
-		self.putChild('whiteboard', WhiteboardResource(csrfStopper, cookieInstaller, domain))
+		self.putChild('whiteboard_dev', WhiteboardDevResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('xdrframe', XDRFrame(domain))
 
 

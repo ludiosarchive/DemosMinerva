@@ -17,16 +17,15 @@ from minerva.decoders import strictDecodeOne
 class WhiteboardIndex(BetterResource):
 	isLeaf = True
 
-	def __init__(self, csrfStopper, cookieInstaller, domain):
+	def __init__(self, csrfStopper, cookieInstaller, domain, fileName):
 		BetterResource.__init__(self)
 		self._csrfStopper = csrfStopper
 		self._cookieInstaller = cookieInstaller
 		self._domain = domain
+		self._fileName = fileName
 
 		self._jinja2Env = jinja2.Environment()
-		self._basePath = FilePath(__file__).parent() # this is minerva/chatapp/
-
-		self._fileName = 'whiteboard.html'
+		self._basePath = FilePath(__file__).parent()
 
 
 	def render_GET(self, request):
@@ -55,7 +54,18 @@ class WhiteboardResource(BetterResource):
 	def __init__(self, csrfStopper, cookieInstaller, domain):
 		BetterResource.__init__(self)
 
-		self.putChild('', WhiteboardIndex(csrfStopper, cookieInstaller, domain))
+		self.putChild('', WhiteboardIndex(
+			csrfStopper, cookieInstaller, domain, 'whiteboard.html'))
+
+
+
+class WhiteboardDevResource(BetterResource):
+
+	def __init__(self, csrfStopper, cookieInstaller, domain):
+		BetterResource.__init__(self)
+
+		self.putChild('', WhiteboardIndex(
+			csrfStopper, cookieInstaller, domain, 'whiteboard_dev.html'))
 
 
 
