@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="charset" content="text/html; charset=utf-8">
-	<title></title>
+	<title>Whiteboard demo (dev) | BrowserNode</title>
 	<style>
 		{{ getTestPageCSS() }}
 
@@ -16,7 +16,13 @@
 
 <div id="doc-no-lame-css">
 <b>Whiteboard demo</b><br>
-This page supports options ?mode=http, ?mode=flash, ?useSub=0, ?useSub=1, ?httpStreaming=1, ?logging=1 (which can be combined).
+This page supports options ?mode=http, ?mode=flash, ?useSub=0, ?useSub=1,
+?httpStreaming=1, ?logging=1 (which can be combined).<br><br>
+
+TODO: fix this for Opera (and maybe other browsers): right now, when
+you click on a circle, the circle captures the click, the event bubbles up,
+and the offsetX/offsetY is wrong (they're both close to 0).  If we instead
+layer a div over the drawing area, it should get the correct offsets.
 </div>
 
 <script>
