@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="charset" content="text/html; charset=utf-8">
+	<title>Whiteboard demo | BrowserNode</title>
+	<style>
+		{{ getTestPageCSS() }}
+
+		#controls tr td {
+			padding: 0.5em 0 0.5em 0;
+		}
+	</style>
+</head>
+<body>
+<div id="doc-no-lame-css">
+<b>Whiteboard demo</b><br>
+This page supports options ?mode=http, ?mode=flash, ?useSub=0, ?useSub=1,
+?httpStreaming=1, ?logging=1 (which can be combined).<br><br>
+
+TODO: fix this for Opera (and maybe other browsers): right now, when
+you click on a circle, the circle captures the click, the event bubbles up,
+and the offsetX/offsetY is wrong (they're both close to 0).  If we instead
+layer a div over the drawing area, it should get the correct offsets.
+</div>
+
+<script>
+// Use just one preamble <script> to reduce page load time.
+
+// We don't define variables on "window" to avoid possible IE stack limit of 12
+// when calling through window.
+CSRF_TOKEN = {{ dumps(token) }};
+__XDRSetup = {
+	domain: {{ dumps(domain) }},
+	sub1: {{ dumps(sub1) }},
+	sub2: {{ dumps(sub2) }}
+};
+</script>
+<!-- Note: in production, this script should be dumped onto the page. -->
+<div id="minerva-xdrframes"></div>
+<style>
+#minerva-xdrframes iframe {
+	width: 1px;
+	height: 1px;
+	border: 0;
+}
+
+#drawArea {
+	/* position: relative is needed to make offsetX/Y work properly
+	in Firefox. See http://www.reloco.com.ar/mozilla/compat.html */
+	position: relative;
+	border: 1px solid #aaa;
+	width: 800px;
+	height: 600px;
+}
+</style>
+<script src="/JSPATH/cw/net/bootstrap_XDRSetup.js"></script>
+
+<div id="drawArea"></div>
+<div id="FlashConnectorSwf"></div>
+<div id="log"></div>
+
+<script src="http://c1.linuxwan.com:9810/compile?id=whiteboard"></script>
+<script>
+__whiteboard_init();
+</script>
+
+</body>
+</html>

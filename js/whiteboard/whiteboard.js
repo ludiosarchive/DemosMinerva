@@ -232,3 +232,6 @@ whiteboard.init = function() {
 	whiteboard.drawRandomStuff();
 	whiteboard.startStream();
 };
+
+
+goog.exportSymbol('__whiteboard_init', whiteboard.init);

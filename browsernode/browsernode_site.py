@@ -59,6 +59,7 @@ class BrowserNodeRoot(BetterResource):
 
 		self.putChild('httpface', httpFace)
 		self.putChild('rtsgame', RTSGame(csrfStopper, cookieInstaller, domain))
+		self.putChild('whiteboard', WhiteboardResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('whiteboard_dev', WhiteboardDevResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('xdrframe', XDRFrame(domain))
 

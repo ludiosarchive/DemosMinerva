@@ -28,7 +28,7 @@ layer a div over the drawing area, it should get the correct offsets.
 <script>
 // Use just one preamble <script> to reduce page load time.
 
-// Don't define variables on "window" to avoid possible IE stack limit of 12
+// We don't define variables on "window" to avoid possible IE stack limit of 12
 // when calling through window.
 CSRF_TOKEN = {{ dumps(token) }};
 __XDRSetup = {
