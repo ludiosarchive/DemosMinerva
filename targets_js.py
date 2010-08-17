@@ -1,6 +1,7 @@
-# Note: inputs option always refers to a child in JSPATH directory.
+# Note: inputs are relative to JSPATH,
+# output is relative to this file's directory.
 
 targets = [
-	{"id": "whiteboard",
-	"inputs": ["whiteboard/whiteboard.js"]}
+	{"inputs": ["whiteboard/whiteboard.js"],
+	"output": "browsernode/compiled/whiteboard.js"}
 ]

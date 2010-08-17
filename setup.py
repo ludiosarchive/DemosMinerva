@@ -9,5 +9,5 @@ setup(
 	version=minerva.__version__,
 	description="Minerva",
 	packages=['browsernode', 'twisted.plugins'],
-	package_data={'browsernode': ['*.html', '*/*.swf', '*/*.html'],},
+	package_data={'browsernode': ['*.html', '*/*.swf', '*/*.html', 'compiled/*'],},
 )
