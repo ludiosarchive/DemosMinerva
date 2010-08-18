@@ -1,6 +1,6 @@
 #!/bin/sh -e
 export JSPATH="$HOME/JSPATH"
-export PYTHONPATH=$HOME/Projects/Coreweb:$HOME/Projects/Minerva:$HOME/Projects/Webmagic:$HOME/Projects/Ecmaster
+export PYTHONPATH=$HOME/Projects/Coreweb:$HOME/Projects/Minerva:$HOME/Projects/Webmagic:$HOME/Projects/Ecmaster:$HOME/Projects/Builder
 export PYRELOADING=1
 export INTERFACE="192.168.0.120"
 
