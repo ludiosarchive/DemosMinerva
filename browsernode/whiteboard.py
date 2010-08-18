@@ -9,6 +9,7 @@ from twisted.web import resource, static
 from cwtools.htmltools import getTestPageCSS
 
 from webmagic.untwist import BetterResource
+import minerva
 from minerva.newlink import (
 	BasicMinervaProtocol, BasicMinervaFactory, getRandomSubdomain)
 from minerva.decoders import strictDecodeOne
@@ -35,11 +36,17 @@ class WhiteboardIndex(BetterResource):
 		sub1 = getRandomSubdomain('ml', 20)
 		sub2 = getRandomSubdomain('ml', 20)
 
+		# Allow the template to include the contents in the page, so
+		# that the client doesn't have to make another HTTP request.
+		bootstrap_XDRSetup_contents = FilePath(minerva.__file__).parent().\
+			child('compiled_client').child('bootstrap_XDRSetup.js').getContent()
+
 		# This jinja2 stuff is for the html page, not the JavaScript
 		template = self._basePath.child(self._fileName).getContent().decode('utf-8')
 		dictionary = dict(
 			getTestPageCSS=getTestPageCSS,
 			token=token,
+			bootstrap_XDRSetup_contents=bootstrap_XDRSetup_contents,
 			domain=self._domain,
 			sub1=sub1,
 			sub2=sub2,
