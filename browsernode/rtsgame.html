@@ -45,6 +45,7 @@ This page supports options ?mode=http, ?mode=flash, ?useSub=0, ?useSub=1, ?httpS
 // when calling through window.
 CSRF_TOKEN = {{ dumps(token) }};
 __XDRSetup = {
+	dev: true,
 	domain: {{ dumps(domain) }},
 	sub1: {{ dumps(sub1) }},
 	sub2: {{ dumps(sub2) }}

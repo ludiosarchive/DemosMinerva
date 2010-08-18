@@ -19,7 +19,7 @@ from minerva.newlink import (
 from minerva.website import (
 	CsrfTransportFirewall, NoopTransportFirewall, CsrfStopper)
 
-from minerva.minervasite import XDRFrame
+from minerva.minervasite import XDRFrame, XDRFrameDev
 
 from browsernode.rtsgame import RTSGame, RTSFactory
 from browsernode.whiteboard import WhiteboardResource, WhiteboardDevResource, WhiteboardFactory
@@ -63,6 +63,7 @@ class BrowserNodeRoot(BetterResource):
 		self.putChild('whiteboard', WhiteboardResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('whiteboard_dev', WhiteboardDevResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('xdrframe', XDRFrame(domain))
+		self.putChild('xdrframe_dev', XDRFrameDev(domain))
 
 
 
