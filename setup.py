@@ -5,9 +5,9 @@ from distutils.core import setup
 import browsernode
 
 setup(
-	name='Minerva',
-	version=minerva.__version__,
-	description="Minerva",
+	name='browsernode',
+	version=browsernode.__version__,
+	description="BrowserNode website",
 	packages=['browsernode', 'twisted.plugins'],
 	package_data={'browsernode': ['*.html', '*/*.swf', '*/*.html', 'compiled/*.js'],},
 )
