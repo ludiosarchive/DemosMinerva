@@ -14,6 +14,8 @@ from minerva.newlink import (
 	BasicMinervaProtocol, BasicMinervaFactory, getRandomSubdomain)
 from minerva.decoders import strictDecodeOne
 
+from brequire import requireFile, requireFiles
+
 
 class WhiteboardIndex(BetterResource):
 	isLeaf = True
@@ -56,6 +58,8 @@ class WhiteboardIndex(BetterResource):
 
 
 
+requireFile(FilePath(__file__).parent().child('whiteboard.html'))
+
 class WhiteboardResource(BetterResource):
 
 	def __init__(self, csrfStopper, cookieInstaller, domain):
@@ -65,6 +69,8 @@ class WhiteboardResource(BetterResource):
 			csrfStopper, cookieInstaller, domain, 'whiteboard.html'))
 
 
+
+requireFile(FilePath(__file__).parent().child('whiteboard_dev.html'))
 
 class WhiteboardDevResource(BetterResource):
 
