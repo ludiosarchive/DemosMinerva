@@ -58,7 +58,7 @@ class WhiteboardIndex(BetterResource):
 
 
 
-requireFile(FilePath(__file__).parent().child('whiteboard.html'))
+requireFile(FilePath(__file__).parent().child('whiteboard.html').path)
 
 class WhiteboardResource(BetterResource):
 
@@ -70,7 +70,7 @@ class WhiteboardResource(BetterResource):
 
 
 
-requireFile(FilePath(__file__).parent().child('whiteboard_dev.html'))
+requireFile(FilePath(__file__).parent().child('whiteboard_dev.html').path)
 
 class WhiteboardDevResource(BetterResource):
 
