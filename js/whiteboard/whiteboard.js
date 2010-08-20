@@ -71,6 +71,9 @@ whiteboard.WhiteboardProtocol.prototype.streamReset = function(reasonString, app
 	whiteboard.logger.info(
 		'streamReset: reasonString=' + cw.repr.repr(reasonString) +
 		', applicationLevel=' + applicationLevel);
+	// TODO: use goog.dom instead
+	document.getElementById('demo-header').innerHTML +=
+		' <b><a href="' + window.location + '">[DISCONNECTED] - RELOAD</a></b>';
 };
 
 /**
@@ -147,7 +150,7 @@ whiteboard.activityDetected = function(ev) {
 	// Only need a timeout if we have an active Stream
 	if(whiteboard.lastProto) {
 		whiteboard.idleTimeout = whiteboard.callQueue.clock.setTimeout(
-			whiteboard.idleFired, 600 * 1000);
+			whiteboard.idleFired, 3600 * 24 * 3 * 1000);
 	}
 };
 
@@ -167,8 +170,7 @@ whiteboard.clickListen = goog.events.listen(
 whiteboard.startStream = function() {
 	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
 	whiteboard.lastProto = new whiteboard.WhiteboardProtocol();
-	// Uncomment to enable the idle timeout.
-	//whiteboard.activityDetected();
+	whiteboard.activityDetected();
 	var endpointD = cw.net.demo.getEndpoint(whiteboard.callQueue);
 	endpointD.addCallback(function(endpoint) {
 		goog.asserts.assert(whiteboard.lastProto, 'lastProto falsy?');
