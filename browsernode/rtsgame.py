@@ -10,7 +10,10 @@ from cwtools.htmltools import getTestPageCSS
 from webmagic.untwist import BetterResource
 from minerva.newlink import (
 	BasicMinervaProtocol, BasicMinervaFactory, getRandomSubdomain)
+from brequire import requireFile
 
+
+requireFile(FilePath(__file__).parent().child('rtsgame.html').path)
 
 class RTSGameIndex(BetterResource):
 	isLeaf = True

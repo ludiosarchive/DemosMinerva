@@ -28,10 +28,10 @@ from webmagic.untwist import (
 	CookieInstaller, BetterResource, BetterFile, HelpfulNoResource,
 	ConnectionTrackingSite, DisplayConnections)
 
+from brequire import requireFile
 
 
-# TODO: CompiledXDRFrame that loads compiled JS code
-
+requireFile(FilePath(__file__).parent().child('index.html').path)
 
 class BrowserNodeRoot(BetterResource):
 

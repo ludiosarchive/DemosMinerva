@@ -59,6 +59,7 @@ class WhiteboardIndex(BetterResource):
 
 
 requireFile(FilePath(__file__).parent().child('whiteboard.html').path)
+requireFile(FilePath(__file__).parent().child('compiled').child('whiteboard.js').path)
 
 class WhiteboardResource(BetterResource):
 
