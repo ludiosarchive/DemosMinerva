@@ -1,10 +1,8 @@
 import jinja2
 import simplejson
-import random
 
 from twisted.python import log
 from twisted.python.filepath import FilePath
-from twisted.web import resource, static
 
 from cwtools.htmltools import getTestPageCSS
 
@@ -14,7 +12,7 @@ from minerva.newlink import (
 	BasicMinervaProtocol, BasicMinervaFactory, getRandomSubdomain)
 from minerva.decoders import strictDecodeOne
 
-from brequire import requireFile, requireFiles
+from brequire import requireFile
 
 
 class WhiteboardIndex(BetterResource):

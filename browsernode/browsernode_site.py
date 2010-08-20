@@ -1,17 +1,10 @@
 import os
-import cgi
-import simplejson
 
-from twisted.python import log
 from twisted.python.filepath import FilePath
-from twisted.web import resource, static, http, server
 from twisted.internet.task import LoopingCall
 
-from zope.interface import implements
-
-from cwtools import testing, jsimp
+from cwtools import testing
 from mypy import randgen
-from mypy.objops import strToNonNegLimit
 
 from minerva.newlink import (
 	SuperFactory, StreamTracker, HttpFace, SocketFace)
@@ -25,8 +18,7 @@ from browsernode.rtsgame import RTSGame, RTSFactory
 from browsernode.whiteboard import WhiteboardResource, WhiteboardDevResource, WhiteboardFactory
 
 from webmagic.untwist import (
-	CookieInstaller, BetterResource, BetterFile, HelpfulNoResource,
-	ConnectionTrackingSite, DisplayConnections)
+	CookieInstaller, BetterResource, BetterFile, ConnectionTrackingSite)
 
 from brequire import requireFile
 
