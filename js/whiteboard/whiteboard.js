@@ -15,6 +15,7 @@ goog.require('goog.events.EventType');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.graphics');
 goog.require('goog.json');
+goog.require('goog.proto2.PbLiteSerializer');
 goog.require('goog.Uri');
 goog.require('cw.eventual');
 goog.require('cw.string');
@@ -25,6 +26,7 @@ goog.require('cw.net.demo.getEndpoint');
 goog.require('cw.net.demo.makeCredentialsData');
 goog.require('cw.repr');
 goog.require('cw.string');
+goog.require('whiteboard.Point');
 
 
 whiteboard._queryData = new goog.Uri(document.location).getQueryData();
@@ -58,7 +60,7 @@ function byId(o) {
  * @constructor
  */
 whiteboard.WhiteboardProtocol = function() {
-
+	this.pbLiteSerializer_ = new goog.proto2.PbLiteSerializer();
 };
 
 whiteboard.WhiteboardProtocol.prototype.streamStarted = function(stream) {
@@ -89,10 +91,11 @@ whiteboard.WhiteboardProtocol.prototype.handleString_ = function(s) {
 	var msgType = payload[0];
 	var body = payload[1];
 
-	if(msgType == 1) { // draw circle
-		var x = body[0];
-		var y = body[1];
-		whiteboard.drawCircleAt(x, y);
+	if(msgType == 1) { // Point
+		// Deserialize.
+		var point = this.pbLiteSerializer_.deserialize(
+			whiteboard.Point.getDescriptor(), body);
+		whiteboard.drawCircleAt(point.getX(), point.getY());
 	}
 };
 

@@ -95,7 +95,7 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 		"""
 		strings = []
 		for x, y in self.factory.circles:
-			strings.append(simplejson.dumps([1, [x, y]]))
+			strings.append(simplejson.dumps([1, [None, x, y]]))
 		self.stream.sendStrings(strings)
 
 
@@ -120,9 +120,7 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 				# Client who told us about this circle already drew it,
 				# no need to echo it back to them.
 				continue
-			# TODO: it's not very safe to just send any body back to the client.
-			# Need to validate first.
-			proto.stream.sendStrings([simplejson.dumps([1, [x, y]])])
+			proto.stream.sendStrings([simplejson.dumps([1, [None, x, y]])])
 
 
 	def stringsReceived(self, strings):
