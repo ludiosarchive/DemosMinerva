@@ -86,12 +86,13 @@ whiteboard.WhiteboardProtocol.prototype.handleString_ = function(s) {
 		whiteboard.logger.severe('Could not handle string: ' + cw.repr.repr(s));
 	}
 
+	// TODO: handle error?
 	var payload = goog.json.parse(s);
 	var msgType = payload[0];
 	var body = payload[1];
 
 	if(msgType == 1) { // Point
-		// Deserialize.
+		// TODO: handle error?
 		var point = this.pbLiteSerializer_.deserialize(
 			whiteboard.Point.getDescriptor(), body);
 		whiteboard.drawCircleAt(point.getX(), point.getY());
