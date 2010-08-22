@@ -119,10 +119,22 @@ whiteboard.WhiteboardProtocol.prototype.reset = function(reason) {
 /**
  * @param {number} x
  * @param {number} y
+ * @private
+ */
+whiteboard.WhiteboardProtocol.prototype.makePoint_ = function(x, y) {
+	var point = new whiteboard.Point();
+	point.setX(x);
+	point.setY(y);
+	return this.pbLiteSerializer_.serialize(point);
+};
+
+/**
+ * @param {number} x
+ * @param {number} y
  */
 whiteboard.WhiteboardProtocol.prototype.sendCircle = function(x, y) {
 	whiteboard.logger.info('telling server about circle at: ' + x + ', ' + y);
-	this.stream_.sendStrings([goog.json.serialize([1, [x, y]])]);
+	this.stream_.sendStrings([goog.json.serialize([1, this.makePoint_(x, y)])]);
 };
 
 

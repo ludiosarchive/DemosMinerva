@@ -13,6 +13,7 @@ from minerva.newlink import (
 from minerva.decoders import strictDecodeOne
 
 from protojson.pbliteserializer import PbLiteSerializer
+from protojson.error import PbDecodeError
 
 from brequire import requireFile
 
@@ -96,7 +97,7 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 
 	def __init__(self, clock):
 		self._clock = clock
-		self._serialize = PbLiteSerializer().serialize
+		self._serializer = PbLiteSerializer()
 
 
 	def _sendAllCircles(self):
@@ -106,7 +107,7 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 		strings = []
 		for x, y in self.factory.circles:
 			strings.append(simplejson.dumps(
-				[1, self._serialize(makePoint(x, y))]))
+				[1, self._serializer.serialize(makePoint(x, y))]))
 		self.stream.sendStrings(strings)
 
 
@@ -124,15 +125,19 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 
 
 	def _handleNewCircle(self, body):
-		x, y = body
-		self.factory.circles.add((x, y))
+		try:
+			point = wm.Point()
+			self._serializer.deserialize(point, body)
+		except PbDecodeError:
+			1/0 # TODO
+		self.factory.circles.add((point.x, point.y))
 		for proto in self.factory.protos:
 			if proto == self:
 				# Client who told us about this circle already drew it,
 				# no need to echo it back to them.
 				continue
 			proto.stream.sendStrings([simplejson.dumps(
-				[1, self._serialize(makePoint(x, y))])])
+				[1, self._serializer.serialize(makePoint(point.x, point.y))])])
 
 
 	def stringsReceived(self, strings):
