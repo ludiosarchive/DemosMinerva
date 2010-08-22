@@ -86,8 +86,7 @@ whiteboard.WhiteboardProtocol.prototype.handleString_ = function(s) {
 		whiteboard.logger.severe('Could not handle string: ' + cw.repr.repr(s));
 	}
 
-	// TODO: do something safer
-	var payload = eval('(' + s + ')');
+	var payload = goog.json.parse(s);
 	var msgType = payload[0];
 	var body = payload[1];
 
