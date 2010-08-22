@@ -14,6 +14,8 @@ from minerva.decoders import strictDecodeOne
 
 from brequire import requireFile
 
+from browsernode import whiteboard_messages_pb2
+
 
 class WhiteboardIndex(BetterResource):
 	isLeaf = True
