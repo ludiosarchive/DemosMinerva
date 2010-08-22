@@ -5,16 +5,18 @@ from twisted.python import log
 from twisted.python.filepath import FilePath
 
 from cwtools.htmltools import getTestPageCSS
-
 from webmagic.untwist import BetterResource
+
 import minerva
 from minerva.newlink import (
 	BasicMinervaProtocol, BasicMinervaFactory, getRandomSubdomain)
 from minerva.decoders import strictDecodeOne
 
+from protojson.pbliteserializer import PbLiteSerializer
+
 from brequire import requireFile
 
-from browsernode import whiteboard_messages_pb2
+from browsernode import whiteboard_messages_pb2 as wm
 
 
 class WhiteboardIndex(BetterResource):
@@ -83,10 +85,18 @@ class WhiteboardDevResource(BetterResource):
 
 
 
+def makePoint(x, y):
+	p = wm.Point()
+	p.x = x
+	p.y = y
+	return p
+
+
 class WhiteboardProtocol(BasicMinervaProtocol):
 
 	def __init__(self, clock):
 		self._clock = clock
+		self._serialize = PbLiteSerializer().serialize
 
 
 	def _sendAllCircles(self):
@@ -95,7 +105,8 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 		"""
 		strings = []
 		for x, y in self.factory.circles:
-			strings.append(simplejson.dumps([1, [None, x, y]]))
+			strings.append(simplejson.dumps(
+				[1, self._serialize(makePoint(x, y))]))
 		self.stream.sendStrings(strings)
 
 
@@ -120,7 +131,8 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 				# Client who told us about this circle already drew it,
 				# no need to echo it back to them.
 				continue
-			proto.stream.sendStrings([simplejson.dumps([1, [None, x, y]])])
+			proto.stream.sendStrings([simplejson.dumps(
+				[1, self._serialize(makePoint(x, y))])])
 
 
 	def stringsReceived(self, strings):
