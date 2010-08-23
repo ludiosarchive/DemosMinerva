@@ -10,9 +10,8 @@ from minerva.newlink import (
 	SuperFactory, StreamTracker, HttpFace, SocketFace)
 
 from minerva.website import (
-	CsrfTransportFirewall, NoopTransportFirewall, CsrfStopper)
-
-from minerva.minervasite import XDRFrame, XDRFrameDev
+	CsrfTransportFirewall, NoopTransportFirewall, CsrfStopper, XDRFrame,
+	XDRFrameDev)
 
 from browsernode.rtsgame import RTSGame, RTSFactory
 from browsernode.whiteboard import WhiteboardResource, WhiteboardDevResource, WhiteboardFactory
