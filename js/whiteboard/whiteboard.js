@@ -156,7 +156,9 @@ whiteboard.idleFired = function() {
 
 whiteboard.idleTimeout = null;
 
-
+/**
+ * @param {*} ev
+ */
 whiteboard.activityDetected = function(ev) {
 	if(whiteboard.idleTimeout != null) {
 		whiteboard.callQueue.clock.clearTimeout(whiteboard.idleTimeout);
@@ -185,7 +187,7 @@ whiteboard.clickListen = goog.events.listen(
 whiteboard.startStream = function() {
 	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
 	whiteboard.lastProto = new whiteboard.WhiteboardProtocol();
-	whiteboard.activityDetected();
+	whiteboard.activityDetected(null);
 	var endpointD = cw.net.demo.getEndpoint(whiteboard.callQueue);
 	endpointD.addCallback(function(endpoint) {
 		goog.asserts.assert(whiteboard.lastProto, 'lastProto falsy?');
