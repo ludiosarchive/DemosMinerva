@@ -301,6 +301,16 @@
 	height: 20px;
 }
 
+#drawAreaContainer {
+	border: 2px solid #aaa;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	/* float just to constrain width */
+	float: left;
+	margin-bottom: 9px;
+}
+
 #drawAreaOverlay {
 	width: 800px;
 	height: 600px;
@@ -310,10 +320,6 @@
 
 #drawArea {
 	position: relative;
-	border: 2px solid #aaa;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
 	width: 800px;
 	height: 600px;
 }
