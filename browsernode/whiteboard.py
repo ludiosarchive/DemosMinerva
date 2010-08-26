@@ -87,13 +87,6 @@ class WhiteboardDevResource(WhiteboardResource):
 
 
 
-def makePoint(x, y):
-	p = wm.Point()
-	p.x = x
-	p.y = y
-	return p
-
-
 class WhiteboardProtocol(BasicMinervaProtocol):
 
 	def __init__(self, clock):
@@ -108,7 +101,7 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 		strings = []
 		for x, y in self.factory.circles:
 			strings.append(simplejson.dumps(
-				[1, self._serializer.serialize(makePoint(x, y))]))
+				[1, self._serializer.serialize(wm.Point(x=x, y=y))]))
 		self.stream.sendStrings(strings)
 
 
@@ -138,7 +131,7 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 				# no need to echo it back to them.
 				continue
 			proto.stream.sendStrings([simplejson.dumps(
-				[1, self._serializer.serialize(makePoint(point.x, point.y))])])
+				[1, self._serializer.serialize(wm.Point(x=point.x, y=point.y))])])
 
 
 	def _clearBoard(self):
