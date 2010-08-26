@@ -16,6 +16,7 @@ goog.require('goog.events.BrowserEvent');
 goog.require('goog.graphics');
 goog.require('goog.json');
 goog.require('goog.proto2.PbLiteSerializer');
+goog.require('goog.style');
 goog.require('goog.Uri');
 goog.require('cw.eventual');
 goog.require('cw.string');
@@ -241,8 +242,11 @@ whiteboard.setupDrawArea = function() {
 	var graphics = goog.graphics.createGraphics(800, 600);
 	whiteboard._drawAreaDiv = goog.dom.getElement('drawArea');
 	graphics.render(whiteboard._drawAreaDiv);
-	goog.events.listen(whiteboard._drawAreaDiv, goog.events.EventType.CLICK, whiteboard.handleClick, false);
 	whiteboard.lastDrawArea = graphics;
+	var overlay = goog.dom.getElement('drawAreaOverlay');
+	goog.style.setUnselectable(overlay, true);
+	goog.events.listen(overlay, goog.events.EventType.CLICK,
+		whiteboard.handleClick, false);
 };
 
 

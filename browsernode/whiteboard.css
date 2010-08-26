@@ -1,0 +1,15 @@
+#drawAreaOverlay {
+	width: 800px;
+	height: 600px;
+	position: absolute;
+	z-index: 2;
+}
+
+#drawArea {
+	/* position: relative is needed to make offsetX/Y work properly
+	in Firefox. See http://www.reloco.com.ar/mozilla/compat.html */
+	position: relative;
+	border: 1px solid #aaa;
+	width: 800px;
+	height: 600px;
+}

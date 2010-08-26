@@ -46,10 +46,14 @@ class WhiteboardIndex(BetterResource):
 		bootstrap_XDRSetup_contents = FilePath(minerva.__file__).parent().\
 			child('compiled_client').child('bootstrap_XDRSetup.js').getContent()
 
+		def getWhiteboardCSS():
+			return FilePath(__file__).parent().child('whiteboard.css').getContent()
+
 		# This jinja2 stuff is for the html page, not the JavaScript
 		template = self._basePath.child(self._fileName).getContent().decode('utf-8')
 		dictionary = dict(
 			getTestPageCSS=getTestPageCSS,
+			getWhiteboardCSS=getWhiteboardCSS,
 			token=token,
 			bootstrap_XDRSetup_contents=bootstrap_XDRSetup_contents,
 			domain=self._domain,
@@ -62,6 +66,7 @@ class WhiteboardIndex(BetterResource):
 
 
 requireFile(FilePath(__file__).parent().child('whiteboard.html').path)
+requireFile(FilePath(__file__).parent().child('whiteboard.css').path)
 requireFile(FilePath(__file__).parent().child('compiled').child('whiteboard.js').path)
 
 class WhiteboardResource(BetterResource):
