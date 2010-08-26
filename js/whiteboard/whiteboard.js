@@ -6,6 +6,7 @@ goog.provide('whiteboard');
 
 goog.require('cw.autoTitle');
 goog.require('goog.asserts');
+goog.require('goog.color');
 goog.require('goog.debug.DivConsole');
 goog.require('goog.debug.Logger');
 goog.require('goog.debug.LogManager');
@@ -313,20 +314,24 @@ whiteboard.onColorEvent = function(ev) {
 	goog.net.cookies.set('whiteboard_defaultColor', color);
 	goog.style.setStyle(goog.dom.getElement('whiteboard-cp-value'),
 		'background-color', color);
-	goog.dom.getElement('whiteboard-cp-value').title = color;
-	goog.dom.getElement('whiteboard-cp-text').innerHTML = goog.color.parse(color).hex;
+	var whiteboardCpValue = goog.dom.getElement('whiteboard-cp-value');
+	whiteboardCpValue.title = color;
+
+	var colorHex = goog.color.parse(color).hex;
+	whiteboardCpValue.innerHTML = colorHex;
+
+	var rgb = goog.color.hexToRgb(colorHex);
+	var lighter = goog.color.rgbArrayToHex(goog.color.lighten(rgb, 0.45));
+	goog.style.setStyle(whiteboardCpValue, 'color', lighter);
 };
 
 
 /**
  * @param {!Array.<string>} colors
  * @param {number} width
- * @param {string} caption
  * @return {!goog.ui.ColorPalette}
  */
-whiteboard.createColorPalette = function(colors, width, caption) {
-	goog.dom.getElement('whiteboard-cp').appendChild(
-		goog.dom.createDom('p', null, caption));
+whiteboard.createColorPalette = function(colors, width) {
 	var cp = new goog.ui.ColorPalette(colors);
 	cp.setSize(width); // If we only set the columns, the rows are calculated.
 	cp.render(goog.dom.getElement('whiteboard-cp'));
@@ -336,10 +341,18 @@ whiteboard.createColorPalette = function(colors, width, caption) {
 
 
 whiteboard.setupControls = function() {
-	var resetBoardButton = new goog.ui.CustomButton('Clear board');
-	resetBoardButton.render(goog.dom.getElement('whiteboard-controls'));
-	goog.events.listen(resetBoardButton, goog.ui.Component.EventType.ACTION,
-		whiteboard.clearBoard);
+	var controlsDiv = goog.dom.getElement('whiteboard-controls');
+
+	//var text = goog.dom.createDom('div', {'class': 'goog-inline-block pick-a-color'}, 'Pick a color:');
+	//goog.dom.append(controlsDiv, text);
+
+	var whiteboardCp = goog.dom.createDom('div',
+		{'class': 'goog-inline-block', 'id': 'whiteboard-cp'});
+	goog.dom.append(controlsDiv, whiteboardCp);
+
+	var whiteboardCpValue = goog.dom.createDom('div',
+		{'class': 'goog-inline-block', 'id': 'whiteboard-cp-value'});
+	goog.dom.append(controlsDiv, whiteboardCpValue);
 
 	// The colors are from closure/goog/demos/palette.html
 	var palette = whiteboard.createColorPalette([
@@ -349,11 +362,19 @@ whiteboard.setupControls = function() {
 		'#76A5AF', '#6FA8DC', '#8E7CC3', '#C27BA0',
 		'#CC0000', '#E69138', '#F1C232', '#6AA84F',
 		'#45818E', '#3D85C6', '#674EA7', '#A64D79'
-	], 8, 'Pick a color, any color:');
+	], 8);
 
 	palette.setSelectedColor(whiteboard.defaultColor);
 	// Fire a fake "event" because the above doesn't.
 	whiteboard.onColorEvent({target: palette});
+
+
+	var resetBoardButton = new goog.ui.CustomButton('Clear board');
+	resetBoardButton.addClassName('clear-board-button');
+	resetBoardButton.render(controlsDiv);
+
+	goog.events.listen(resetBoardButton, goog.ui.Component.EventType.ACTION,
+		whiteboard.clearBoard);
 };
 
 
