@@ -91,7 +91,6 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 
 	def __init__(self, clock):
 		self._clock = clock
-		self._serializer = PbLiteSerializer()
 
 
 	def _sendAllCircles(self):
@@ -101,7 +100,7 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 		strings = []
 		for x, y, color in self.factory.circles:
 			strings.append(simplejson.dumps(
-				[1, self._serializer.serialize(wm.Point(
+				[1, self.factory.serializer.serialize(wm.Point(
 					x=x, y=y, color=color))]))
 		self.stream.sendStrings(strings)
 
@@ -122,28 +121,10 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 	def _handleNewCircle(self, body):
 		try:
 			point = wm.Point()
-			self._serializer.deserialize(point, body)
+			self.factory.serializer.deserialize(point, body)
 		except PbDecodeError:
 			1/0 # TODO
-		self.factory.circles.add((point.x, point.y, point.color))
-		for proto in self.factory.protos:
-			if proto == self:
-				# Client who told us about this circle already drew it,
-				# no need to echo it back to them.
-				continue
-			proto.stream.sendStrings([simplejson.dumps(
-				[1, self._serializer.serialize(wm.Point(
-					x=point.x, y=point.y, color=point.color))])])
-
-
-	def _clearBoard(self):
-		self.factory.circles.clear()
-		for proto in self.factory.protos:
-			if proto == self:
-				# Client who told us to reset has already cleared its board.
-				continue
-			proto.stream.sendStrings([simplejson.dumps(
-				[2, self._serializer.serialize(wm.ClearBoard())])])
+		self.factory.addCircle(point.x, point.y, point.color, dontTell=(self,))
 
 
 	def stringsReceived(self, strings):
@@ -160,7 +141,7 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 					if msgType == 1: # new circle
 						self._handleNewCircle(body)
 					elif msgType == 2: # reset
-						self._clearBoard()
+						self.factory.clearBoard(dontTell=(self,))
 		except:
 			log.err()
 
@@ -168,12 +149,51 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 
 class WhiteboardFactory(BasicMinervaFactory):
 	protocol = WhiteboardProtocol
+	maxInactivity = 20 * 60
 
 	def __init__(self, clock):
 		self._clock = clock
 		self.counter = 0
 		self.protos = set()
 		self.circles = set()
+		self.serializer = PbLiteSerializer()
+		self._idleDc = None
+		self.resetIdle()
+
+
+	def addCircle(self, x, y, color, dontTell=()):
+		self.resetIdle()
+		self.circles.add((x, y, color))
+		for proto in self.protos:
+			if proto in dontTell:
+				# Client who told us about this circle already drew it,
+				# no need to echo it back to them.
+				continue
+			proto.stream.sendStrings([simplejson.dumps(
+				[1, self.serializer.serialize(wm.Point(
+					x=x, y=y, color=color))])])
+
+
+	def clearBoard(self, dontTell=()):
+		self.resetIdle()
+		self.circles.clear()
+		for proto in self.protos:
+			if proto in dontTell:
+				continue
+			proto.stream.sendStrings([simplejson.dumps(
+				[2, self.serializer.serialize(wm.ClearBoard())])])
+
+
+	def _cancelIdleDc(self):
+		if self._idleDc is not None:
+			if self._idleDc.active():
+				self._idleDc.cancel()
+			self._idleDc = None
+
+
+	def resetIdle(self):
+		self._cancelIdleDc()
+		self._idleDc = self._clock.callLater(self.maxInactivity, self.clearBoard)
 
 
 	def buildProtocol(self):

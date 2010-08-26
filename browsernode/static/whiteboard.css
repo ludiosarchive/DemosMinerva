@@ -302,12 +302,10 @@
 
 #whiteboard-controls-left {
 	float: left;
-	margin: 16px 0 0 0;
 }
 
 #whiteboard-controls-right {
 	float: right;
-	margin: 16px 0 0 0;
 }
 
 .clear-board-button {
