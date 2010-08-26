@@ -99,9 +99,10 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 		Send all existing circles to the client.
 		"""
 		strings = []
-		for x, y in self.factory.circles:
+		for x, y, color in self.factory.circles:
 			strings.append(simplejson.dumps(
-				[1, self._serializer.serialize(wm.Point(x=x, y=y))]))
+				[1, self._serializer.serialize(wm.Point(
+					x=x, y=y, color=color))]))
 		self.stream.sendStrings(strings)
 
 
@@ -124,14 +125,15 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 			self._serializer.deserialize(point, body)
 		except PbDecodeError:
 			1/0 # TODO
-		self.factory.circles.add((point.x, point.y))
+		self.factory.circles.add((point.x, point.y, point.color))
 		for proto in self.factory.protos:
 			if proto == self:
 				# Client who told us about this circle already drew it,
 				# no need to echo it back to them.
 				continue
 			proto.stream.sendStrings([simplejson.dumps(
-				[1, self._serializer.serialize(wm.Point(x=point.x, y=point.y))])])
+				[1, self._serializer.serialize(wm.Point(
+					x=point.x, y=point.y, color=point.color))])])
 
 
 	def _clearBoard(self):

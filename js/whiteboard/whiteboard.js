@@ -102,7 +102,7 @@ whiteboard.WhiteboardProtocol.prototype.handleString_ = function(s) {
 		// TODO: handle error?
 		var point = this.pbLiteSerializer_.deserialize(
 			whiteboard.Point.getDescriptor(), body);
-		whiteboard.drawCircleAt(point.getX(), point.getY());
+		whiteboard.drawCircleAt(point.getX(), point.getY(), point.getColor());
 	} else if(msgType == 2) { // ClearBoard
 		whiteboard.clearMyBoard();
 	} else {
@@ -139,12 +139,14 @@ whiteboard.WhiteboardProtocol.prototype.reset = function(reason) {
 /**
  * @param {number} x
  * @param {number} y
+ * @param {string} color
  * @private
  */
-whiteboard.WhiteboardProtocol.prototype.makePoint_ = function(x, y) {
+whiteboard.WhiteboardProtocol.prototype.makePoint_ = function(x, y, color) {
 	var point = new whiteboard.Point();
 	point.setX(x);
 	point.setY(y);
+	point.setColor(color);
 	return this.pbLiteSerializer_.serialize(point);
 };
 
@@ -152,9 +154,10 @@ whiteboard.WhiteboardProtocol.prototype.makePoint_ = function(x, y) {
  * @param {number} x
  * @param {number} y
  */
-whiteboard.WhiteboardProtocol.prototype.sendCircle = function(x, y) {
-	whiteboard.logger.info('Telling server about circle at: ' + x + ', ' + y);
-	this.stream_.sendStrings([goog.json.serialize([1, this.makePoint_(x, y)])]);
+whiteboard.WhiteboardProtocol.prototype.sendCircle = function(x, y, color) {
+	whiteboard.logger.info('Telling server about circle at: ' +
+		x + ', ' + y + ' with color ' + color);
+	this.stream_.sendStrings([goog.json.serialize([1, this.makePoint_(x, y, color)])]);
 };
 
 /**
@@ -250,9 +253,9 @@ whiteboard.drawRandomStuff = function() {
 };
 
 
-whiteboard.drawCircleAt = function(x, y) {
-	var fill = new goog.graphics.SolidFill('yellow');
-	var stroke = new goog.graphics.Stroke(2, 'green');
+whiteboard.drawCircleAt = function(x, y, color) {
+	var fill = new goog.graphics.SolidFill(color);
+	var stroke = new goog.graphics.Stroke(1, 'black');
 	var circleElement = whiteboard.lastDrawArea.drawCircle(x, y, 5, stroke, fill);
 };
 
@@ -273,8 +276,8 @@ whiteboard.handleClick = function(ev) {
 	var patchedEv = new goog.events.BrowserEvent(ev);
 	var x = patchedEv.offsetX;
 	var y = patchedEv.offsetY;
-	whiteboard.drawCircleAt(x, y);
-	whiteboard.lastProto.sendCircle(x, y);
+	whiteboard.drawCircleAt(x, y, whiteboard.currentColor);
+	whiteboard.lastProto.sendCircle(x, y, whiteboard.currentColor);
 };
 
 
@@ -306,6 +309,7 @@ whiteboard.onColorEvent = function(ev) {
 	if(!color) {
 		color = whiteboard.defaultColor;
 	}
+	whiteboard.currentColor = color;
 	goog.net.cookies.set('whiteboard_defaultColor', color);
 	goog.style.setStyle(goog.dom.getElement('whiteboard-cp-value'),
 		'background-color', color);
@@ -353,16 +357,17 @@ whiteboard.setupControls = function() {
 };
 
 
-whiteboard.getDefaultColorFromCookie = function() {
+whiteboard.setupColor = function() {
 	var c = goog.net.cookies.get('whiteboard_defaultColor');
 	if(c) {
 		whiteboard.defaultColor = c;
 	}
+	whiteboard.currentColor = whiteboard.defaultColor;
 };
 
 
 whiteboard.init = function() {
-	whiteboard.getDefaultColorFromCookie();
+	whiteboard.setupColor();
 	whiteboard.setupControls();
 	whiteboard.setupDrawAreaOverlay();
 	whiteboard.setupDrawArea();
