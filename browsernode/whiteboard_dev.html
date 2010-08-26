@@ -8,7 +8,7 @@
 	<style>
 		{{ getTestPageCSS() }}
 	</style>
-	<link rel="stylesheet" type="text/css" href="whiteboard.css">
+	<link rel="stylesheet" type="text/css" href="static/whiteboard.css">
 </head>
 <body>
 <!-- note: this file is mostly a copy/paste of rtsgame.html -->
@@ -41,7 +41,11 @@ __XDRSetup = {
 <div id="minerva-xdrframes"></div>
 <script src="/JSPATH/cw/net/bootstrap_XDRSetup.js"></script>
 
-<div id="whiteboard-controls"></div>
+<div id="whiteboard-controls">
+	<div id="whiteboard-cp"></div>
+	<div id="whiteboard-cp-value"></div>
+	<div id="whiteboard-cp-text"></div>
+</div>
 <div id="drawAreaOverlay"></div>
 <div id="drawArea"></div>
 <div id="FlashConnectorSwf"></div>

@@ -15,7 +15,7 @@ from minerva.decoders import strictDecodeOne
 from protojson.pbliteserializer import PbLiteSerializer
 from protojson.error import PbDecodeError
 
-from brequire import requireFile
+from brequire import requireFile, requireFiles
 
 from browsernode import whiteboard_messages_pb2 as wm
 
@@ -65,8 +65,7 @@ class WhiteboardIndex(BetterResource):
 
 
 requireFile(FilePath(__file__).parent().child('whiteboard.html').path)
-requireFile(FilePath(__file__).parent().child('whiteboard.css').path)
-requireFile(FilePath(__file__).parent().child('button-bg.png').path)
+requireFiles([f.path for f in FilePath(__file__).parent().child('static').children()])
 requireFile(FilePath(__file__).parent().child('compiled').child('whiteboard.js').path)
 
 class WhiteboardResource(BetterResource):
@@ -77,10 +76,7 @@ class WhiteboardResource(BetterResource):
 
 		self.putChild('', WhiteboardIndex(
 			csrfStopper, cookieInstaller, domain, self.templateFilename))
-		self.putChild('whiteboard.css',
-			BetterFile(FilePath(__file__).parent().child('whiteboard.css').path))
-		self.putChild('button-bg.png',
-			BetterFile(FilePath(__file__).parent().child('button-bg.png').path))
+		self.putChild('static', BetterFile(FilePath(__file__).parent().child('static').path))
 
 
 

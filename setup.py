@@ -9,6 +9,6 @@ setup(
 	version=browsernode.__version__,
 	description="BrowserNode website",
 	packages=['browsernode', 'twisted.plugins'],
-	package_data={'browsernode': ['*.html', '*.css', '*.png',
+	package_data={'browsernode': ['*.html', 'static/*',
 		'*/*.swf', '*/*.html', 'compiled/*.js'],},
 )

@@ -207,6 +207,85 @@
 }
 
 
+/*
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by an Apache 2.0 License.
+ * See the COPYING file for details.
+ */
+
+/*
+ * Standard styling for palettes created by goog.ui.PaletteRenderer.
+ *
+ * @author pupius@google.com (Daniel Pupius)
+ * @author attila@google.com (Attila Bodis)
+ */
+
+
+.goog-palette {
+	cursor: default;
+	outline: none;
+}
+
+.goog-palette-table {
+	border: 1px solid #666;
+	border-collapse: collapse;
+	margin: 5px;
+}
+
+.goog-palette-cell {
+	border: 0;
+	/*border-right: 1px solid #666;*/
+	cursor: pointer;
+	height: 18px;
+	margin: 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 18px;
+}
+
+
+.goog-palette-colorswatch {
+	position: relative;
+	height: 18px;
+	width: 18px;
+	font-size: x-small;
+}
+
+.goog-palette-cell-hover .goog-palette-colorswatch {
+	height: 16px;
+	width: 16px;
+	border: 1px solid #FFF;
+}
+
+.goog-palette-cell-selected .goog-palette-colorswatch {
+	height: 16px;
+	width: 16px;
+	border: 1px solid #333;
+	color: #fff;
+	font-weight: bold;
+	background-image: url(color-swatch-tick.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.goog-palette-customcolor {
+	position: relative;
+	height: 16px;
+	width: 16px;
+	font-size: x-small;
+	background-color: #FAFAFA;
+	color: #666;
+	border: 1px solid #EEE;
+}
+
+.goog-palette-cell-hover .goog-palette-customcolor {
+	background-color: #FEE;
+	border: 1px solid #F66;
+	color: #F66;
+}
+
+
 /****************************************************************************/
 
 #whiteboard-doc {
@@ -215,6 +294,11 @@
 
 #whiteboard-controls {
 	margin-top: 1em;
+}
+
+#whiteboard-cp-value {
+	width: 50px;
+	height: 20px;
 }
 
 #drawAreaOverlay {
@@ -226,7 +310,10 @@
 
 #drawArea {
 	position: relative;
-	border: 1px solid #aaa;
+	border: 2px solid #aaa;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 	width: 800px;
 	height: 600px;
 }

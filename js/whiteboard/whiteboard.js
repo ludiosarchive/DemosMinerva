@@ -19,6 +19,7 @@ goog.require('goog.proto2.PbLiteSerializer');
 goog.require('goog.style');
 goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.CustomButton');
+goog.require('goog.ui.ColorPalette');
 goog.require('goog.Uri');
 goog.require('cw.eventual');
 goog.require('cw.string');
@@ -284,11 +285,43 @@ whiteboard.setupDrawAreaOverlay = function() {
 };
 
 
+whiteboard.onColorEvent = function(e) {
+	var palette = e.target;
+	var color = palette.getSelectedColor();
+	goog.style.setStyle(goog.dom.getElement('whiteboard-cp-value'),
+		'background-color', color);
+	goog.dom.getElement('whiteboard-cp-value').title = color;
+	goog.dom.getElement('whiteboard-cp-text').innerHTML = goog.color.parse(color).hex;
+};
+
+
+whiteboard.createColorPalette = function(colors, width, caption) {
+	goog.dom.getElement('whiteboard-cp').appendChild(
+		goog.dom.createDom('p', null, caption));
+	var cp = new goog.ui.ColorPalette(colors);
+	cp.setSize(width); // If we only set the columns, the rows are calculated.
+	cp.render(goog.dom.getElement('whiteboard-cp'));
+	goog.events.listen(cp, goog.ui.Component.EventType.ACTION, whiteboard.onColorEvent);
+	return cp;
+};
+
+
 whiteboard.setupControls = function() {
 	var resetBoardButton = new goog.ui.CustomButton('Clear board');
 	resetBoardButton.render(goog.dom.getElement('whiteboard-controls'));
 	goog.events.listen(resetBoardButton, goog.ui.Component.EventType.ACTION,
 		whiteboard.clearBoard);
+
+	// The colors are from closure/goog/demos/palette.html
+	whiteboard.createColorPalette([
+		'#EA9999', '#F9CB9C', '#FFE599', '#B6D7A8',
+		'#A2C4C9', '#9FC5E8', '#B4A7D6', '#D5A6BD',
+		'#E06666', '#F6B26B', '#FFD966', '#93C47D',
+		'#76A5AF', '#6FA8DC', '#8E7CC3', '#C27BA0',
+		'#CC0000', '#E69138', '#F1C232', '#6AA84F',
+		'#45818E', '#3D85C6', '#674EA7', '#A64D79'
+	], 8, 'Pick a color, any color:');
+
 };
 
 
