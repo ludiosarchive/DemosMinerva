@@ -11,12 +11,14 @@ goog.require('goog.debug.Logger');
 goog.require('goog.debug.LogManager');
 goog.require('goog.dom');
 goog.require('goog.events');
+goog.require('goog.events.Event');
 goog.require('goog.events.EventType');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.graphics');
 goog.require('goog.json');
 goog.require('goog.proto2.PbLiteSerializer');
 goog.require('goog.style');
+goog.require('goog.net.cookies');
 goog.require('goog.ui.Component.EventType');
 goog.require('goog.ui.CustomButton');
 goog.require('goog.ui.ColorPalette');
@@ -113,9 +115,16 @@ whiteboard.WhiteboardProtocol.prototype.handleString_ = function(s) {
  * @param {!Array.<string>} strings
  */
 whiteboard.WhiteboardProtocol.prototype.stringsReceived = function(strings) {
-	for(var i=0; i < strings.length; i++) {
-		var s = strings[i];
-		this.handleString_(s);
+	// Suspend because CanvasGraphics is slow to redraw - exhbits O(N^2)
+	// behavior, at least in WebKit.  It's especially bad with iPhone 2G.
+	whiteboard.lastDrawArea.suspend();
+	try {
+		for(var i=0; i < strings.length; i++) {
+			var s = strings[i];
+			this.handleString_(s);
+		}
+	} finally {
+		whiteboard.lastDrawArea.resume();
 	}
 };
 
@@ -285,9 +294,19 @@ whiteboard.setupDrawAreaOverlay = function() {
 };
 
 
-whiteboard.onColorEvent = function(e) {
-	var palette = e.target;
+whiteboard.defaultColor = '#E06666';
+
+
+/**
+ * @param {{target: !goog.ui.ColorPalette}} ev
+ */
+whiteboard.onColorEvent = function(ev) {
+	var palette = ev.target;
 	var color = palette.getSelectedColor();
+	if(!color) {
+		color = whiteboard.defaultColor;
+	}
+	goog.net.cookies.set('whiteboard_defaultColor', color);
 	goog.style.setStyle(goog.dom.getElement('whiteboard-cp-value'),
 		'background-color', color);
 	goog.dom.getElement('whiteboard-cp-value').title = color;
@@ -295,6 +314,12 @@ whiteboard.onColorEvent = function(e) {
 };
 
 
+/**
+ * @param {!Array.<string>} colors
+ * @param {number} width
+ * @param {string} caption
+ * @return {!goog.ui.ColorPalette}
+ */
 whiteboard.createColorPalette = function(colors, width, caption) {
 	goog.dom.getElement('whiteboard-cp').appendChild(
 		goog.dom.createDom('p', null, caption));
@@ -313,7 +338,7 @@ whiteboard.setupControls = function() {
 		whiteboard.clearBoard);
 
 	// The colors are from closure/goog/demos/palette.html
-	whiteboard.createColorPalette([
+	var palette = whiteboard.createColorPalette([
 		'#EA9999', '#F9CB9C', '#FFE599', '#B6D7A8',
 		'#A2C4C9', '#9FC5E8', '#B4A7D6', '#D5A6BD',
 		'#E06666', '#F6B26B', '#FFD966', '#93C47D',
@@ -322,10 +347,22 @@ whiteboard.setupControls = function() {
 		'#45818E', '#3D85C6', '#674EA7', '#A64D79'
 	], 8, 'Pick a color, any color:');
 
+	palette.setSelectedColor(whiteboard.defaultColor);
+	// Fire a fake "event" because the above doesn't.
+	whiteboard.onColorEvent({target: palette});
+};
+
+
+whiteboard.getDefaultColorFromCookie = function() {
+	var c = goog.net.cookies.get('whiteboard_defaultColor');
+	if(c) {
+		whiteboard.defaultColor = c;
+	}
 };
 
 
 whiteboard.init = function() {
+	whiteboard.getDefaultColorFromCookie();
 	whiteboard.setupControls();
 	whiteboard.setupDrawAreaOverlay();
 	whiteboard.setupDrawArea();
