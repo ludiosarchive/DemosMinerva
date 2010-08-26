@@ -318,7 +318,7 @@ whiteboard.onColorEvent = function(ev) {
 	whiteboardCpValue.title = color;
 
 	var colorHex = goog.color.parse(color).hex;
-	whiteboardCpValue.innerHTML = colorHex;
+	goog.dom.setTextContent(whiteboardCpValue, colorHex);
 
 	var rgb = goog.color.hexToRgb(colorHex);
 	var lighter = goog.color.rgbArrayToHex(goog.color.lighten(rgb, 0.45));
