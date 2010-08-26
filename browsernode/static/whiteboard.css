@@ -293,31 +293,43 @@
 }
 
 #whiteboard-doc {
-	
+
 }
 
-#whiteboard-controls {
-	margin-top: 20px;
+.clearer {
+	clear: both;
+}
+
+#whiteboard-controls-left {
+	float: left;
+	margin: 16px 0 0 0;
+}
+
+#whiteboard-controls-right {
+	float: right;
+	margin: 16px 0 0 0;
 }
 
 .clear-board-button {
-	float: right;
 }
 
-#whiteboard-controls * {
-	vertical-align: middle;
+#whiteboard-controls-left * {
+	vertical-align: top;
+}
+
+#whiteboard-cp {
 }
 
 #whiteboard-cp-value {
 	width: 148px;
 	height: 54px;
+	line-height: 54px; /* to vertically center */
 	border: 1px solid #666;
 	margin: 5px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 20px;
 	font-weight: bold;
 	text-align: center;
-	vertical-align: middle;
 }
 
 #drawAreaContainer {

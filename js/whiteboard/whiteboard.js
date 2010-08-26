@@ -341,18 +341,18 @@ whiteboard.createColorPalette = function(colors, width) {
 
 
 whiteboard.setupControls = function() {
-	var controlsDiv = goog.dom.getElement('whiteboard-controls');
+	var leftControlsDiv = goog.dom.getElement('whiteboard-controls-left');
 
 	//var text = goog.dom.createDom('div', {'class': 'goog-inline-block pick-a-color'}, 'Pick a color:');
-	//goog.dom.append(controlsDiv, text);
+	//goog.dom.append(leftControlsDiv, text);
 
 	var whiteboardCp = goog.dom.createDom('div',
 		{'class': 'goog-inline-block', 'id': 'whiteboard-cp'});
-	goog.dom.append(controlsDiv, whiteboardCp);
+	goog.dom.append(leftControlsDiv, whiteboardCp);
 
 	var whiteboardCpValue = goog.dom.createDom('div',
 		{'class': 'goog-inline-block', 'id': 'whiteboard-cp-value'});
-	goog.dom.append(controlsDiv, whiteboardCpValue);
+	goog.dom.append(leftControlsDiv, whiteboardCpValue);
 
 	// The colors are from closure/goog/demos/palette.html
 	var palette = whiteboard.createColorPalette([
@@ -369,9 +369,10 @@ whiteboard.setupControls = function() {
 	whiteboard.onColorEvent({target: palette});
 
 
+	var rightControlsDiv = goog.dom.getElement('whiteboard-controls-right');
 	var resetBoardButton = new goog.ui.CustomButton('Clear board');
 	resetBoardButton.addClassName('clear-board-button');
-	resetBoardButton.render(controlsDiv);
+	resetBoardButton.render(rightControlsDiv);
 
 	goog.events.listen(resetBoardButton, goog.ui.Component.EventType.ACTION,
 		whiteboard.clearBoard);
