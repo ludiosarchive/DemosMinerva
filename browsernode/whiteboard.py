@@ -5,7 +5,7 @@ from twisted.python import log
 from twisted.python.filepath import FilePath
 
 from cwtools.htmltools import getTestPageCSS
-from webmagic.untwist import BetterResource
+from webmagic.untwist import BetterResource, BetterFile
 
 import minerva
 from minerva.newlink import (
@@ -23,12 +23,12 @@ from browsernode import whiteboard_messages_pb2 as wm
 class WhiteboardIndex(BetterResource):
 	isLeaf = True
 
-	def __init__(self, csrfStopper, cookieInstaller, domain, fileName):
+	def __init__(self, csrfStopper, cookieInstaller, domain, filename):
 		BetterResource.__init__(self)
 		self._csrfStopper = csrfStopper
 		self._cookieInstaller = cookieInstaller
 		self._domain = domain
-		self._fileName = fileName
+		self._filename = filename
 
 		self._jinja2Env = jinja2.Environment()
 		self._basePath = FilePath(__file__).parent()
@@ -50,10 +50,9 @@ class WhiteboardIndex(BetterResource):
 			return FilePath(__file__).parent().child('whiteboard.css').getContent()
 
 		# This jinja2 stuff is for the html page, not the JavaScript
-		template = self._basePath.child(self._fileName).getContent().decode('utf-8')
+		template = self._basePath.child(self._filename).getContent().decode('utf-8')
 		dictionary = dict(
 			getTestPageCSS=getTestPageCSS,
-			getWhiteboardCSS=getWhiteboardCSS,
 			token=token,
 			bootstrap_XDRSetup_contents=bootstrap_XDRSetup_contents,
 			domain=self._domain,
@@ -67,27 +66,28 @@ class WhiteboardIndex(BetterResource):
 
 requireFile(FilePath(__file__).parent().child('whiteboard.html').path)
 requireFile(FilePath(__file__).parent().child('whiteboard.css').path)
+requireFile(FilePath(__file__).parent().child('button-bg.png').path)
 requireFile(FilePath(__file__).parent().child('compiled').child('whiteboard.js').path)
 
 class WhiteboardResource(BetterResource):
+	templateFilename = 'whiteboard.html'
 
 	def __init__(self, csrfStopper, cookieInstaller, domain):
 		BetterResource.__init__(self)
 
 		self.putChild('', WhiteboardIndex(
-			csrfStopper, cookieInstaller, domain, 'whiteboard.html'))
+			csrfStopper, cookieInstaller, domain, self.templateFilename))
+		self.putChild('whiteboard.css',
+			BetterFile(FilePath(__file__).parent().child('whiteboard.css').path))
+		self.putChild('button-bg.png',
+			BetterFile(FilePath(__file__).parent().child('button-bg.png').path))
 
 
 
 requireFile(FilePath(__file__).parent().child('whiteboard_dev.html').path)
 
-class WhiteboardDevResource(BetterResource):
-
-	def __init__(self, csrfStopper, cookieInstaller, domain):
-		BetterResource.__init__(self)
-
-		self.putChild('', WhiteboardIndex(
-			csrfStopper, cookieInstaller, domain, 'whiteboard_dev.html'))
+class WhiteboardDevResource(WhiteboardResource):
+	templateFilename = 'whiteboard_dev.html'
 
 
 
@@ -145,6 +145,16 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 				[1, self._serializer.serialize(makePoint(point.x, point.y))])])
 
 
+	def _clearBoard(self):
+		self.factory.circles.clear()
+		for proto in self.factory.protos:
+			if proto == self:
+				# Client who told us to reset has already cleared its board.
+				continue
+			proto.stream.sendStrings([simplejson.dumps(
+				[2, self._serializer.serialize(wm.ClearBoard())])])
+
+
 	def stringsReceived(self, strings):
 		"""
 		Note: C{strings} may be a mix of C{str}s and C{StringFragment}s.
@@ -158,6 +168,8 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 					body = payload[1]
 					if msgType == 1: # new circle
 						self._handleNewCircle(body)
+					elif msgType == 2: # reset
+						self._clearBoard()
 		except:
 			log.err()
 

@@ -7,8 +7,8 @@
 	<title>Whiteboard demo (dev) | BrowserNode</title>
 	<style>
 		{{ getTestPageCSS() }}
-		{{ getWhiteboardCSS() }}
 	</style>
+	<link rel="stylesheet" type="text/css" href="whiteboard.css">
 </head>
 <body>
 <!-- note: this file is mostly a copy/paste of rtsgame.html -->
@@ -27,7 +27,7 @@ layer a div over the drawing area, it should get the correct offsets.
 <script>
 // Use just one preamble <script> to reduce page load time.
 
-// We don't define variables on "window" to avoid possible IE stack limit of 12
+// We don't define anything on "window" to avoid possible IE stack limit of 12
 // when calling through window.
 CSRF_TOKEN = {{ dumps(token) }};
 __XDRSetup = {
@@ -41,6 +41,7 @@ __XDRSetup = {
 <div id="minerva-xdrframes"></div>
 <script src="/JSPATH/cw/net/bootstrap_XDRSetup.js"></script>
 
+<div id="whiteboard-controls"></div>
 <div id="drawAreaOverlay"></div>
 <div id="drawArea"></div>
 <div id="FlashConnectorSwf"></div>

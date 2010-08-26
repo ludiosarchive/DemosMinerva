@@ -17,6 +17,8 @@ goog.require('goog.graphics');
 goog.require('goog.json');
 goog.require('goog.proto2.PbLiteSerializer');
 goog.require('goog.style');
+goog.require('goog.ui.Component.EventType');
+goog.require('goog.ui.CustomButton');
 goog.require('goog.Uri');
 goog.require('cw.eventual');
 goog.require('cw.string');
@@ -28,6 +30,7 @@ goog.require('cw.net.demo.makeCredentialsData');
 goog.require('cw.repr');
 goog.require('cw.string');
 goog.require('whiteboard.Point');
+goog.require('whiteboard.ClearBoard');
 
 
 whiteboard._queryData = new goog.Uri(document.location).getQueryData();
@@ -97,6 +100,11 @@ whiteboard.WhiteboardProtocol.prototype.handleString_ = function(s) {
 		var point = this.pbLiteSerializer_.deserialize(
 			whiteboard.Point.getDescriptor(), body);
 		whiteboard.drawCircleAt(point.getX(), point.getY());
+	} else if(msgType == 2) { // ClearBoard
+		whiteboard.clearMyBoard();
+	} else {
+		whiteboard.logger.warning('Strange message from server: ' +
+			cw.repr.repr(payload));
 	}
 };
 
@@ -135,9 +143,19 @@ whiteboard.WhiteboardProtocol.prototype.makePoint_ = function(x, y) {
  * @param {number} y
  */
 whiteboard.WhiteboardProtocol.prototype.sendCircle = function(x, y) {
-	whiteboard.logger.info('telling server about circle at: ' + x + ', ' + y);
+	whiteboard.logger.info('Telling server about circle at: ' + x + ', ' + y);
 	this.stream_.sendStrings([goog.json.serialize([1, this.makePoint_(x, y)])]);
 };
+
+/**
+ * Tell the server to clear the board.
+ */
+whiteboard.WhiteboardProtocol.prototype.sendClearBoard = function() {
+	whiteboard.logger.info('Telling server to clear the board.');
+	this.stream_.sendStrings([goog.json.serialize([2,
+		this.pbLiteSerializer_.serialize(new whiteboard.ClearBoard())])]);
+};
+
 
 
 /**
@@ -218,7 +236,7 @@ whiteboard.reconnectStream = function() {
 whiteboard.drawRandomStuff = function() {
 	var fill = new goog.graphics.SolidFill('yellow');
 	var stroke = new goog.graphics.Stroke(2, 'green');
-	var rectElement = whiteboard.lastDrawArea.drawRect(30, 10, 100, 80, stroke, fill);
+	//var rectElement = whiteboard.lastDrawArea.drawRect(30, 10, 100, 80, stroke, fill);
 };
 
 
@@ -226,6 +244,18 @@ whiteboard.drawCircleAt = function(x, y) {
 	var fill = new goog.graphics.SolidFill('yellow');
 	var stroke = new goog.graphics.Stroke(2, 'green');
 	var circleElement = whiteboard.lastDrawArea.drawCircle(x, y, 5, stroke, fill);
+};
+
+
+whiteboard.clearMyBoard = function() {
+	whiteboard.lastDrawArea.dispose();
+	whiteboard.setupDrawArea();
+};
+
+
+whiteboard.clearBoard = function() {
+	whiteboard.clearMyBoard();
+	whiteboard.lastProto.sendClearBoard();
 };
 
 
@@ -243,6 +273,10 @@ whiteboard.setupDrawArea = function() {
 	whiteboard._drawAreaDiv = goog.dom.getElement('drawArea');
 	graphics.render(whiteboard._drawAreaDiv);
 	whiteboard.lastDrawArea = graphics;
+};
+
+
+whiteboard.setupDrawAreaOverlay = function() {
 	var overlay = goog.dom.getElement('drawAreaOverlay');
 	goog.style.setUnselectable(overlay, true);
 	goog.events.listen(overlay, goog.events.EventType.CLICK,
@@ -250,7 +284,17 @@ whiteboard.setupDrawArea = function() {
 };
 
 
+whiteboard.setupControls = function() {
+	var resetBoardButton = new goog.ui.CustomButton('Clear board');
+	resetBoardButton.render(goog.dom.getElement('whiteboard-controls'));
+	goog.events.listen(resetBoardButton, goog.ui.Component.EventType.ACTION,
+		whiteboard.clearBoard);
+};
+
+
 whiteboard.init = function() {
+	whiteboard.setupControls();
+	whiteboard.setupDrawAreaOverlay();
 	whiteboard.setupDrawArea();
 	whiteboard.drawRandomStuff();
 	whiteboard.startStream();
