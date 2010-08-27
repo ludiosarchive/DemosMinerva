@@ -223,7 +223,9 @@ whiteboard.startStream = function() {
 	whiteboard.activityDetected(null);
 	var endpointD = cw.net.demo.getEndpoint(whiteboard.callQueue);
 	endpointD.addCallback(function(endpoint) {
-		goog.asserts.assert(whiteboard.lastProto, 'lastProto falsy?');
+		if(!whiteboard.lastProto) {
+			throw Error("lastProto falsy?");
+		}
 		var stream = new cw.net.Stream(
 			whiteboard.callQueue, whiteboard.lastProto, endpoint, streamPolicy);
 		stream.start();
@@ -341,7 +343,10 @@ whiteboard.createColorPalette = function(colors, width) {
 
 
 whiteboard.setupControls = function() {
-	var leftControlsDiv = goog.dom.getElement('whiteboard-controls-left');
+	var leftControlsDiv = /** @type {!HTMLElement} */(
+		goog.dom.getElement('whiteboard-controls-left'));
+	var rightControlsDiv = /** @type {!HTMLElement} */(
+		goog.dom.getElement('whiteboard-controls-right'));
 
 	//var text = goog.dom.createDom('div', {'class': 'goog-inline-block pick-a-color'}, 'Pick a color:');
 	//goog.dom.append(leftControlsDiv, text);
@@ -369,7 +374,6 @@ whiteboard.setupControls = function() {
 	whiteboard.onColorEvent({target: palette});
 
 
-	var rightControlsDiv = goog.dom.getElement('whiteboard-controls-right');
 	var resetBoardButton = new goog.ui.CustomButton('Clear board');
 	resetBoardButton.addClassName('clear-board-button');
 	resetBoardButton.render(rightControlsDiv);
