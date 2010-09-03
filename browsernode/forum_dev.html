@@ -32,7 +32,7 @@ This page supports options ?mode=http, ?mode=flash, ?useSub=0, ?useSub=1, ?httpS
 </td>
 <td>
 	<input type="text" name="textinput" id="textinput">
-	<input type="submit" value="Send" onclick="forum.sendText(byId('textinput').value);return false">
+	<input type="submit" value="Send" onclick="__forum_sendText(document.getElementById('textinput').value);return false">
 </td>
 </tr>
 </table>

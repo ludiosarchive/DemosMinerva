@@ -33,11 +33,6 @@ window.onerror = function(msg, url, lineNumber) {
 		'\nURL: ' + url + '\nLine Number: ' + lineNumber)
 };
 
-
-function byId(o) {
-	return document.getElementById(o);
-}
-
 /**
  * @implements {cw.net.IMinervaProtocol}
  * @constructor
@@ -180,4 +175,6 @@ forum.init = function() {
 	forum.startStream();
 };
 
+
 goog.exportSymbol('__forum_init', forum.init);
+goog.exportSymbol('__forum_sendText', forum.sendText);
