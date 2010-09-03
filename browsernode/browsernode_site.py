@@ -13,7 +13,7 @@ from minerva.website import (
 	CsrfTransportFirewall, NoopTransportFirewall, CsrfStopper, XDRFrame,
 	XDRFrameDev)
 
-from browsernode.forum import RTSGameDev, RTSFactory
+from browsernode.forum import ForumDevResource, ForumFactory
 from browsernode.whiteboard import WhiteboardResource, WhiteboardDevResource, WhiteboardFactory
 
 from webmagic.untwist import (
@@ -50,7 +50,7 @@ class BrowserNodeRoot(BetterResource):
 		self.putChild('@testres_Coreweb', BetterFile(testres_Coreweb))
 
 		self.putChild('httpface', httpFace)
-		self.putChild('forum_dev', RTSGameDev(csrfStopper, cookieInstaller, domain))
+		self.putChild('forum_dev', ForumDevResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('whiteboard', WhiteboardResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('whiteboard_dev', WhiteboardDevResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('xdrframe', XDRFrame(domain))
@@ -75,7 +75,7 @@ def makeMinervaAndHttp(reactor, csrfSecret, domain):
 	firewall = CsrfTransportFirewall(NoopTransportFirewall(), csrfStopper)
 	tracker = StreamTracker(reactor, clock, SuperFactory(
 		clock, subfactories={
-			'forum': RTSFactory(clock),
+			'forum': ForumFactory(clock),
 			'whiteboard': WhiteboardFactory(clock)}))
 
 	httpFace = HttpFace(clock, tracker, firewall)

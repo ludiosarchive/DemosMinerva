@@ -11,9 +11,9 @@ from minerva.newlink import (
 from brequire import requireFile
 
 
-requireFile(FilePath(__file__).parent().child('forum.html').path)
+requireFile(FilePath(__file__).parent().child('forum_dev.html').path)
 
-class RTSGameIndex(BetterResource):
+class ForumIndex(BetterResource):
 	isLeaf = True
 
 	def __init__(self, csrfStopper, cookieInstaller, domain):
@@ -25,7 +25,7 @@ class RTSGameIndex(BetterResource):
 		self._jinja2Env = jinja2.Environment()
 		self._basePath = FilePath(__file__).parent() # this is minerva/chatapp/
 
-		self._fileName = 'forum.html'
+		self._fileName = 'forum_dev.html'
 
 
 	def render_GET(self, request):
@@ -49,16 +49,16 @@ class RTSGameIndex(BetterResource):
 
 
 
-class RTSGameDev(BetterResource):
+class ForumDevResource(BetterResource):
 
 	def __init__(self, csrfStopper, cookieInstaller, domain):
 		BetterResource.__init__(self)
 
-		self.putChild('', RTSGameIndex(csrfStopper, cookieInstaller, domain))
+		self.putChild('', ForumIndex(csrfStopper, cookieInstaller, domain))
 
 
 
-class RTSProtocol(BasicMinervaProtocol):
+class ForumProtocol(BasicMinervaProtocol):
 
 	def __init__(self, clock):
 		self._clock = clock
@@ -93,8 +93,8 @@ class RTSProtocol(BasicMinervaProtocol):
 
 
 
-class RTSFactory(BasicMinervaFactory):
-	protocol = RTSProtocol
+class ForumFactory(BasicMinervaFactory):
+	protocol = ForumProtocol
 
 	def __init__(self, clock):
 		self._clock = clock
