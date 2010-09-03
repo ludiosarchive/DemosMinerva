@@ -23,8 +23,8 @@ This page supports options ?mode=http, ?mode=flash, ?useSub=0, ?useSub=1, ?httpS
 <tr>
 	<td>Reconnect:</td>
 	<td>
-		<input type="submit" value="Reset" onclick="rtsgame.resetStream('because user clicked button');return false">
-		<input type="submit" value="Reset and connect new stream" onclick="rtsgame.reconnectStream();return false">
+		<input type="submit" value="Reset" onclick="forum.resetStream('because user clicked button');return false">
+		<input type="submit" value="Reset and connect new stream" onclick="forum.reconnectStream();return false">
 	</td>
 </tr>
 <tr>
@@ -33,7 +33,7 @@ This page supports options ?mode=http, ?mode=flash, ?useSub=0, ?useSub=1, ?httpS
 </td>
 <td>
 	<input type="text" name="textinput" id="textinput">
-	<input type="submit" value="Send" onclick="rtsgame.sendText(byId('textinput').value);return false">
+	<input type="submit" value="Send" onclick="forum.sendText(byId('textinput').value);return false">
 </td>
 </tr>
 </table>
@@ -62,7 +62,7 @@ __XDRSetup = {
 <script src="/JSPATH/closure/goog/base.js"></script>
 <script src="/JSPATH/all_deps.js"></script>
 <script>
-goog.provide('rtsgame');
+goog.provide('forum');
 
 goog.require('cw.autoTitle');
 goog.require('goog.debug.DivConsole');
@@ -89,12 +89,12 @@ var logDiv = document.getElementById('log');
 var divConsole = new goog.debug.DivConsole(logDiv);
 divConsole.setCapturing(true);
 
-rtsgame.logger = goog.debug.Logger.getLogger('rtsgame.logger');
-rtsgame.logger.info('Logger works.');
+forum.logger = goog.debug.Logger.getLogger('forum.logger');
+forum.logger.info('Logger works.');
 
 
 window.onerror = function(msg, url, lineNumber) {
-	rtsgame.logger.severe('window.onerror: message: ' + cw.repr.repr(msg) +
+	forum.logger.severe('window.onerror: message: ' + cw.repr.repr(msg) +
 		'\nURL: ' + url + '\nLine Number: ' + lineNumber)
 };
 
@@ -107,25 +107,25 @@ function byId(o) {
  * @implements {cw.net.IMinervaProtocol}
  * @constructor
  */
-rtsgame.ChatProtocol = function() {
+forum.ChatProtocol = function() {
 
 };
 
-rtsgame.ChatProtocol.prototype.streamStarted = function(stream) {
+forum.ChatProtocol.prototype.streamStarted = function(stream) {
 	this.stream_ = stream;
-	rtsgame.logger.info('streamStarted');
+	forum.logger.info('streamStarted');
 	this.stream_.sendStrings(['subprotocol:forum']);
 };
 
-rtsgame.ChatProtocol.prototype.streamReset = function(reasonString, applicationLevel) {
-	rtsgame.logger.info(
+forum.ChatProtocol.prototype.streamReset = function(reasonString, applicationLevel) {
+	forum.logger.info(
 		'streamReset: reasonString=' + cw.repr.repr(reasonString) +
 		', applicationLevel=' + applicationLevel);
 };
 
-rtsgame.ChatProtocol.prototype.handleString_ = function(s) {
+forum.ChatProtocol.prototype.handleString_ = function(s) {
 	function fail() {
-		rtsgame.logger.severe('Could not handle string: ' + cw.repr.repr(s));
+		forum.logger.severe('Could not handle string: ' + cw.repr.repr(s));
 	}
 
 	var splitted = cw.string.split(s, '|', 2);
@@ -140,10 +140,10 @@ rtsgame.ChatProtocol.prototype.handleString_ = function(s) {
 	}
 
 	// TODO: add timestamp
-	rtsgame.logger.info(cw.string.format('<{0}> {1}', uaId, text));
+	forum.logger.info(cw.string.format('<{0}> {1}', uaId, text));
 };
 
-rtsgame.ChatProtocol.prototype.stringsReceived = function(strings) {
+forum.ChatProtocol.prototype.stringsReceived = function(strings) {
 	for(var i=0; i < strings.length; i++) {
 		var s = strings[i];
 		this.handleString_(s);
@@ -153,44 +153,44 @@ rtsgame.ChatProtocol.prototype.stringsReceived = function(strings) {
 /**
  * @param {string} reason
  */
-rtsgame.ChatProtocol.prototype.reset = function(reason) {
-	rtsgame.logger.info('resetting with reason: ' + reason);
+forum.ChatProtocol.prototype.reset = function(reason) {
+	forum.logger.info('resetting with reason: ' + reason);
 	this.stream_.reset(reason);
 };
 
-rtsgame.ChatProtocol.prototype.sendText = function(text) {
-	rtsgame.logger.info('sendText: ' + text);
+forum.ChatProtocol.prototype.sendText = function(text) {
+	forum.logger.info('sendText: ' + text);
 	this.stream_.sendStrings(["broadcast:" + text]);
 };
 
 
 /**
- * @type {?rtsgame.ChatProtocol}
+ * @type {?forum.ChatProtocol}
  */
-rtsgame.lastProto = null;
+forum.lastProto = null;
 
 
-rtsgame.callQueue = new cw.eventual.CallQueue(goog.global['window']);
+forum.callQueue = new cw.eventual.CallQueue(goog.global['window']);
 
 
-rtsgame.idleFired = function() {
-	rtsgame.resetStream("idle timeout fired");
-	rtsgame.lastProto = null;
+forum.idleFired = function() {
+	forum.resetStream("idle timeout fired");
+	forum.lastProto = null;
 };
 
 
-rtsgame.idleTimeout = null;
+forum.idleTimeout = null;
 
 
-rtsgame.activityDetected = function(ev) {
-	if(rtsgame.idleTimeout != null) {
-		rtsgame.callQueue.clock.clearTimeout(rtsgame.idleTimeout);
+forum.activityDetected = function(ev) {
+	if(forum.idleTimeout != null) {
+		forum.callQueue.clock.clearTimeout(forum.idleTimeout);
 	}
 
 	// Only need a timeout if we have an active Stream
-	if(rtsgame.lastProto) {
-		rtsgame.idleTimeout = rtsgame.callQueue.clock.setTimeout(
-			rtsgame.idleFired, 600 * 1000);
+	if(forum.lastProto) {
+		forum.idleTimeout = forum.callQueue.clock.setTimeout(
+			forum.idleFired, 600 * 1000);
 	}
 };
 
@@ -198,23 +198,23 @@ rtsgame.activityDetected = function(ev) {
 /**
  * @type {!Array.<!goog.events.EventType>}
  */
-rtsgame.activityEvents = [
+forum.activityEvents = [
 	goog.events.EventType.CLICK,
 	goog.events.EventType.FOCUS,
 	goog.events.EventType.KEYDOWN,
 	goog.events.EventType.KEYPRESS];
-rtsgame.clickListen = goog.events.listen(
-	goog.global, rtsgame.activityEvents, rtsgame.activityDetected, true);
+forum.clickListen = goog.events.listen(
+	goog.global, forum.activityEvents, forum.activityDetected, true);
 
 
-rtsgame.startStream = function() {
+forum.startStream = function() {
 	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
-	rtsgame.lastProto = new rtsgame.ChatProtocol();
-	rtsgame.activityDetected();
-	var endpointD = cw.net.demo.getEndpoint(rtsgame.callQueue);
+	forum.lastProto = new forum.ChatProtocol();
+	forum.activityDetected();
+	var endpointD = cw.net.demo.getEndpoint(forum.callQueue);
 	endpointD.addCallback(function(endpoint) {
 		var stream = new cw.net.Stream(
-			rtsgame.callQueue, rtsgame.lastProto, endpoint, streamPolicy);
+			forum.callQueue, forum.lastProto, endpoint, streamPolicy);
 		stream.start();
 	});
 };
@@ -223,25 +223,25 @@ rtsgame.startStream = function() {
 /**
  * @param {string} reason
  */
-rtsgame.resetStream = function(reason) {
-	rtsgame.lastProto.reset(reason);
+forum.resetStream = function(reason) {
+	forum.lastProto.reset(reason);
 };
 
 
-rtsgame.reconnectStream = function() {
-	if(rtsgame.lastProto) {
-		rtsgame.lastProto.reset('because user clicked reconnect button');
+forum.reconnectStream = function() {
+	if(forum.lastProto) {
+		forum.lastProto.reset('because user clicked reconnect button');
 	}
-	rtsgame.startStream();
+	forum.startStream();
 };
 
 
-rtsgame.sendText = function(text) {
-	rtsgame.lastProto.sendText(text);
+forum.sendText = function(text) {
+	forum.lastProto.sendText(text);
 };
 
 
-rtsgame.startStream();
+forum.startStream();
 
 </script>
 
