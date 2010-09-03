@@ -37,20 +37,7 @@ goog.require('whiteboard.Point');
 goog.require('whiteboard.ClearBoard');
 
 
-whiteboard._queryData = new goog.Uri(document.location).getQueryData();
-whiteboard.useLogging = Boolean(Number(whiteboard._queryData.get('logging', '0')));
-
-if(whiteboard.useLogging) {
-	goog.debug.LogManager.getRoot().setLevel(goog.debug.Logger.Level.ALL);
-	var logDiv = document.getElementById('log');
-	var divConsole = new goog.debug.DivConsole(logDiv);
-	divConsole.setCapturing(true);
-} else {
-	goog.debug.LogManager.getRoot().setLevel(goog.debug.Logger.Level.OFF);
-}
-
 whiteboard.logger = goog.debug.Logger.getLogger('whiteboard.logger');
-whiteboard.logger.info('Logger works.');
 
 
 window.onerror = function(msg, url, lineNumber) {
@@ -387,7 +374,25 @@ whiteboard.setupColor = function() {
 };
 
 
+whiteboard.setupLogging = function() {
+	whiteboard._queryData = new goog.Uri(document.location).getQueryData();
+	whiteboard.useLogging = Boolean(Number(whiteboard._queryData.get('logging', '0')));
+
+	if(whiteboard.useLogging) {
+		goog.debug.LogManager.getRoot().setLevel(goog.debug.Logger.Level.ALL);
+		var logDiv = document.getElementById('log');
+		var divConsole = new goog.debug.DivConsole(logDiv);
+		divConsole.setCapturing(true);
+	} else {
+		goog.debug.LogManager.getRoot().setLevel(goog.debug.Logger.Level.OFF);
+	}
+
+	whiteboard.logger.info('Logger works.');
+};
+
+
 whiteboard.init = function() {
+	whiteboard.setupLogging();
 	whiteboard.setupColor();
 	whiteboard.setupControls();
 	whiteboard.setupDrawAreaOverlay();
