@@ -58,11 +58,6 @@ window.onerror = function(msg, url, lineNumber) {
 		'\nURL: ' + url + '\nLine Number: ' + lineNumber)
 };
 
-
-function byId(o) {
-	return document.getElementById(o);
-}
-
 /**
  * @implements {cw.net.IMinervaProtocol}
  * @constructor
