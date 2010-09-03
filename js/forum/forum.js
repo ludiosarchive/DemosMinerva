@@ -18,14 +18,7 @@ goog.require('cw.repr');
 goog.require('cw.string');
 
 
-goog.debug.LogManager.getRoot().setLevel(goog.debug.Logger.Level.ALL);
-
-var logDiv = document.getElementById('log');
-var divConsole = new goog.debug.DivConsole(logDiv);
-divConsole.setCapturing(true);
-
 forum.logger = goog.debug.Logger.getLogger('forum.logger');
-forum.logger.info('Logger works.');
 
 
 window.onerror = function(msg, url, lineNumber) {
@@ -53,6 +46,9 @@ forum.ChatProtocol.prototype.streamReset = function(reasonString, applicationLev
 		', applicationLevel=' + applicationLevel);
 };
 
+/**
+ * @param {string} s
+ */
 forum.ChatProtocol.prototype.handleString_ = function(s) {
 	function fail() {
 		forum.logger.severe('Could not handle string: ' + cw.repr.repr(s));
@@ -73,6 +69,9 @@ forum.ChatProtocol.prototype.handleString_ = function(s) {
 	forum.logger.info(cw.string.format('<{0}> {1}', uaId, text));
 };
 
+/**
+ * @param {!Array.<string>} strings
+ */
 forum.ChatProtocol.prototype.stringsReceived = function(strings) {
 	for(var i=0; i < strings.length; i++) {
 		var s = strings[i];
@@ -111,7 +110,9 @@ forum.idleFired = function() {
 
 forum.idleTimeout = null;
 
-
+/**
+ * @param {*} ev
+ */
 forum.activityDetected = function(ev) {
 	if(forum.idleTimeout != null) {
 		forum.callQueue.clock.clearTimeout(forum.idleTimeout);
@@ -134,15 +135,18 @@ forum.activityEvents = [
 	goog.events.EventType.KEYDOWN,
 	goog.events.EventType.KEYPRESS];
 forum.clickListen = goog.events.listen(
-	goog.global, forum.activityEvents, forum.activityDetected, true);
+	window, forum.activityEvents, forum.activityDetected, true);
 
 
 forum.startStream = function() {
 	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
 	forum.lastProto = new forum.ChatProtocol();
-	forum.activityDetected();
+	forum.activityDetected(null);
 	var endpointD = cw.net.demo.getEndpoint(forum.callQueue);
 	endpointD.addCallback(function(endpoint) {
+		if(!forum.lastProto) {
+			throw Error("lastProto falsy?");
+		}
 		var stream = new cw.net.Stream(
 			forum.callQueue, forum.lastProto, endpoint, streamPolicy);
 		stream.start();
@@ -165,13 +169,23 @@ forum.reconnectStream = function() {
 	forum.startStream();
 };
 
-
+/**
+ * @param {string} text
+ */
 forum.sendText = function(text) {
 	forum.lastProto.sendText(text);
 };
 
 
 forum.init = function() {
+	goog.debug.LogManager.getRoot().setLevel(goog.debug.Logger.Level.ALL);
+
+	var logDiv = document.getElementById('log');
+	var divConsole = new goog.debug.DivConsole(logDiv);
+	divConsole.setCapturing(true);
+
+	forum.logger.info('Logger works.');
+
 	forum.startStream();
 };
 
