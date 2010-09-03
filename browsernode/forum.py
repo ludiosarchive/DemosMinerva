@@ -11,7 +11,7 @@ from minerva.newlink import (
 from brequire import requireFile
 
 
-requireFile(FilePath(__file__).parent().child('rtsgame.html').path)
+requireFile(FilePath(__file__).parent().child('forum.html').path)
 
 class RTSGameIndex(BetterResource):
 	isLeaf = True
@@ -25,7 +25,7 @@ class RTSGameIndex(BetterResource):
 		self._jinja2Env = jinja2.Environment()
 		self._basePath = FilePath(__file__).parent() # this is minerva/chatapp/
 
-		self._fileName = 'rtsgame.html'
+		self._fileName = 'forum.html'
 
 
 	def render_GET(self, request):
@@ -49,7 +49,7 @@ class RTSGameIndex(BetterResource):
 
 
 
-class RTSGame(BetterResource):
+class RTSGameDev(BetterResource):
 
 	def __init__(self, csrfStopper, cookieInstaller, domain):
 		BetterResource.__init__(self)

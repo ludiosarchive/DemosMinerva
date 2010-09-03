@@ -114,7 +114,7 @@ rtsgame.ChatProtocol = function() {
 rtsgame.ChatProtocol.prototype.streamStarted = function(stream) {
 	this.stream_ = stream;
 	rtsgame.logger.info('streamStarted');
-	this.stream_.sendStrings(['subprotocol:rtsgame']);
+	this.stream_.sendStrings(['subprotocol:forum']);
 };
 
 rtsgame.ChatProtocol.prototype.streamReset = function(reasonString, applicationLevel) {
