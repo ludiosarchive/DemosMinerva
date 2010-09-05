@@ -142,7 +142,7 @@ forum.startStream = function() {
 	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
 	forum.lastProto = new forum.ChatProtocol();
 	forum.activityDetected(null);
-	var endpointD = cw.net.demo.getEndpoint(forum.callQueue);
+	var endpointD = cw.net.demo.getEndpoint(forum.callQueue, true, false, '/httpface/');
 	endpointD.addCallback(function(endpoint) {
 		if(!forum.lastProto) {
 			throw Error("lastProto falsy?");
