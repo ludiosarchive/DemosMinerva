@@ -13,7 +13,7 @@ from minerva.website import (
 	CsrfTransportFirewall, NoopTransportFirewall, CsrfStopper, XDRFrame,
 	XDRFrameDev)
 
-from browsernode.forum import ForumDevResource, ForumFactory
+from browsernode.forum import ForumResource, ForumDevResource, ForumFactory
 from browsernode.whiteboard import WhiteboardResource, WhiteboardDevResource, WhiteboardFactory
 
 from webmagic.untwist import (
@@ -50,6 +50,7 @@ class BrowserNodeRoot(BetterResource):
 		self.putChild('@testres_Coreweb', BetterFile(testres_Coreweb))
 
 		self.putChild('httpface', httpFace)
+		self.putChild('forum', ForumResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('forum_dev', ForumDevResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('whiteboard', WhiteboardResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('whiteboard_dev', WhiteboardDevResource(csrfStopper, cookieInstaller, domain))

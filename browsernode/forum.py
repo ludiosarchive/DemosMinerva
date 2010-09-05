@@ -5,27 +5,25 @@ from twisted.python.filepath import FilePath
 
 from cwtools.htmltools import getTestPageCSS
 
-from webmagic.untwist import BetterResource
+from webmagic.untwist import BetterResource, BetterFile
+import minerva
 from minerva.newlink import (
 	BasicMinervaProtocol, BasicMinervaFactory, getRandomSubdomain)
-from brequire import requireFile
+from brequire import requireFile, requireFiles
 
-
-requireFile(FilePath(__file__).parent().child('forum_dev.html').path)
 
 class ForumIndex(BetterResource):
 	isLeaf = True
 
-	def __init__(self, csrfStopper, cookieInstaller, domain):
+	def __init__(self, csrfStopper, cookieInstaller, domain, filename):
 		BetterResource.__init__(self)
 		self._csrfStopper = csrfStopper
 		self._cookieInstaller = cookieInstaller
 		self._domain = domain
+		self._filename = filename
 
 		self._jinja2Env = jinja2.Environment()
 		self._basePath = FilePath(__file__).parent() # this is minerva/chatapp/
-
-		self._fileName = 'forum_dev.html'
 
 
 	def render_GET(self, request):
@@ -35,11 +33,17 @@ class ForumIndex(BetterResource):
 		sub1 = getRandomSubdomain('ml', 20)
 		sub2 = getRandomSubdomain('ml', 20)
 
+		# Allow the template to include the contents in the page, so
+		# that the client doesn't have to make another HTTP request.
+		bootstrap_XDRSetup_contents = FilePath(minerva.__file__).parent().\
+			child('compiled_client').child('bootstrap_XDRSetup.js').getContent()
+
 		# This jinja2 stuff is for the html page, not the JavaScript
-		template = self._basePath.child(self._fileName).getContent().decode('utf-8')
+		template = self._basePath.child(self._filename).getContent().decode('utf-8')
 		dictionary = dict(
 			getTestPageCSS=getTestPageCSS,
 			token=token,
+			bootstrap_XDRSetup_contents=bootstrap_XDRSetup_contents,
 			domain=self._domain,
 			sub1=sub1,
 			sub2=sub2,
@@ -49,12 +53,26 @@ class ForumIndex(BetterResource):
 
 
 
-class ForumDevResource(BetterResource):
+requireFile(FilePath(__file__).parent().child('forum.html').path)
+requireFiles([f.path for f in FilePath(__file__).parent().child('static').children()])
+requireFile(FilePath(__file__).parent().child('compiled').child('forum.js').path)
+
+class ForumResource(BetterResource):
+	templateFilename = 'forum.html'
 
 	def __init__(self, csrfStopper, cookieInstaller, domain):
 		BetterResource.__init__(self)
 
-		self.putChild('', ForumIndex(csrfStopper, cookieInstaller, domain))
+		self.putChild('', ForumIndex(
+			csrfStopper, cookieInstaller, domain, self.templateFilename))
+		self.putChild('static', BetterFile(FilePath(__file__).parent().child('static').path))
+
+
+
+requireFile(FilePath(__file__).parent().child('forum_dev.html').path)
+
+class ForumDevResource(ForumResource):
+	templateFilename = 'forum_dev.html'
 
 
 

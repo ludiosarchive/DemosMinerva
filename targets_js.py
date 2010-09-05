@@ -3,5 +3,8 @@
 
 targets = [
 	{"inputs": ["whiteboard/whiteboard.js"],
-	"output": "browsernode/compiled/whiteboard.js"}
+	"output": "browsernode/compiled/whiteboard.js"},
+
+	{"inputs": ["forum/forum.js"],
+	"output": "browsernode/compiled/forum.js"},
 ]
