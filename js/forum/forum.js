@@ -192,28 +192,98 @@ forum.setupDebug = function() {
 
 
 /**
+ * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
+ *
  * @constructor
+ * @extends {goog.ui.Component}
  */
-forum.Forum = function() {
+forum.ForumComponent = function(opt_domHelper) {
+	goog.ui.Component.call(this, opt_domHelper);
+
 	/**
 	 * @type {goog.editor.Field}
 	 */
 	this.field = null;
 };
+goog.inherits(forum.ForumComponent, goog.ui.Component);
 
+/**
+ * @enum {string}
+ */
+forum.ForumComponent.IdFragment = {
+	FIELD: 'field'
+};
 
-forum.Forum.prototype.setupField = function(parentElement) {
-	var dom = goog.dom.getDomHelper(parentElement);
-	var myDiv = dom.createDom(goog.dom.TagName.DIV, {'id': 'forum-field-1'});
+/**
+ * Decorates an existing HTML DIV element as a ForumComponent.
+ *
+ * @param {HTMLElement} element The DIV element to decorate. The element's
+ *    text, if any will be used as the component's label.
+ */
+forum.ForumComponent.prototype.decorateInternal = function(element) {
+	forum.ForumComponent.superClass_.decorateInternal.call(this, element);
+
+	this.createField(element);
+};
+
+/**
+ * Creates an initial DOM representation for the component.
+ */
+forum.ForumComponent.prototype.createDom = function() {
+	this.decorateInternal(/** @type {!HTMLElement} */(
+		this.dom_.createElement('div')));
+};
+
+/**
+ * @param {HTMLElement} parentElement
+ */
+forum.ForumComponent.prototype.createField = function(parentElement) {
+	this.domHelper = goog.dom.getDomHelper(parentElement);
+	this.fieldId = this.makeId(forum.ForumComponent.IdFragment.FIELD);
+	var myDiv = this.domHelper.createDom(goog.dom.TagName.DIV, {'id': this.fieldId});
 	parentElement.appendChild(myDiv);
-	this.field = new goog.editor.Field('forum-field-1', dom.getDocument());
+};
+
+/**
+ */
+forum.ForumComponent.prototype.enterDocument = function() {
+	forum.ForumComponent.superClass_.enterDocument.call(this);
+
+	this.field = new goog.editor.Field(this.fieldId, this.domHelper.getDocument());
 	this.field.makeEditable();
 };
 
+/**
+ */
+forum.ForumComponent.prototype.exitDocument = function() {
+	forum.ForumComponent.superClass_.exitDocument.call(this);
+
+	this.field.makeUneditable();
+};
+
+
+
+
+
+/**
+ * @constructor
+ */
+forum.Forum = function() {
+
+};
+
+
+/**
+ * @type {!forum.ForumComponent}
+ */
+forum.Forum.prototype.component;
+
 
 forum.Forum.prototype.setup = function() {
-	this.setupField(goog.dom.getElement('forum'));
+	this.component = new forum.ForumComponent();
+	this.component.render(goog.dom.getElement('forum-container'));
 };
+
 
 
 forum.init = function() {
