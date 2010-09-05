@@ -29,7 +29,7 @@ goog.require('cw.string');
 goog.require('cw.net.Stream');
 goog.require('cw.net.IMinervaProtocol');
 goog.require('cw.net.HttpStreamingMode');
-goog.require('cw.net.demo.getEndpoint');
+goog.require('cw.net.demo.getEndpointByQueryArgs');
 goog.require('cw.net.demo.makeCredentialsData');
 goog.require('cw.repr');
 goog.require('cw.string');
@@ -203,7 +203,7 @@ whiteboard.startStream = function() {
 	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
 	whiteboard.lastProto = new whiteboard.WhiteboardProtocol();
 	whiteboard.activityDetected(null);
-	var endpointD = cw.net.demo.getEndpoint(whiteboard.callQueue);
+	var endpointD = cw.net.demo.getEndpointByQueryArgs(whiteboard.callQueue);
 	endpointD.addCallback(function(endpoint) {
 		if(!whiteboard.lastProto) {
 			throw Error("lastProto falsy?");
