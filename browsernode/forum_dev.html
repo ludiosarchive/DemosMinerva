@@ -6,36 +6,14 @@
 	<style>
 		{{ getTestPageCSS() }}
 
-		#controls tr td {
-			padding: 0.5em 0 0.5em 0;
+		#minerva-xdrframes iframe {
+			width: 1px;
+			height: 1px;
+			border: 0;
 		}
 	</style>
 </head>
 <body>
-
-<div id="doc">
-This page supports options ?mode=http, ?mode=flash, ?useSub=0, ?useSub=1, ?httpStreaming=1, ?log=1
-(which can be combined).
-</div>
-
-<table id="controls">
-<tr>
-	<td>Reconnect:</td>
-	<td>
-		<input type="submit" value="Reset" onclick="forum.resetStream('because user clicked button');return false">
-		<input type="submit" value="Reset and connect new stream" onclick="forum.reconnectStream();return false">
-	</td>
-</tr>
-<tr>
-<td>
-	Send text:
-</td>
-<td>
-	<input type="text" name="textinput" id="textinput">
-	<input type="submit" value="Send" onclick="__forum_sendText(document.getElementById('textinput').value);return false">
-</td>
-</tr>
-</table>
 
 <script>
 // Use just one preamble <script> to reduce page load time.
@@ -54,7 +32,7 @@ __XDRSetup = {
 <div id="minerva-xdrframes"></div>
 <script src="/JSPATH/cw/net/bootstrap_XDRSetup.js"></script>
 
-<div id="FlashConnectorSwf"></div>
+<div id="forum"></div>
 <div id="log"></div>
 
 <script>CLOSURE_NO_DEPS = true;</script>

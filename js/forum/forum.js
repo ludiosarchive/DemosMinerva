@@ -4,6 +4,8 @@ goog.require('cw.autoTitle');
 goog.require('goog.debug.DivConsole');
 goog.require('goog.debug.Logger');
 goog.require('goog.debug.LogManager');
+goog.require('goog.dom');
+goog.require('goog.editor.Field');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.Uri');
@@ -177,6 +179,36 @@ forum.sendText = function(text) {
 };
 
 
+forum.setupForum = function() {
+
+};
+
+
+/**
+ * @constructor
+ */
+forum.Forum = function() {
+	/**
+	 * @type {goog.editor.Field}
+	 */
+	this.field = null;
+};
+
+
+forum.Forum.prototype.setupField = function(parentElement) {
+	var dom = goog.dom.getDomHelper(parentElement);
+	var myDiv = dom.createDom(goog.dom.TagName.DIV, {'id': 'forum-field-1'});
+	parentElement.appendChild(myDiv);
+	this.field = new goog.editor.Field('forum-field-1', dom.getDocument());
+	this.field.makeEditable();
+};
+
+
+forum.Forum.prototype.setup = function() {
+	this.setupField(goog.dom.getElement('forum'));
+};
+
+
 forum.init = function() {
 	goog.debug.LogManager.getRoot().setLevel(goog.debug.Logger.Level.ALL);
 
@@ -185,6 +217,9 @@ forum.init = function() {
 	divConsole.setCapturing(true);
 
 	forum.logger.info('Logger works.');
+
+	var myForum = new forum.Forum();
+	myForum.setup();
 
 	forum.startStream();
 };
