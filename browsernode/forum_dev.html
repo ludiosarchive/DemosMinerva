@@ -7,6 +7,7 @@
 		{{ getTestPageCSS() }}
 
 		#minerva-xdrframes iframe {
+			position: absolute;
 			width: 1px;
 			height: 1px;
 			border: 0;
@@ -22,7 +23,7 @@
 // when calling through window.
 CSRF_TOKEN = {{ dumps(token) }};
 __XDRSetup = {
-	dev: true,
+	dev: false, /* using compiled xdrframe is okay */
 	domain: {{ dumps(domain) }},
 	sub1: {{ dumps(sub1) }},
 	sub2: {{ dumps(sub2) }}
