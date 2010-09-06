@@ -1,6 +1,5 @@
 goog.provide('forum');
 
-goog.require('cw.autoTitle');
 goog.require('goog.debug');
 goog.require('goog.debug.FancyWindow');
 goog.require('goog.debug.Logger');
@@ -256,9 +255,9 @@ forum.ForumComponent.prototype.enterDocument = function() {
 /**
  */
 forum.ForumComponent.prototype.exitDocument = function() {
-	forum.ForumComponent.superClass_.exitDocument.call(this);
-
 	this.field.makeUneditable();
+
+	forum.ForumComponent.superClass_.exitDocument.call(this);
 };
 
 

@@ -213,3 +213,10 @@ html, body {
 	background-color: #f7f7f7;
 }
 
+#minerva-xdrframes iframe {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	border: 0;
+}
+
