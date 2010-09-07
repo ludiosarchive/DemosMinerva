@@ -10,6 +10,7 @@ goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.json');
 goog.require('goog.proto2.PbLiteSerializer');
+goog.require('goog.ui.CustomButton');
 goog.require('goog.Uri');
 goog.require('cw.eventual');
 goog.require('cw.string');
@@ -223,6 +224,10 @@ forum.ForumComponent.prototype.decorateInternal = function(element) {
 	forum.ForumComponent.superClass_.decorateInternal.call(this, element);
 
 	this.createField(element);
+
+	var submitButton = new goog.ui.CustomButton('Submit');
+	submitButton.addClassName('forum-submit-button');
+	this.addChild(submitButton, true);
 };
 
 /**
