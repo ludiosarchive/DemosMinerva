@@ -1,0 +1,10 @@
+package browsernode.ljstream_messages;
+
+import "js/javascript_package.proto";
+option (javascript_package) = "ljstream";
+
+message NewPost {
+	required string title = 1;
+	required string url = 2;
+	required string body = 3;
+}

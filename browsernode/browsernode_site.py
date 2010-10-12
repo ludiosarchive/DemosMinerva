@@ -15,6 +15,7 @@ from minerva.website import (
 
 from browsernode.forum import ForumResource, ForumDevResource, ForumFactory
 from browsernode.whiteboard import WhiteboardResource, WhiteboardDevResource, WhiteboardFactory
+from browsernode.ljstream import LjStreamResource, LjStreamDevResource, LjStreamFactory
 
 from webmagic.untwist import (
 	CookieInstaller, BetterResource, BetterFile, ConnectionTrackingSite)
@@ -54,6 +55,8 @@ class BrowserNodeRoot(BetterResource):
 		self.putChild('forum_dev', ForumDevResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('whiteboard', WhiteboardResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('whiteboard_dev', WhiteboardDevResource(csrfStopper, cookieInstaller, domain))
+		self.putChild('ljstream', LjStreamResource(csrfStopper, cookieInstaller, domain))
+		self.putChild('ljstream_dev', LjStreamDevResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('xdrframe', XDRFrame(domain))
 		self.putChild('xdrframe_dev', XDRFrameDev(domain))
 

@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="charset" content="text/html; charset=utf-8">
+	<title>LiveJournal stream demo</title>
+	<link rel="stylesheet" type="text/css" href="static/forum.css">
+</head>
+<body>
+
+<div id="minerva-xdrframes"></div>
+<div id="forum-container"></div>
+<div id="log"></div>
+
+<script>
+// Use just one preamble <script> to reduce page load time.
+
+// We don't define anything on "window" to avoid possible IE stack limit of 12
+// when calling through window.
+CSRF_TOKEN = {{ dumps(token) }};
+__XDRSetup = {
+	dev: false,
+	domain: {{ dumps(domain) }},
+	sub1: {{ dumps(sub1) }},
+	sub2: {{ dumps(sub2) }}
+};
+{{ bootstrap_XDRSetup_contents }}
+</script>
+
+<script src="/compiled/ljstream.js"></script>
+<script>
+__ljstream_init();
+</script>
+
+</body>
+</html>

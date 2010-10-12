@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="charset" content="text/html; charset=utf-8">
+	<title>LiveJournal stream demo (dev)</title>
+	<link rel="stylesheet" type="text/css" href="static/ljstream.css">
+</head>
+<body>
+
+<script>
+// Use just one preamble <script> to reduce page load time.
+
+// We don't define variables on "window" to avoid possible IE stack limit of 12
+// when calling through window.
+CSRF_TOKEN = {{ dumps(token) }};
+__XDRSetup = {
+	dev: false, /* using compiled xdrframe is okay */
+	domain: {{ dumps(domain) }},
+	sub1: {{ dumps(sub1) }},
+	sub2: {{ dumps(sub2) }}
+};
+</script>
+<!-- Note: in production, this script should be dumped onto the page. -->
+<div id="minerva-xdrframes"></div>
+<script src="/JSPATH/cw/net/bootstrap_XDRSetup.js"></script>
+
+<div id="ljstream-container"></div>
+<div id="log"></div>
+
+<script>CLOSURE_NO_DEPS = true;</script>
+<script src="/JSPATH/closure/goog/base.js"></script>
+<script src="/JSPATH/all_deps.js"></script>
+<script>
+goog.require('ljstream');
+</script>
+<script>
+__ljstream_init();
+</script>
+
+</body>
+</html>

@@ -7,4 +7,7 @@ targets = [
 
 	{"inputs": ["forum/forum.js"],
 	"output": "browsernode/compiled/forum.js"},
+
+	{"inputs": ["ljstream/ljstream.js"],
+	"output": "browsernode/compiled/ljstream.js"},
 ]
