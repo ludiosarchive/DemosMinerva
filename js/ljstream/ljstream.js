@@ -37,7 +37,7 @@ window.onerror = function(msg, url, lineNumber) {
  * @constructor
  */
 ljstream.ChatProtocol = function() {
-
+	this.pbLiteSerializer_ = new goog.proto2.PbLiteSerializer();
 };
 
 ljstream.ChatProtocol.prototype.streamStarted = function(stream) {
@@ -60,19 +60,17 @@ ljstream.ChatProtocol.prototype.handleString_ = function(s) {
 		ljstream.logger.severe('Could not handle string: ' + cw.repr.repr(s));
 	}
 
-	var splitted = cw.string.split(s, '|', 2);
-	if(splitted.length != 3) {
-		return fail();
-	}
-	var type = splitted[0];
-	var uaId = splitted[1];
-	var text = splitted[2];
-	if(type != "TEXT") {
-		return fail();
-	}
+	// TODO: handle error?
+	var payload = goog.json.parse(s);
+	var msgType = payload[0];
+	var body = payload[1];
 
-	// TODO: add timestamp
-	ljstream.logger.info(cw.string.format('<{0}> {1}', uaId, text));
+	if(msgType == 1) { // NewPost
+		// TODO: handle error?
+		var post = this.pbLiteSerializer_.deserialize(
+			ljstream.NewPost.getDescriptor(), body);
+		ljstream.appendPost(post.getTitle(), post.getUrl(), post.getBody());
+	}
 };
 
 /**
@@ -136,6 +134,20 @@ ljstream.activityEvents = [
 	goog.events.EventType.KEYPRESS];
 ljstream.clickListen = goog.events.listen(
 	window, ljstream.activityEvents, ljstream.activityDetected, true);
+
+
+/**
+ * @param {string} title
+ * @param {string} url
+ * @param {string} body
+ */
+ljstream.appendPost = function(title, url, body) {
+	var d = goog.dom.createDom;
+	// TODO: we have XSS here, probably
+	var postDiv = d('div', {'class': 'ljpost'}, d('a', {'href': url}, title), body);
+	var container = goog.dom.getElement('ljstream-container');
+	container.appendChild(postDiv);
+};
 
 
 ljstream.startStream = function() {
