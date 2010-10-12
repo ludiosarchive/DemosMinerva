@@ -174,7 +174,7 @@ class LjStreamProtocol(BasicMinervaProtocol):
 
 
 	def streamReset(self, reasonString, applicationLevel):
-		self.factory.chatters.remove(self)
+		self.factory.protos.remove(self)
 		del self.stream
 
 
