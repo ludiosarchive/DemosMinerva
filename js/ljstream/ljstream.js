@@ -5,7 +5,6 @@ goog.require('goog.debug.FancyWindow');
 goog.require('goog.debug.Logger');
 goog.require('goog.debug.LogManager');
 goog.require('goog.dom');
-goog.require('goog.editor.Field');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.json');
@@ -21,6 +20,8 @@ goog.require('cw.net.demo.getEndpoint');
 goog.require('cw.net.demo.makeCredentialsData');
 goog.require('cw.repr');
 goog.require('cw.string');
+
+goog.require('ljstream.NewPost');
 
 
 ljstream.logger = goog.debug.Logger.getLogger('ljstream.logger');
@@ -91,12 +92,6 @@ ljstream.ChatProtocol.prototype.reset = function(reason) {
 	ljstream.logger.info('resetting with reason: ' + reason);
 	this.stream_.reset(reason);
 };
-
-ljstream.ChatProtocol.prototype.sendText = function(text) {
-	ljstream.logger.info('sendText: ' + text);
-	this.stream_.sendStrings(["broadcast:" + text]);
-};
-
 
 /**
  * @type {?ljstream.ChatProtocol}
@@ -174,12 +169,6 @@ ljstream.reconnectStream = function() {
 	ljstream.startStream();
 };
 
-/**
- * @param {string} text
- */
-ljstream.sendText = function(text) {
-	ljstream.lastProto.sendText(text);
-};
 
 
 ljstream.setupDebug = function() {
@@ -191,101 +180,19 @@ ljstream.setupDebug = function() {
 };
 
 
-/**
- * @param {goog.dom.DomHelper=} opt_domHelper DOM helper to use.
- *
- * @constructor
- * @extends {goog.ui.Component}
- */
-ljstream.ForumComponent = function(opt_domHelper) {
-	goog.ui.Component.call(this, opt_domHelper);
-
-	/**
-	 * @type {goog.editor.Field}
-	 */
-	this.field = null;
-};
-goog.inherits(ljstream.ForumComponent, goog.ui.Component);
-
-/**
- * @enum {string}
- */
-ljstream.ForumComponent.IdFragment = {
-	FIELD: 'field'
-};
-
-/**
- * Decorates an existing HTML DIV element as a ForumComponent.
- *
- * @param {HTMLElement} element The DIV element to decorate. The element's
- *    text, if any will be used as the component's label.
- */
-ljstream.ForumComponent.prototype.decorateInternal = function(element) {
-	ljstream.ForumComponent.superClass_.decorateInternal.call(this, element);
-
-	this.createField(element);
-
-	var submitButton = new goog.ui.CustomButton('Submit');
-	submitButton.addClassName('ljstream-submit-button');
-	this.addChild(submitButton, true);
-};
-
-/**
- * Creates an initial DOM representation for the component.
- */
-ljstream.ForumComponent.prototype.createDom = function() {
-	this.decorateInternal(/** @type {!HTMLElement} */(
-		this.dom_.createElement('div')));
-};
-
-/**
- * @param {HTMLElement} parentElement
- */
-ljstream.ForumComponent.prototype.createField = function(parentElement) {
-	this.domHelper = goog.dom.getDomHelper(parentElement);
-	this.fieldId = this.makeId(ljstream.ForumComponent.IdFragment.FIELD);
-	var myDiv = this.domHelper.createDom(goog.dom.TagName.DIV, {'id': this.fieldId});
-	parentElement.appendChild(myDiv);
-};
-
-/**
- */
-ljstream.ForumComponent.prototype.enterDocument = function() {
-	ljstream.ForumComponent.superClass_.enterDocument.call(this);
-
-	this.field = new goog.editor.Field(this.fieldId, this.domHelper.getDocument());
-	this.field.makeEditable();
-};
-
-/**
- */
-ljstream.ForumComponent.prototype.exitDocument = function() {
-	this.field.makeUneditable();
-
-	ljstream.ForumComponent.superClass_.exitDocument.call(this);
-};
-
-
-
 
 
 /**
  * @constructor
  */
-ljstream.Forum = function() {
+ljstream.LjView = function() {
 
 };
 
 
-/**
- * @type {!ljstream.ForumComponent}
- */
-ljstream.Forum.prototype.component;
 
+ljstream.LjView.prototype.setup = function() {
 
-ljstream.Forum.prototype.setup = function() {
-	this.component = new ljstream.ForumComponent();
-	this.component.render(goog.dom.getElement('ljstream-container'));
 };
 
 
@@ -294,7 +201,7 @@ ljstream.init = function() {
 	goog.debug.LogManager.getRoot().setLevel(goog.debug.Logger.Level.ALL);
 	ljstream.setupDebug();
 
-	var myForum = new ljstream.Forum();
+	var myForum = new ljstream.LjView();
 	myForum.setup();
 
 	ljstream.startStream();
@@ -302,4 +209,3 @@ ljstream.init = function() {
 
 
 goog.exportSymbol('__ljstream_init', ljstream.init);
-goog.exportSymbol('__ljstream_sendText', ljstream.sendText);

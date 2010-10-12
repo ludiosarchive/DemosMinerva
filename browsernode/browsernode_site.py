@@ -80,7 +80,9 @@ def makeMinervaAndHttp(reactor, csrfSecret, domain):
 	tracker = StreamTracker(reactor, clock, SuperFactory(
 		clock, subfactories={
 			'forum': ForumFactory(clock),
-			'whiteboard': WhiteboardFactory(clock)}))
+			'whiteboard': WhiteboardFactory(clock),
+			'ljstream': LjStreamFactory(clock),
+		}))
 
 	httpFace = HttpFace(clock, tracker, firewall)
 	socketFace = SocketFace(clock, tracker, firewall, policyString=policyString)
