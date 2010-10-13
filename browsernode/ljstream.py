@@ -17,20 +17,20 @@ from brequire import requireFile, requireFiles
 from protojson.pbliteserializer import PbLiteSerializer
 from protojson.error import PbDecodeError
 
-from BeautifulSoup import BeautifulStoneSoup
+from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
 
 from browsernode import ljstream_messages_pb2 as ljm
 
 
-def unescape(s):
-	# TODO: this is wrong.  We need to give `s` to an HTML parser,
-	# then grab the text string of the root node.
-	s = s.replace('&apos;', "'")
-	s = s.replace('&quot;', '"')
-	s = s.replace('&gt;', '>')
-	s = s.replace('&lt;', '<')
-	s = s.replace('&amp;', '&') # must be done last
-	return s
+def unescapeXhtml(s):
+	htmlInput = '<html>' + s
+	# Livejournal stream has &apos; so we must use XHTML_ENTITIES
+	unescaped = BeautifulSoup(
+		htmlInput, convertEntities=BeautifulSoup.XHTML_ENTITIES
+	).contents[0].string
+	if not unescaped:
+		unescaped = ""
+	return unescaped
 
 
 class LjProtocol(protocol.Protocol):
@@ -74,8 +74,8 @@ Host: atom.services.livejournal.com\r
 
 		htmlContent = soup.findAll('content')[0].string
 
-		htmlContent = unescape(htmlContent)
-		htmlTitle = unescape(htmlTitle)
+		htmlContent = unescapeXhtml(htmlContent)
+		htmlTitle = unescapeXhtml(htmlTitle)
 
 		# TODO: filter out playboy, sex, viagra, jewelry, "porn ", "porno", naked, fucking
 
