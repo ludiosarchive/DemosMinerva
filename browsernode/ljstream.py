@@ -77,7 +77,7 @@ Host: atom.services.livejournal.com\r
 		htmlContent = unescape(htmlContent)
 		htmlTitle = unescape(htmlTitle)
 
-		# TODO: filter out playboy, sex, viagra, jewelry
+		# TODO: filter out playboy, sex, viagra, jewelry, "porn ", "porno", naked, fucking
 
 		self.factory._feedReceivedCallable({"url": postHref, "title": htmlTitle, "body": htmlContent})
 
