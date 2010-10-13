@@ -143,7 +143,7 @@ ljstream.clickListen = goog.events.listen(
  */
 ljstream.appendPost = function(title, url, body) {
 	var d = goog.dom.createDom;
-	// TODO: we have XSS here, probably
+	// TODO: security: we have XSS here, probably
 	var postDiv = d('div', {'class': 'ljpost'},
 		d('a', {'href': url, 'class': 'ljpost-title'}, title),
 		d('span', {'class': 'ljpost-body'}, body));

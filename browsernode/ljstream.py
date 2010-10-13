@@ -22,6 +22,17 @@ from BeautifulSoup import BeautifulStoneSoup
 from browsernode import ljstream_messages_pb2 as ljm
 
 
+def unescape(s):
+	# TODO: this is wrong.  We need to give `s` to an HTML parser,
+	# then grab the text string of the root node.
+	s = s.replace('&apos;', "'")
+	s = s.replace('&quot;', '"')
+	s = s.replace('&gt;', '>')
+	s = s.replace('&lt;', '<')
+	s = s.replace('&amp;', '&') # must be done last
+	return s
+
+
 class LjProtocol(protocol.Protocol):
 	"""
 	I parse the LiveJournal Atom stream.  Connect me to
@@ -49,6 +60,8 @@ Host: atom.services.livejournal.com\r
 			log.err(e, "Problem parsing %r" % (feedString,))
 		# We want the <title>, not the <title type="text"> (because that's just the journal title)
 		htmlTitle = soup.findAll(lambda tag: tag.name == u'title' and not tag.attrs)[0].string
+		if not htmlTitle: # it might be None
+			htmlTitle = u""
 
 		# name, attrs looks like this:
 		# u'link', [(u'href', u'http://aksnbs.livejournal.com/15282.html')]
@@ -60,6 +73,11 @@ Host: atom.services.livejournal.com\r
 		postHref = twoLinks[1].attrs[0][1]
 
 		htmlContent = soup.findAll('content')[0].string
+
+		htmlContent = unescape(htmlContent)
+		htmlTitle = unescape(htmlTitle)
+
+		# TODO: filter out playboy, sex, viagra, jewelry
 
 		self.factory._feedReceivedCallable({"url": postHref, "title": htmlTitle, "body": htmlContent})
 
@@ -168,13 +186,11 @@ class LjStreamProtocol(BasicMinervaProtocol):
 
 	def streamStarted(self, stream):
 		self.stream = stream
-		self.factory.protos.add(self)
-		# just a placeholder
-		self.factory.broadcastPost({"url": "http://url/", "body": "The body", "title": "The Title"})
+		self.factory.addViewer(self)
 
 
 	def streamReset(self, reasonString, applicationLevel):
-		self.factory.protos.remove(self)
+		self.factory.removeViewer(self)
 		del self.stream
 
 
@@ -191,13 +207,49 @@ class LjStreamProtocol(BasicMinervaProtocol):
 class LjStreamFactory(BasicMinervaFactory):
 	protocol = LjStreamProtocol
 
-	def __init__(self, clock):
+	def __init__(self, reactor, clock):
+		self._reactor = reactor
 		self._clock = clock
 		self.protos = set()
 		self.serializer = PbLiteSerializer()
+		self.ljFactory = LjFactory(self.broadcastPost)
+
+
+	def startDownloading(self):
+		"""
+		Start downloading data from the LiveJournal stream.  To save
+		bandwidth, we don't do this when there are no viewers.
+		"""
+		# TODO: handle disconnects from livejournal
+		ep = endpoints.TCP4ClientEndpoint(
+			self._reactor, 'atom.services.livejournal.com', 80)
+		ep.connect(self.ljFactory)
+
+
+	def stopDownloading(self):
+		"""
+		Stop downloading data from the LiveJournal stream.
+		"""
+		1/0
+
+
+	def addViewer(self, proto):
+		needToStartDownloading = not self.protos
+		self.protos.add(proto)
+		# just a placeholder
+		self.broadcastPost({"url": "http://url/", "body": "The body", "title": "The Title"})
+		if needToStartDownloading:
+			self.startDownloading()
+
+
+	def removeViewer(self, proto):
+		self.protos.remove(proto)
+		if not self.protos:
+			self.stopDownloading()
 
 
 	def broadcastPost(self, post):
+		##print "POST", post
 		for proto in self.protos:
 			proto.stream.sendStrings([simplejson.dumps(
 				[1, self.serializer.serialize(ljm.NewPost(
@@ -214,7 +266,8 @@ class LjStreamFactory(BasicMinervaFactory):
 def main():
 	log.startLogging(sys.stdout)
 	from twisted.internet import reactor
-	ep = endpoints.TCP4ClientEndpoint(reactor, 'atom.services.livejournal.com', 80)
+	ep = endpoints.TCP4ClientEndpoint(
+		reactor, 'atom.services.livejournal.com', 80)
 	def feedReceived(feed):
 		print feed
 	factory = LjFactory(feedReceived)
