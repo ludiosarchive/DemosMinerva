@@ -269,8 +269,6 @@ class LjStreamFactory(BasicMinervaFactory):
 	def addViewer(self, proto):
 		needToStartDownloading = not self.protos
 		self.protos.add(proto)
-		# just a placeholder
-		self.broadcastPost({"url": "http://url/", "body": "The body", "title": "The Title"})
 		if needToStartDownloading:
 			self.startDownloading()
 
