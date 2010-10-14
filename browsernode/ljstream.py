@@ -1,6 +1,7 @@
 import sys
 import jinja2
 import simplejson
+import html2text
 
 from twisted.python.filepath import FilePath
 from twisted.internet import endpoints, protocol
@@ -84,7 +85,9 @@ Host: atom.services.livejournal.com\r
 
 		# TODO: filter out playboy, sex, viagra, jewelry, "porn ", "porno", naked, fucking
 
-		self.factory._feedReceivedCallable({"url": postHref, "title": htmlTitle, "body": htmlContent})
+		shortTextContent = html2text.html2text(htmlContent)[:600]
+
+		self.factory._feedReceivedCallable({"url": postHref, "title": htmlTitle, "body": shortTextContent})
 
 
 	def dataReceived(self, data):
