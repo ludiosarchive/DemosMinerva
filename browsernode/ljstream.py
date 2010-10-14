@@ -275,6 +275,9 @@ class LjStreamFactory(BasicMinervaFactory):
 	def broadcastPost(self, post):
 		##print "POST", post
 		for proto in self.protos:
+			if proto.stream.queue.getMaxConsumption() > 2 * 1024 * 1024:
+				proto.stream.reset("> 2MB outgoing")
+				continue
 			proto.stream.sendStrings([simplejson.dumps(
 				[1, self.serializer.serialize(ljm.NewPost(
 					title=post['title'], url=post['url'], body=post['body']))])])
