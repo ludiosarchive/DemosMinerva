@@ -223,7 +223,6 @@ class LjStreamProtocol(BasicMinervaProtocol):
 		# TODO: allow user to control whether they're sent posts in
 		# English, Russian, or both.
 		pass
-		# TODO: user should ping us every 10s, disconnect after 25s
 
 
 
