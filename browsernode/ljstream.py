@@ -85,7 +85,13 @@ Host: atom.services.livejournal.com\r
 
 		# TODO: filter out playboy, sex, viagra, jewelry, "porn ", "porno", naked, fucking
 
-		shortTextContent = html2text.html2text(htmlContent)[:600]
+		try:
+			origBodyWidth = html2text.BODY_WIDTH
+			# Disable wrapping, because we don't need it.
+			html2text.BODY_WIDTH = 0
+			shortTextContent = html2text.html2text(htmlContent)[:600]
+		finally:
+			html2text.BODY_WIDTH = origBodyWidth
 
 		self.factory._feedReceivedCallable({"url": postHref, "title": htmlTitle, "body": shortTextContent})
 
