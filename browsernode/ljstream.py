@@ -33,7 +33,7 @@ def unescapeXhtml(s):
 	return unescaped
 
 
-class LjProtocol(protocol.Protocol):
+class DownloaderProtocol(protocol.Protocol):
 	"""
 	I parse the LiveJournal Atom stream.  Connect me to
 	C{atom.services.livejournal.com:80}.
@@ -46,11 +46,16 @@ class LjProtocol(protocol.Protocol):
 
 
 	def connectionMade(self):
+		self.factory.protos.append(self)
 		self.transport.write("""\
 GET /atom-stream.xml HTTP/1.1\r
 Host: atom.services.livejournal.com\r
 \r
 """)
+
+
+	def connectionLost(self, reason):
+		self.factory.protos.pop(0)
 
 
 	def feedStringReceived(self, feedString):
@@ -106,11 +111,28 @@ Host: atom.services.livejournal.com\r
 
 
 
-class LjFactory(protocol.Factory):
-	protocol = LjProtocol
+class NoProtocol(Exception):
+	pass
+
+
+
+class DownloaderFactory(protocol.Factory):
+	protocol = DownloaderProtocol
 
 	def __init__(self, feedReceivedCallable):
 		self._feedReceivedCallable = feedReceivedCallable
+		self.protos = []
+
+
+	def _getLatestProtocol(self):
+		try:
+			return self.protos[-1]
+		except IndexError:
+			raise NoProtocol()
+
+
+	def abortLatestProtocol(self):
+		self._getLatestProtocol().transport.abortConnection()
 
 
 
@@ -201,6 +223,7 @@ class LjStreamProtocol(BasicMinervaProtocol):
 		# TODO: allow user to control whether they're sent posts in
 		# English, Russian, or both.
 		pass
+		# TODO: user should ping us every 10s, disconnect after 25s
 
 
 
@@ -212,7 +235,7 @@ class LjStreamFactory(BasicMinervaFactory):
 		self._clock = clock
 		self.protos = set()
 		self.serializer = PbLiteSerializer()
-		self.ljFactory = LjFactory(self.broadcastPost)
+		self.dlFactory = DownloaderFactory(self.broadcastPost)
 
 
 	def startDownloading(self):
@@ -220,17 +243,19 @@ class LjStreamFactory(BasicMinervaFactory):
 		Start downloading data from the LiveJournal stream.  To save
 		bandwidth, we don't do this when there are no viewers.
 		"""
+		log.msg("Connecting to LiveJournal")
 		# TODO: handle disconnects from livejournal
 		ep = endpoints.TCP4ClientEndpoint(
 			self._reactor, 'atom.services.livejournal.com', 80)
-		ep.connect(self.ljFactory)
+		ep.connect(self.dlFactory)
 
 
 	def stopDownloading(self):
 		"""
 		Stop downloading data from the LiveJournal stream.
 		"""
-		1/0
+		log.msg("Disconnecting from LiveJournal")
+		self.dlFactory.abortLatestProtocol()
 
 
 	def addViewer(self, proto):
