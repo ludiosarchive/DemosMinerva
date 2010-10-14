@@ -138,22 +138,32 @@ ljstream.clickListen = goog.events.listen(
 
 
 /**
+ * @type {number}
+ */
+ljstream.postsOnPage = 0;
+
+
+/**
  * @param {string} title
  * @param {string} url
  * @param {string} body
  */
 ljstream.appendPost = function(title, url, body) {
 	var d = goog.dom.createDom;
-	if(!goog.string.trim(title)) {
+	title = goog.string.trim(title);
+	if(!title) {
 		title = '[No title]';
 	}
 	// TODO: security: we have XSS here, probably
-	var postDiv = d('div', {'class': 'ljpost'},
-		d('div', {'class': 'ljpost-title'},
-			d('a', {'href': url, 'class': 'ljpost-title-link'}, title)),
-		d('div', {'class': 'ljpost-body'}, d('nobr', {}, body)));
+	var postClassName = 'ljpost-' + (ljstream.postsOnPage % 2 == 0 ? 'even' : 'odd');
+	var postDiv =
+		d('div', {'class': postClassName},
+			d('nobr', {},
+				d('a', {'href': url, 'class': 'ljpost-title-link'}, title),
+				body));
 	var container = goog.dom.getElement('ljstream-container-inner');
 	container.appendChild(postDiv);
+	ljstream.postsOnPage += 1;
 };
 
 

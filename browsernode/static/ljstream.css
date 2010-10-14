@@ -289,7 +289,7 @@
 /****************************************************************************/
 
 * {
-	font-family: Verdana, sans-serif;
+	font-family: Tahoma, Arial, Verdana, sans-serif;
 	font-size: 13px;
 }
 
@@ -321,18 +321,15 @@ body, html {
 	clear: both;
 }
 
-.ljpost {
+.ljpost-even, .ljpost-odd {
+	padding: 3px;
 	clear: both;
 }
 
-.ljpost-title {
-	float: left;
-	margin-right: 1em;
+.ljpost-even {
+	background-color: #e3e1dd;
 }
 
-.ljpost-body {
-	float: left;
-	overflow: hidden;
-	/* not compliant */
-	text-overflow: ellipsis;
+.ljpost-odd {
+	background-color: #f7f7f7;
 }
