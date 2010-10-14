@@ -299,9 +299,40 @@ pre, code {
 }
 
 body, html {
-	background-color: #eee;
+	background-color: #fff;
 }
 
 #log {
 	clear: both;
+}
+
+#ljstream-container {
+	overflow: hidden;
+}
+
+#ljstream-container-inner {
+	/* This is needed to get the post title and body on the same line.
+	It may need to change, depending on how many characters the server
+	sends per body. */
+	width: 9000px;
+}
+
+.clearer {
+	clear: both;
+}
+
+.ljpost {
+	clear: both;
+}
+
+.ljpost-title {
+	float: left;
+	margin-right: 1em;
+}
+
+.ljpost-body {
+	float: left;
+	overflow: hidden;
+	/* not compliant */
+	text-overflow: ellipsis;
 }

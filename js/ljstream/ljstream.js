@@ -8,6 +8,7 @@ goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.json');
+goog.require('goog.string');
 goog.require('goog.proto2.PbLiteSerializer');
 goog.require('goog.ui.CustomButton');
 goog.require('goog.Uri');
@@ -143,11 +144,15 @@ ljstream.clickListen = goog.events.listen(
  */
 ljstream.appendPost = function(title, url, body) {
 	var d = goog.dom.createDom;
+	if(!goog.string.trim(title)) {
+		title = '[No title]';
+	}
 	// TODO: security: we have XSS here, probably
 	var postDiv = d('div', {'class': 'ljpost'},
-		d('a', {'href': url, 'class': 'ljpost-title'}, title),
-		d('span', {'class': 'ljpost-body'}, body));
-	var container = goog.dom.getElement('ljstream-container');
+		d('div', {'class': 'ljpost-title'},
+			d('a', {'href': url, 'class': 'ljpost-title-link'}, title)),
+		d('div', {'class': 'ljpost-body'}, d('nobr', {}, body)));
+	var container = goog.dom.getElement('ljstream-container-inner');
 	container.appendChild(postDiv);
 };
 
@@ -206,7 +211,10 @@ ljstream.LjView = function() {
 
 
 ljstream.LjView.prototype.setup = function() {
-
+	var container = goog.dom.getElement('ljstream-container');
+	var d = goog.dom.createDom;
+	var inner = d('div', {'id': 'ljstream-container-inner'});
+	container.appendChild(inner);
 };
 
 
@@ -215,8 +223,8 @@ ljstream.init = function() {
 	goog.debug.LogManager.getRoot().setLevel(goog.debug.Logger.Level.ALL);
 	ljstream.setupDebug();
 
-	var myForum = new ljstream.LjView();
-	myForum.setup();
+	var view = new ljstream.LjView();
+	view.setup();
 
 	ljstream.startStream();
 };

@@ -78,9 +78,11 @@ Host: atom.services.livejournal.com\r
 		# The second link is the correct one.
 		postHref = twoLinks[1].attrs[0][1]
 
-		htmlContent = soup.findAll('content')[0].string
+		# The .string gives us over-escaped "HTML"; we turn it into
+		# a real HTML string with unescapeXhtml.
+		htmlContent = unescapeXhtml(soup.findAll('content')[0].string)
+		numImages = htmlContent.count('<img ')
 
-		htmlContent = unescapeXhtml(htmlContent)
 		htmlTitle = unescapeXhtml(htmlTitle)
 
 		# TODO: filter out playboy, sex, viagra, jewelry, "porn ", "porno", naked, fucking
@@ -93,7 +95,12 @@ Host: atom.services.livejournal.com\r
 		finally:
 			html2text.BODY_WIDTH = origBodyWidth
 
-		self.factory._feedReceivedCallable({"url": postHref, "title": htmlTitle, "body": shortTextContent})
+		self.factory._feedReceivedCallable({
+			"url": postHref,
+			"title": htmlTitle,
+			"body": shortTextContent,
+			"num_images": numImages,
+		})
 
 
 	def dataReceived(self, data):
@@ -287,7 +294,11 @@ class LjStreamFactory(BasicMinervaFactory):
 				continue
 			proto.stream.sendStrings([simplejson.dumps(
 				[1, self.serializer.serialize(ljm.NewPost(
-					title=post['title'], url=post['url'], body=post['body']))])])
+					title=post['title'],
+					url=post['url'],
+					body=post['body'],
+					num_images=post['num_images'],
+				))])])
 
 
 	def buildProtocol(self):

@@ -7,4 +7,5 @@ message NewPost {
 	required string title = 1;
 	required string url = 2;
 	required string body = 3;
+	required int32 num_images = 4;
 }
