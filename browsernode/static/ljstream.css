@@ -346,6 +346,10 @@ body, html {
 	background-color: #f7f7f7;
 }
 
+.ljpost-title-link {
+	font-weight: bold;
+}
+
 .important-message {
 	font-weight: bold;
 }
