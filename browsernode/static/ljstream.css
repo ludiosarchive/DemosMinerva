@@ -318,10 +318,6 @@ body, html {
 	clear: both;
 }
 
-#prefs {
-	padding-bottom: 0.8em;
-}
-
 #demo-header {
 	position: fixed;
 	border-bottom: 1px solid #ccc;
@@ -338,6 +334,11 @@ body, html {
 	background-color: #eee;
 	padding: 3px;
 	margin: 1px 0.75em 1px 1px;
+}
+
+.clear-posts-button {
+	position: relative;
+	top: -2px;
 }
 
 #ljstream-container {
