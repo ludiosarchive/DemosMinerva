@@ -117,7 +117,7 @@ ljstream.linkify = (function() {
 
 		// Initialize options.
 		for (i in default_options) {
-			if (options[ i ] === undefined) {
+			if (!goog.isDef(options[ i ])) {
 				options[ i ] = default_options[ i ];
 			}
 		}
