@@ -333,15 +333,19 @@ body, html {
 	clear: both;
 }
 
-.ljpost-even, .ljpost-odd {
+.row-even, .row-odd {
 	padding: 3px 4px 3px 4px;
 	clear: both;
 }
 
-.ljpost-even {
+.row-even {
 	background-color: #e5eef5;
 }
 
-.ljpost-odd {
+.row-odd {
 	background-color: #f7f7f7;
+}
+
+.important-message {
+	font-weight: bold;
 }

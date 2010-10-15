@@ -104,6 +104,13 @@ ljstream.callQueue = new cw.eventual.CallQueue(goog.global['window']);
 ljstream.idleFired = function() {
 	ljstream.resetStream("idle timeout fired");
 	ljstream.lastProto = null;
+
+	var d = goog.dom.createDom;
+	var message =
+		d('span', {'class': 'important-message'},
+			"No key/mouse activity, stopping stream to save " +
+			"everyone's bandwidth.");
+	ljstream.appendRow(message);
 };
 
 
@@ -140,7 +147,23 @@ ljstream.clickListen = goog.events.listen(
 /**
  * @type {number}
  */
-ljstream.postsOnPage = 0;
+ljstream.rowsOnPage = 0;
+
+
+/**
+ * @param {!Element} element
+ */
+ljstream.appendRow = function(element) {
+	var className = 'row-' + (ljstream.rowsOnPage % 2 == 0 ? 'even' : 'odd');
+	var d = goog.dom.createDom;
+	var rowDiv =
+		d('div', {'class': className},
+			d('nobr', {}, element));
+
+	var container = goog.dom.getElement('ljstream-container-inner');
+	container.appendChild(rowDiv);
+	ljstream.rowsOnPage += 1;
+};
 
 
 /**
@@ -157,16 +180,14 @@ ljstream.appendPost = function(title, url, body) {
 	var linkifiedBody = ljstream.linkify(goog.string.htmlEscape(body));
 	var linkifiedBodyFrag = goog.dom.htmlToDocumentFragment(linkifiedBody);
 	// TODO: security: we have XSS here, probably
-	var postClassName = 'ljpost-' + (ljstream.postsOnPage % 2 == 0 ? 'even' : 'odd');
-	var postDiv =
-		d('div', {'class': postClassName},
-			d('nobr', {},
-				d('a', {'href': url, 'class': 'ljpost-title-link'}, title),
-				d('span', {}, '\u00a0' /* nbsp */),
-				linkifiedBodyFrag));
-	var container = goog.dom.getElement('ljstream-container-inner');
-	container.appendChild(postDiv);
-	ljstream.postsOnPage += 1;
+
+	var post =
+		d('span', {},
+			d('a', {'href': url, 'class': 'ljpost-title-link'}, title),
+			d('span', {}, '\u00a0' /* nbsp */),
+			linkifiedBodyFrag);
+	ljstream.appendRow(post);
+
 };
 
 
