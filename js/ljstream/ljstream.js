@@ -50,6 +50,7 @@ ljstream.ChatProtocol.prototype.streamReset = function(reasonString, application
 	ljstream.logger.info(
 		'streamReset: reasonString=' + cw.repr.repr(reasonString) +
 		', applicationLevel=' + applicationLevel);
+	ljstream.appendImportantMessage('Disconnected from server.  Try reloading this page.');
 };
 
 /**
@@ -117,16 +118,24 @@ ljstream.lastProto = null;
 ljstream.callQueue = new cw.eventual.CallQueue(goog.global['window']);
 
 
+/**
+ * @param {string} message
+ */
+ljstream.appendImportantMessage = function(message) {
+	var d = goog.dom.createDom;
+	var message =
+		d('span', {'class': 'important-message'}, message);
+	ljstream.appendRow(message);
+};
+
+
 ljstream.idleFired = function() {
 	ljstream.resetStream("idle timeout fired");
 	ljstream.lastProto = null;
 
-	var d = goog.dom.createDom;
-	var message =
-		d('span', {'class': 'important-message'},
-			"No key/mouse activity, stopping stream to save " +
-			"everyone's bandwidth.");
-	ljstream.appendRow(message);
+	ljstream.appendImportantMessage(
+		"No key/mouse activity, stopping stream to save " +
+		"everyone's bandwidth.");
 };
 
 
