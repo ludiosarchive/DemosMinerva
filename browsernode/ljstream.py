@@ -85,8 +85,6 @@ Host: atom.services.livejournal.com\r
 
 		htmlTitle = unescapeXhtml(htmlTitle)
 
-		# TODO: filter out playboy, sex, viagra, jewelry, "porn ", "porno", naked, fucking
-
 		try:
 			origBodyWidth = html2text.BODY_WIDTH
 			# Disable wrapping, because we don't need it.

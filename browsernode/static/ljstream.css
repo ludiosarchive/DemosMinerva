@@ -288,6 +288,12 @@
 
 /****************************************************************************/
 
+#minerva-xdrframes iframe {
+	width: 1px;
+	height: 1px;
+	border: 0;
+}
+
 * {
 	font-family: Tahoma, Arial, Verdana, sans-serif;
 	font-size: 13px;
@@ -327,9 +333,9 @@ body, html {
 }
 
 .ljpost-even {
-	background-color: #e3e1dd;
+	background-color: #eadcf1;
 }
 
 .ljpost-odd {
-	background-color: #f7f7f7;
+	background-color: #d7c0d9;
 }
