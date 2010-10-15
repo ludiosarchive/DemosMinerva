@@ -164,6 +164,9 @@ whiteboard.callQueue = new cw.eventual.CallQueue(goog.global['window']);
 
 
 whiteboard.idleFired = function() {
+	if(!whiteboard.lastProto) {
+		return;
+	}
 	whiteboard.resetStream("idle timeout fired");
 	whiteboard.lastProto = null;
 };

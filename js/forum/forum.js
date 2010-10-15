@@ -108,6 +108,9 @@ forum.callQueue = new cw.eventual.CallQueue(goog.global['window']);
 
 
 forum.idleFired = function() {
+	if(!forum.lastProto) {
+		return;
+	}
 	forum.resetStream("idle timeout fired");
 	forum.lastProto = null;
 };

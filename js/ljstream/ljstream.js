@@ -305,6 +305,9 @@ ljstream.appendImportantMessage = function(message) {
 
 
 ljstream.idleFired = function() {
+	if(!ljstream.lastProto) {
+		return;
+	}
 	ljstream.resetStream("idle timeout fired");
 	ljstream.lastProto = null;
 
