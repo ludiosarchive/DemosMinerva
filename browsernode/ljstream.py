@@ -335,6 +335,7 @@ class LjStreamFactory(BasicMinervaFactory):
 		Start downloading data from the LiveJournal stream.  To save
 		bandwidth, we don't do this when there are no viewers.
 		"""
+		self.dlFactory.continueTrying = 1
 		self._reactor.connectTCP(
 			'atom.services.livejournal.com', 80, self.dlFactory, timeout=10)
 
@@ -344,6 +345,7 @@ class LjStreamFactory(BasicMinervaFactory):
 		Stop downloading data from the LiveJournal stream.
 		"""
 		log.msg("Disconnecting from LiveJournal")
+		self.dlFactory.continueTrying = 0
 		self.dlFactory.abortLatestProtocol()
 
 
