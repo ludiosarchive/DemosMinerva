@@ -529,7 +529,7 @@ ljstream.LjView.prototype.setup = function() {
 		});
 
 	var container = goog.dom.getElement('ljstream-container');
-	container.style.marginTop = '100px';
+	container.style.marginTop = goog.dom.getElement('demo-header').offsetHeight + 'px';
 	goog.dom.getElement('demo-header').style.width = '9000px';
 	var d = goog.dom.createDom;
 	var inner = d('div', {'id': 'ljstream-container-inner'});
