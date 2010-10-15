@@ -226,6 +226,7 @@ ljstream.ChatProtocol.prototype.streamReset = function(reasonString, application
 		'streamReset: reasonString=' + cw.repr.repr(reasonString) +
 		', applicationLevel=' + applicationLevel);
 	ljstream.appendImportantMessage('Disconnected from server.  Try reloading this page.');
+	ljstream.lastProto = null;
 };
 
 /**

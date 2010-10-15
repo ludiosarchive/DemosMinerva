@@ -66,6 +66,7 @@ whiteboard.WhiteboardProtocol.prototype.streamReset = function(reasonString, app
 	// TODO: use goog.dom instead
 	document.getElementById('demo-header').innerHTML +=
 		' <b><a href="' + window.location + '">[DISCONNECTED] - RELOAD</a></b>';
+	whiteboard.lastProto = null;
 };
 
 /**

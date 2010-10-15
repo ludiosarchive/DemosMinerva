@@ -49,6 +49,7 @@ forum.ChatProtocol.prototype.streamReset = function(reasonString, applicationLev
 	forum.logger.info(
 		'streamReset: reasonString=' + cw.repr.repr(reasonString) +
 		', applicationLevel=' + applicationLevel);
+	forum.lastProto = null;
 };
 
 /**
