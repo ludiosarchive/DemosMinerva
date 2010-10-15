@@ -8,19 +8,23 @@
 <body>
 
 <div id="demo-header">
-	<h1>LiveJournal stream, all public posts</h1>
+	<div id="demo-header-text">
+		<h1>LiveJournal stream, all public posts</h1>
 
-	<p>
-		This is uncensored.  If you don't want to see any objectionable text or links, <a href="/">navigate away now</a>.
-	</p>
+		<p>
+			This is uncensored.  If you don't want to see any objectionable text or links, <a href="/">navigate away now</a>.
+		</p>
 
-	<label class="pref-label">
-		<input type="checkbox" id="include_russian_posts" checked> Show new Russian posts
-	</label>
+		<div id="prefs">
+			<label class="pref-label">
+				<input type="checkbox" id="include_russian_posts" checked> Show new Russian posts
+			</label>
 
-	<label class="pref-label">
-		<input type="checkbox" id="automatic_scroll" checked> Automatic scroll
-	</label>
+			<label class="pref-label">
+				<input type="checkbox" id="automatic_scroll" checked> Automatic scroll
+			</label>
+		</div>
+	</div>
 </div>
 
 <script>

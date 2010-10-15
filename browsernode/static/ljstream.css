@@ -318,8 +318,19 @@ body, html {
 	clear: both;
 }
 
+#prefs {
+	padding-bottom: 0.8em;
+}
+
 #demo-header {
-	margin: 0 0.8em 0 0.8em;
+	position: fixed;
+	border-bottom: 1px solid #ccc;
+	/* needed because this is fixed and hovers over the rows */
+	background-color: #fff;
+}
+
+#demo-header-text {
+	padding: 0 0.8em 0.4em 0.8em;
 }
 
 .pref-label {
