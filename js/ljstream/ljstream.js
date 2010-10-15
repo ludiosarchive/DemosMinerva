@@ -228,8 +228,6 @@ ljstream.setupDebug = function() {
 	var debugWindow = new goog.debug.FancyWindow('main');
 	debugWindow.setEnabled(true);
 	debugWindow.init();
-
-	ljstream.logger.info('Logger works.');
 };
 
 
@@ -427,7 +425,10 @@ ljstream.LjView.prototype.setup = function() {
 
 ljstream.init = function() {
 	goog.debug.LogManager.getRoot().setLevel(goog.debug.Logger.Level.ALL);
-	ljstream.setupDebug();
+	if(cw.net.demo.isLoggingEnabled()) {
+		ljstream.setupDebug();
+	}
+	ljstream.logger.info('Logger works.');
 
 	var view = new ljstream.LjView();
 	view.setup();
