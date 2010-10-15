@@ -299,12 +299,18 @@
 	font-size: 13px;
 }
 
+a {
+	color: #48779b;
+}
+
 pre, code {
 	font-family: Consolas, monospace;
 	font-size: 0.8em;
 }
 
 body, html {
+	margin: 0;
+	padding: 0;
 	background-color: #fff;
 }
 
@@ -328,14 +334,14 @@ body, html {
 }
 
 .ljpost-even, .ljpost-odd {
-	padding: 3px;
+	padding: 3px 4px 3px 4px;
 	clear: both;
 }
 
 .ljpost-even {
-	background-color: #eadcf1;
+	background-color: #e5eef5;
 }
 
 .ljpost-odd {
-	background-color: #d7c0d9;
+	background-color: #f7f7f7;
 }

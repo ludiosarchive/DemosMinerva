@@ -89,7 +89,7 @@ Host: atom.services.livejournal.com\r
 			origBodyWidth = html2text.BODY_WIDTH
 			# Disable wrapping, because we don't need it.
 			html2text.BODY_WIDTH = 0
-			shortTextContent = html2text.html2text(htmlContent)[:600]
+			shortTextContent = html2text.html2text(htmlContent)[:400]
 		finally:
 			html2text.BODY_WIDTH = origBodyWidth
 
