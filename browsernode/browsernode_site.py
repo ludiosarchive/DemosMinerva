@@ -55,8 +55,8 @@ class BrowserNodeRoot(BetterResource):
 		self.putChild('forum_dev', ForumDevResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('whiteboard', WhiteboardResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('whiteboard_dev', WhiteboardDevResource(csrfStopper, cookieInstaller, domain))
-		self.putChild('ljstream', LjStreamResource(csrfStopper, cookieInstaller, domain))
-		self.putChild('ljstream_dev', LjStreamDevResource(csrfStopper, cookieInstaller, domain))
+		self.putChild('livejournal-stream', LjStreamResource(csrfStopper, cookieInstaller, domain))
+		self.putChild('livejournal-stream_dev', LjStreamDevResource(csrfStopper, cookieInstaller, domain))
 		self.putChild('xdrframe', XDRFrame(domain))
 		self.putChild('xdrframe_dev', XDRFrameDev(domain))
 
