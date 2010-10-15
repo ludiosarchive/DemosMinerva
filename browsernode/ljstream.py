@@ -151,6 +151,7 @@ class NoProtocol(Exception):
 
 class DownloaderFactory(protocol.ReconnectingClientFactory):
 	protocol = DownloaderProtocol
+	maxDelay = 5 * 60
 
 	def __init__(self, feedReceivedCallable):
 		self._feedReceivedCallable = feedReceivedCallable
