@@ -58,6 +58,7 @@ class DownloaderProtocol(protocol.Protocol):
 
 
 	def connectionMade(self):
+		self.factory.resetActivityTimeout()
 		self.factory.protos.append(self)
 		self.transport.write("""\
 GET /atom-stream.xml HTTP/1.1\r
@@ -67,6 +68,7 @@ Host: atom.services.livejournal.com\r
 
 
 	def connectionLost(self, reason):
+		self.factory.stopActivityTimeout()
 		self.factory.protos.pop(0)
 
 
@@ -121,6 +123,7 @@ Host: atom.services.livejournal.com\r
 
 
 	def dataReceived(self, data):
+		self.factory.resetActivityTimeout()
 		self._buffer += data
 		if len(self._buffer) > 1024 * 1024:
 			log.msg("_buffer was over 1MB; clearing it.")
@@ -153,9 +156,27 @@ class DownloaderFactory(protocol.ReconnectingClientFactory):
 	protocol = DownloaderProtocol
 	maxDelay = 5 * 60
 
-	def __init__(self, feedReceivedCallable):
+	def __init__(self, clock, feedReceivedCallable):
+		self._clock = clock
 		self._feedReceivedCallable = feedReceivedCallable
+		self._activityDc = None
 		self.protos = []
+
+
+	def _noActivity(self):
+		log.msg("LiveJournal connection is not receiving any data; disconnecting.")
+		self.abortLatestProtocol()
+
+
+	def stopActivityTimeout(self):
+		if self._activityDc:
+			if self._activityDc.active():
+				self._activityDc.cancel()
+
+
+	def resetActivityTimeout(self):
+		self.stopActivityTimeout()
+		self._activityDc = self._clock.callLater(10, self._noActivity)
 
 
 	def startedConnecting(self, connector):
@@ -305,7 +326,7 @@ class LjStreamFactory(BasicMinervaFactory):
 		self._clock = clock
 		self.protos = set()
 		self.serializer = PbLiteSerializer()
-		self.dlFactory = DownloaderFactory(self.broadcastPost)
+		self.dlFactory = DownloaderFactory(self._clock, self.broadcastPost)
 
 
 	def startDownloading(self):
@@ -313,7 +334,8 @@ class LjStreamFactory(BasicMinervaFactory):
 		Start downloading data from the LiveJournal stream.  To save
 		bandwidth, we don't do this when there are no viewers.
 		"""
-		self._reactor.connectTCP('atom.services.livejournal.com', 80, self.dlFactory)
+		self._reactor.connectTCP(
+			'atom.services.livejournal.com', 80, self.dlFactory, timeout=10)
 
 
 	def stopDownloading(self):
@@ -361,8 +383,9 @@ def main():
 	from twisted.internet import reactor
 	def feedReceived(feed):
 		print feed
-	factory = DownloaderFactory(feedReceived)
-	reactor.connectTCP('atom.services.livejournal.com', 80, factory)
+	clock = reactor
+	factory = DownloaderFactory(clock, feedReceived)
+	reactor.connectTCP('atom.services.livejournal.com', 80, factory, timeout=10)
 	reactor.run()
 
 
