@@ -326,11 +326,15 @@ body, html {
 	border: 1px solid #ccc;
 	background-color: #eee;
 	padding: 3px;
-	margin: 1px;
+	margin: 1px 0.75em 1px 1px;
 }
 
 #ljstream-container {
 	overflow: hidden;
+}
+
+#ljstream-big-empty {
+	height: 1024px;
 }
 
 #ljstream-container-inner {

@@ -349,6 +349,34 @@ ljstream.clickListen = goog.events.listen(
 
 
 /**
+ * @type {!goog.dom.DomHelper}
+ */
+ljstream.domHelper = new goog.dom.DomHelper();
+
+
+/**
+ * Based on http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
+ *
+ * @param {!Element} el
+ * @return {boolean}
+ */
+ljstream.elementBelowViewport = function(el) {
+	// TODO: should this be using some goog. stuff?
+	var top = el.offsetTop;
+	var height = el.offsetHeight;
+
+	while(el.offsetParent) {
+		el = el.offsetParent;
+		top += el.offsetTop;
+	}
+
+	var scrollY = goog.dom.getDocumentScroll().y;
+	var viewportHeight = ljstream.domHelper.getViewportSize().height;
+	return (top + height) <= (scrollY + viewportHeight);
+};
+
+
+/**
  * @type {number}
  */
 ljstream.rowsOnPage = 0;
@@ -367,6 +395,13 @@ ljstream.appendRow = function(element) {
 	var container = goog.dom.getElement('ljstream-container-inner');
 	container.appendChild(rowDiv);
 	ljstream.rowsOnPage += 1;
+
+	if(ljstream.automaticScroll) {
+		if(!ljstream.elementBelowViewport(rowDiv)) {
+			var viewportHeight = ljstream.domHelper.getViewportSize().height;
+			window.scrollBy(0, Math.round(viewportHeight / 2) + 80)
+		}
+	}
 };
 
 
@@ -384,6 +419,8 @@ ljstream.appendPost = function(title, url, body) {
 	var linkifiedBody = ljstream.linkify(goog.string.htmlEscape(body));
 	var linkifiedBodyFrag = goog.dom.htmlToDocumentFragment(linkifiedBody);
 	// TODO: security: we have XSS here, probably
+	// maybe sanitize URL a bit more?
+	// maybe ban RTL toggle and other strange unicode chars?
 
 	var post =
 		d('span', {},
@@ -461,6 +498,14 @@ ljstream.LjView.prototype.setup = function() {
 		goog.events.EventType.CLICK,
 		function(e) {
 			ljstream.lastProto.sendPreferences();
+		}
+	);
+
+	ljstream.automaticScroll = true;
+	goog.events.listen(goog.dom.getElement('automatic_scroll'),
+		goog.events.EventType.CLICK,
+		function(e) {
+			ljstream.automaticScroll = e.target.checked;
 		}
 	);
 
