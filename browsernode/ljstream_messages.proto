@@ -8,4 +8,5 @@ message NewPost {
 	required string url = 2;
 	required string body = 3;
 	required int32 num_images = 4;
+	required string lang = 5;
 }

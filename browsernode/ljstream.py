@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import sys
 import jinja2
 import simplejson
@@ -32,6 +34,14 @@ def unescapeXhtml(s):
 	if not unescaped:
 		unescaped = ""
 	return unescaped
+
+
+def containsRussianVowels(s):
+	russianVowels = u"АаЕеЁёИиЙйОоУуЭэЮюЯя"
+	for vowel in russianVowels:
+		if vowel in s:
+			return True
+	return False
 
 
 class DownloaderProtocol(protocol.Protocol):
@@ -93,11 +103,19 @@ Host: atom.services.livejournal.com\r
 		finally:
 			html2text.BODY_WIDTH = origBodyWidth
 
+		if containsRussianVowels(htmlTitle):
+			lang = "ru"
+		elif containsRussianVowels(shortTextContent):
+			lang = "ru"
+		else:
+			lang = "?"
+
 		self.factory._feedReceivedCallable({
 			"url": postHref,
 			"title": htmlTitle,
 			"body": shortTextContent,
 			"num_images": numImages,
+			"lang": lang
 		})
 
 
@@ -291,12 +309,7 @@ class LjStreamFactory(BasicMinervaFactory):
 				proto.stream.reset("> 2MB outgoing")
 				continue
 			proto.stream.sendStrings([simplejson.dumps(
-				[1, self.serializer.serialize(ljm.NewPost(
-					title=post['title'],
-					url=post['url'],
-					body=post['body'],
-					num_images=post['num_images'],
-				))])])
+				[1, self.serializer.serialize(ljm.NewPost(**post))])])
 
 
 	def buildProtocol(self):
