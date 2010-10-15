@@ -6,7 +6,7 @@ import simplejson
 import html2text
 
 from twisted.python.filepath import FilePath
-from twisted.internet import endpoints, protocol
+from twisted.internet import protocol
 from twisted.python import log
 
 from cwtools.htmltools import getTestPageCSS
@@ -149,12 +149,32 @@ class NoProtocol(Exception):
 
 
 
-class DownloaderFactory(protocol.Factory):
+class DownloaderFactory(protocol.ReconnectingClientFactory):
 	protocol = DownloaderProtocol
 
 	def __init__(self, feedReceivedCallable):
 		self._feedReceivedCallable = feedReceivedCallable
 		self.protos = []
+
+
+	def startedConnecting(self, connector):
+		log.msg('Started to connect to LiveJournal.')
+
+
+	def buildProtocol(self, addr):
+		log.msg('Connected to LiveJournal.')
+		self.resetDelay()
+		return protocol.ReconnectingClientFactory.buildProtocol(self, addr)
+
+
+	def clientConnectionLost(self, connector, reason):
+		log.msg('Lost connection.  Reason: ' + repr(reason))
+		protocol.ReconnectingClientFactory.clientConnectionLost(self, connector, reason)
+
+
+	def clientConnectionFailed(self, connector, reason):
+		log.msg('Connection failed.  Reason: ' + repr(reason))
+		protocol.ReconnectingClientFactory.clientConnectionFailed(self, connector, reason)
 
 
 	def _getLatestProtocol(self):
@@ -292,11 +312,7 @@ class LjStreamFactory(BasicMinervaFactory):
 		Start downloading data from the LiveJournal stream.  To save
 		bandwidth, we don't do this when there are no viewers.
 		"""
-		log.msg("Connecting to LiveJournal")
-		# TODO: handle disconnects from livejournal
-		ep = endpoints.TCP4ClientEndpoint(
-			self._reactor, 'atom.services.livejournal.com', 80)
-		ep.connect(self.dlFactory)
+		self._reactor.connectTCP('atom.services.livejournal.com', 80, self.dlFactory)
 
 
 	def stopDownloading(self):
@@ -342,12 +358,10 @@ class LjStreamFactory(BasicMinervaFactory):
 def main():
 	log.startLogging(sys.stdout)
 	from twisted.internet import reactor
-	ep = endpoints.TCP4ClientEndpoint(
-		reactor, 'atom.services.livejournal.com', 80)
 	def feedReceived(feed):
 		print feed
 	factory = DownloaderFactory(feedReceived)
-	ep.connect(factory)
+	reactor.connectTCP('atom.services.livejournal.com', 80, factory)
 	reactor.run()
 
 
