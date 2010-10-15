@@ -23,6 +23,7 @@ goog.require('cw.repr');
 goog.require('cw.string');
 
 goog.require('ljstream.NewPost');
+goog.require('ljstream.SetPreferences');
 
 
 ljstream.logger = goog.debug.Logger.getLogger('ljstream.logger');
@@ -30,7 +31,7 @@ ljstream.logger = goog.debug.Logger.getLogger('ljstream.logger');
 
 window.onerror = function(msg, url, lineNumber) {
 	ljstream.logger.severe('window.onerror: message: ' + cw.repr.repr(msg) +
-		'\nURL: ' + url + '\nLine Number: ' + lineNumber)
+		'\nURL: ' + url + '\nLine Number: ' + lineNumber);
 };
 
 /**
@@ -43,8 +44,6 @@ ljstream.ChatProtocol = function() {
 
 ljstream.ChatProtocol.prototype.streamStarted = function(stream) {
 	this.stream_ = stream;
-	ljstream.logger.info('streamStarted');
-	this.stream_.sendStrings(['subprotocol:ljstream']);
 };
 
 ljstream.ChatProtocol.prototype.streamReset = function(reasonString, applicationLevel) {
@@ -72,6 +71,23 @@ ljstream.ChatProtocol.prototype.handleString_ = function(s) {
 			ljstream.NewPost.getDescriptor(), body);
 		ljstream.appendPost(post.getTitle(), post.getUrl(), post.getBody());
 	}
+};
+
+/**
+ * @param {boolean} includeRussianPosts
+ * @return {!Array}
+ */
+ljstream.ChatProtocol.prototype.makePreferences_ = function(includeRussianPosts) {
+	var prefs = new ljstream.SetPreferences();
+	prefs.setIncludeRussianPosts(includeRussianPosts);
+	return this.pbLiteSerializer_.serialize(prefs);
+};
+
+ljstream.ChatProtocol.prototype.sendPreferences = function() {
+	ljstream.logger.info('Sending preferences to server');
+	var includeRussianPosts = ljstream.getIncludeRussianPosts();
+	var prefsArray = this.makePreferences_(includeRussianPosts);
+	this.stream_.sendStrings([goog.json.serialize([2, prefsArray])]);
 };
 
 /**
@@ -202,6 +218,11 @@ ljstream.startStream = function() {
 		}
 		var stream = new cw.net.Stream(
 			ljstream.callQueue, ljstream.lastProto, endpoint, streamPolicy);
+
+		// assign it early because sendPreferences expects stream_ to exist
+		ljstream.lastProto.stream_ = stream;
+		stream.sendStrings(['subprotocol:ljstream']);
+		ljstream.lastProto.sendPreferences();
 		stream.start();
 	});
 };
@@ -406,6 +427,14 @@ ljstream.linkify = (function() {
 
 
 /**
+ * @return {boolean}
+ */
+ljstream.getIncludeRussianPosts = function() {
+	return goog.dom.getElement('include_russian_posts').checked;
+};
+
+
+/**
  * @constructor
  */
 ljstream.LjView = function() {
@@ -415,6 +444,13 @@ ljstream.LjView = function() {
 
 
 ljstream.LjView.prototype.setup = function() {
+	goog.events.listen(goog.dom.getElement('include_russian_posts'),
+		goog.events.EventType.CLICK,
+		function(e) {
+			ljstream.lastProto.sendPreferences();
+		}
+	);
+
 	var container = goog.dom.getElement('ljstream-container');
 	var d = goog.dom.createDom;
 	var inner = d('div', {'id': 'ljstream-container-inner'});

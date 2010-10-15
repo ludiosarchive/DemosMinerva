@@ -15,6 +15,7 @@ from webmagic.untwist import BetterResource, BetterFile
 import minerva
 from minerva.newlink import (
 	BasicMinervaProtocol, BasicMinervaFactory, getRandomSubdomain)
+from minerva.decoders import strictDecodeOne
 from brequire import requireFile, requireFiles
 
 from protojson.pbliteserializer import PbLiteSerializer
@@ -236,6 +237,7 @@ class LjStreamProtocol(BasicMinervaProtocol):
 
 	def __init__(self, clock):
 		self._clock = clock
+		self.includeRussianPosts = True
 
 
 	def streamStarted(self, stream):
@@ -248,14 +250,30 @@ class LjStreamProtocol(BasicMinervaProtocol):
 		del self.stream
 
 
+	def _setPreferences(self, body):
+		try:
+			sp = ljm.SetPreferences()
+			self.factory.serializer.deserialize(sp, body)
+		except PbDecodeError:
+			1/0 # TODO
+		self.includeRussianPosts = sp.include_russian_posts
+
+
 	def stringsReceived(self, strings):
 		"""
 		Note: C{strings} may be a mix of C{str}s and C{StringFragment}s.
 		"""
-		# TODO: allow user to control whether they're sent posts in
-		# English, Russian, or both.
-		pass
-
+		try:
+			for s in strings:
+				s = str(s) # maybe StringFragment -> str
+				payload = strictDecodeOne(s)
+				if len(payload) == 2:
+					msgType = payload[0]
+					body = payload[1]
+					if msgType == 2: # SetPreferences
+						self._setPreferences(body)
+		except:
+			log.err()
 
 
 class LjStreamFactory(BasicMinervaFactory):
@@ -305,6 +323,8 @@ class LjStreamFactory(BasicMinervaFactory):
 	def broadcastPost(self, post):
 		##print "POST", post
 		for proto in self.protos:
+			if post['lang'] == 'ru' and not proto.includeRussianPosts:
+				continue
 			if proto.stream.queue.getMaxConsumption() > 2 * 1024 * 1024:
 				proto.stream.reset("> 2MB outgoing")
 				continue
@@ -326,7 +346,7 @@ def main():
 		reactor, 'atom.services.livejournal.com', 80)
 	def feedReceived(feed):
 		print feed
-	factory = LjFactory(feedReceived)
+	factory = DownloaderFactory(feedReceived)
 	ep.connect(factory)
 	reactor.run()
 
