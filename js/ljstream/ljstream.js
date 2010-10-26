@@ -299,9 +299,9 @@ ljstream.callQueue = new cw.eventual.CallQueue(goog.global['window']);
  */
 ljstream.appendImportantMessage = function(message) {
 	var d = goog.dom.createDom;
-	var message =
+	var messageSpan =
 		d('span', {'class': 'important-message'}, message);
-	ljstream.appendRow(message);
+	ljstream.appendRow(messageSpan);
 };
 
 
