@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import jinja2
 import simplejson
 import html2text
 
@@ -9,13 +8,10 @@ from twisted.python.filepath import FilePath
 from twisted.internet import protocol
 from twisted.python import log
 
-from cwtools.htmltools import getTestPageCSS
-
 from webmagic.untwist import BetterResource, BetterFile
-import minerva
-from minerva.newlink import (
-	BasicMinervaProtocol, BasicMinervaFactory, getRandomSubdomain)
+from minerva.newlink import BasicMinervaProtocol, BasicMinervaFactory
 from minerva.decoders import strictDecodeOne
+from minerva.website import MinervaBootstrap
 from brequire import requireFile, requireFiles
 
 from protojson.pbliteserializer import PbLiteSerializer
@@ -212,59 +208,19 @@ class DownloaderFactory(protocol.ReconnectingClientFactory):
 
 
 
-class LjStreamIndex(BetterResource):
-	isLeaf = True
-
-	def __init__(self, csrfStopper, cookieInstaller, domain, filename):
-		BetterResource.__init__(self)
-		self._csrfStopper = csrfStopper
-		self._cookieInstaller = cookieInstaller
-		self._domain = domain
-		self._filename = filename
-
-		self._jinja2Env = jinja2.Environment()
-		self._basePath = FilePath(__file__).parent() # this is minerva/chatapp/
-
-
-	def render_GET(self, request):
-		cookie = self._cookieInstaller.getSet(request)
-		token = self._csrfStopper.makeToken(cookie)
-
-		sub1 = getRandomSubdomain('ml', 20)
-		sub2 = getRandomSubdomain('ml', 20)
-
-		# Allow the template to include the contents in the page, so
-		# that the client doesn't have to make another HTTP request.
-		bootstrap_XDRSetup_contents = FilePath(minerva.__file__).parent().\
-			child('compiled_client').child('bootstrap_XDRSetup.js').getContent()
-
-		# This jinja2 stuff is for the html page, not the JavaScript
-		template = self._basePath.child(self._filename).getContent().decode('utf-8')
-		dictionary = dict(
-			getTestPageCSS=getTestPageCSS,
-			token=token,
-			bootstrap_XDRSetup_contents=bootstrap_XDRSetup_contents,
-			domain=self._domain,
-			sub1=sub1,
-			sub2=sub2,
-			dumps=simplejson.dumps)
-		rendered = self._jinja2Env.from_string(template).render(dictionary)
-		return rendered.encode('utf-8')
-
-
 
 requireFile(FilePath(__file__).parent().child('ljstream.html').path)
 requireFiles([f.path for f in FilePath(__file__).parent().child('static').children()])
 requireFile(FilePath(__file__).parent().child('compiled').child('ljstream.js').path)
 
 class LjStreamResource(BetterResource):
-	templateFilename = 'ljstream.html'
+	templateFile = FilePath(__file__).parent().child('ljstream.html')
 
 	def __init__(self, csrfStopper, cookieInstaller, domain):
 		BetterResource.__init__(self)
 
-		self.putChild('', LjStreamIndex(
-			csrfStopper, cookieInstaller, domain, self.templateFilename))
+		self.putChild('', MinervaBootstrap(
+			csrfStopper, cookieInstaller, domain, self.templateFile))
 		self.putChild('static', BetterFile(FilePath(__file__).parent().child('static').path))
 
 
@@ -272,7 +228,7 @@ class LjStreamResource(BetterResource):
 requireFile(FilePath(__file__).parent().child('forum_dev.html').path)
 
 class LjStreamDevResource(LjStreamResource):
-	templateFilename = 'ljstream_dev.html'
+	templateFile = FilePath(__file__).parent().child('ljstream_dev.html')
 
 
 
