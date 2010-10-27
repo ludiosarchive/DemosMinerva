@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="charset" content="text/html; charset=utf-8">
-	<title>LiveJournal stream demo</title>
+	<title>LiveJournal stream demo{{ " (dev)" if dev_mode else "" }} | BrowserNode</title>
 	<link rel="stylesheet" type="text/css" href="static/ljstream.css">
 </head>
 <body>
@@ -39,7 +39,7 @@
 // when calling through window.
 CSRF_TOKEN = {{ dumps(bootstrap.csrf_token) }};
 __XDRSetup = {
-	dev: false,
+	dev: {{ dumps(dev_mode) }},
 	domain: {{ dumps(domain) }},
 	sub1: {{ dumps(bootstrap.sub1) }},
 	sub2: {{ dumps(bootstrap.sub2) }}
@@ -47,7 +47,16 @@ __XDRSetup = {
 {{ bootstrap.XDRSetup_contents }}
 </script>
 
+{% if dev_mode %}
+<script>CLOSURE_NO_DEPS = true;</script>
+<script src="/JSPATH/closure/goog/base.js"></script>
+<script src="/JSPATH/all_deps.js"></script>
+<script>
+goog.require('ljstream');
+</script>
+{% else %}
 <script src="/compiled/ljstream.js"></script>
+{% endif %}
 <script>
 __ljstream_init();
 </script>

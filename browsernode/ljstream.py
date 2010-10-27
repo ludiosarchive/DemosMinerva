@@ -208,27 +208,26 @@ class DownloaderFactory(protocol.ReconnectingClientFactory):
 
 
 
-
 requireFile(FilePath(__file__).parent().child('ljstream.html').path)
 requireFiles([f.path for f in FilePath(__file__).parent().child('static').children()])
 requireFile(FilePath(__file__).parent().child('compiled').child('ljstream.js').path)
 
 class LjStreamResource(BetterResource):
 	templateFile = FilePath(__file__).parent().child('ljstream.html')
+	dictionary = {'dev_mode': False}
 
 	def __init__(self, csrfStopper, cookieInstaller, domain):
 		BetterResource.__init__(self)
 
 		self.putChild('', MinervaBootstrap(
-			csrfStopper, cookieInstaller, self.templateFile, dict(domain=domain)))
+			csrfStopper, cookieInstaller, self.templateFile, dict(
+				domain=domain, **self.dictionary)))
 		self.putChild('static', BetterFile(FilePath(__file__).parent().child('static').path))
 
 
 
-requireFile(FilePath(__file__).parent().child('forum_dev.html').path)
-
 class LjStreamDevResource(LjStreamResource):
-	templateFile = FilePath(__file__).parent().child('ljstream_dev.html')
+	dictionary = {'dev_mode': True}
 
 
 
