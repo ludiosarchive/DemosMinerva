@@ -14,20 +14,20 @@ requireFile(FilePath(__file__).parent().child('compiled').child('forum.js').path
 
 class ForumResource(BetterResource):
 	templateFile = FilePath(__file__).parent().child('forum.html')
+	dictionary = {'dev_mode': False}
 
 	def __init__(self, csrfStopper, cookieInstaller, domain):
 		BetterResource.__init__(self)
 
 		self.putChild('', MinervaBootstrap(
-			csrfStopper, cookieInstaller, self.templateFile, dict(domain=domain)))
+			csrfStopper, cookieInstaller, self.templateFile, dict(
+				domain=domain, **self.dictionary)))
 		self.putChild('static', BetterFile(FilePath(__file__).parent().child('static').path))
 
 
 
-requireFile(FilePath(__file__).parent().child('forum_dev.html').path)
-
 class ForumDevResource(ForumResource):
-	templateFile = FilePath(__file__).parent().child('forum_dev.html')
+	dictionary = {'dev_mode': True}
 
 
 
