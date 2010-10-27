@@ -220,7 +220,7 @@ class LjStreamResource(BetterResource):
 		BetterResource.__init__(self)
 
 		self.putChild('', MinervaBootstrap(
-			csrfStopper, cookieInstaller, domain, self.templateFile))
+			csrfStopper, cookieInstaller, self.templateFile, dict(domain=domain)))
 		self.putChild('static', BetterFile(FilePath(__file__).parent().child('static').path))
 
 
