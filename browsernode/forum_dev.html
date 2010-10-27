@@ -12,12 +12,12 @@
 
 // We don't define variables on "window" to avoid possible IE stack limit of 12
 // when calling through window.
-CSRF_TOKEN = {{ dumps(token) }};
+CSRF_TOKEN = {{ dumps(bootstrap_csrf_token) }};
 __XDRSetup = {
 	dev: false, /* using compiled xdrframe is okay */
 	domain: {{ dumps(domain) }},
-	sub1: {{ dumps(sub1) }},
-	sub2: {{ dumps(sub2) }}
+	sub1: {{ dumps(bootstrap_sub1) }},
+	sub2: {{ dumps(bootstrap_sub2) }}
 };
 </script>
 <!-- Note: in production, this script should be dumped onto the page. -->

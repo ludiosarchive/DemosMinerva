@@ -55,12 +55,12 @@ layer a div over the drawing area, it should get the correct offsets.-->
 
 // We don't define anything on "window" to avoid possible IE stack limit of 12
 // when calling through window.
-CSRF_TOKEN = {{ dumps(token) }};
+CSRF_TOKEN = {{ dumps(bootstrap_csrf_token) }};
 __XDRSetup = {
 	dev: false,
 	domain: {{ dumps(domain) }},
-	sub1: {{ dumps(sub1) }},
-	sub2: {{ dumps(sub2) }}
+	sub1: {{ dumps(bootstrap_sub1) }},
+	sub2: {{ dumps(bootstrap_sub2) }}
 };
 {{ bootstrap_XDRSetup_contents }}
 </script>
