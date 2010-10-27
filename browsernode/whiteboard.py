@@ -23,20 +23,20 @@ requireFile(FilePath(__file__).parent().child('compiled').child('whiteboard.js')
 
 class WhiteboardResource(BetterResource):
 	templateFile = FilePath(__file__).parent().child('whiteboard.html')
+	dictionary = {'dev_mode': False}
 
 	def __init__(self, csrfStopper, cookieInstaller, domain):
 		BetterResource.__init__(self)
 
 		self.putChild('', MinervaBootstrap(
-			csrfStopper, cookieInstaller, self.templateFile, dict(domain=domain)))
+			csrfStopper, cookieInstaller, self.templateFile, dict(
+				domain=domain, **self.dictionary)))
 		self.putChild('static', BetterFile(FilePath(__file__).parent().child('static').path))
 
 
 
-requireFile(FilePath(__file__).parent().child('whiteboard_dev.html').path)
-
 class WhiteboardDevResource(WhiteboardResource):
-	templateFile = FilePath(__file__).parent().child('whiteboard_dev.html')
+	dictionary = {'dev_mode': True}
 
 
 

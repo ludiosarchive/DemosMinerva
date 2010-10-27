@@ -4,7 +4,6 @@
 
 goog.provide('whiteboard');
 
-goog.require('cw.autoTitle');
 goog.require('goog.asserts');
 goog.require('goog.color');
 goog.require('goog.debug.DivConsole');

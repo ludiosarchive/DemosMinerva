@@ -4,48 +4,49 @@
 	<meta http-equiv="charset" content="text/html; charset=utf-8">
 	<!-- needed because VML performance in IE8 is abysmal -->
 	<meta http-equiv="X-UA-Compatible" content="IE=7">
-	<title>Whiteboard demo | BrowserNode</title>
+	<title>Whiteboard demo{{ " (dev)" if dev_mode else "" }} | BrowserNode</title>
+	{% if not dev_mode %}
 	<style>
 		#minerva-xdrframes iframe {
 			width: 1px;
 			height: 1px;
 			border: 0;
+			position: absolute;
 		}
 	</style>
+	{% endif %}
 	<link rel="stylesheet" type="text/css" href="static/whiteboard.css">
 </head>
 <body>
 <div id="whiteboard-container">
-<div id="whiteboard-doc">
-<div id="demo-header"><b>Whiteboard demo</b></div>
+	<div id="whiteboard-doc">
+		<div id="minerva-xdrframes"></div>
+		<div id="demo-header"><b>Whiteboard demo</b></div>
+		<p>
+			Click on the whiteboard below to add colored points.  The state of the whiteboard
+			is instantly synchronized with all other browsers viewing this page.  If there's
+			no one around, open a second browser (or another tab/window).
+		</p>
 
-<p>
-Click on the whiteboard below to add colored points.  The state of the whiteboard
-is instantly synchronized with all other browsers viewing this page.  If there's
-no one around, open a second browser (or another tab/window).
-</p>
+		<p>
+			After 20 minutes of inactivity, the board will be automatically cleared.
+		</p>
 
-<p>
-After 20 minutes of inactivity, the board will be automatically cleared.
-</p>
+		{% if dev_mode %}
+		<p>
+			This page supports options ?mode=http, ?mode=flash, ?useSub=0, ?useSub=1,
+			?httpStreaming=1, ?logging=1 (which can be combined).
+		</p>
+		{% endif %}
+	</div>
 
-<!--This page supports options ?mode=http, ?mode=flash, ?useSub=0, ?useSub=1,
-?httpStreaming=1, ?logging=1 (which can be combined).<br><br>
-
-TODO: fix this for Opera/IE (and maybe other browsers): right now, when
-you click on a circle, the circle captures the click, the event bubbles up,
-and the offsetX/offsetY is wrong (they're both close to 0).  If we instead
-layer a div over the drawing area, it should get the correct offsets.-->
-</div>
-
-<div id="whiteboard-controls-left"></div>
-<div id="whiteboard-controls-right"></div>
-<br class="clearer">
-<div id="minerva-xdrframes"></div>
-<div id="drawAreaContainer">
-	<div id="drawAreaOverlay"></div>
-	<div id="drawArea"></div>
-</div>
+	<div id="whiteboard-controls-left"></div>
+	<div id="whiteboard-controls-right"></div>
+	<br class="clearer">
+	<div id="drawAreaContainer">
+		<div id="drawAreaOverlay"></div>
+		<div id="drawArea"></div>
+	</div>
 </div>
 <div id="FlashConnectorSwf"></div>
 <div id="log"></div>
@@ -57,7 +58,7 @@ layer a div over the drawing area, it should get the correct offsets.-->
 // when calling through window.
 CSRF_TOKEN = {{ dumps(bootstrap.csrf_token) }};
 __XDRSetup = {
-	dev: false,
+	dev: {{ dumps(dev_mode) }},
 	domain: {{ dumps(domain) }},
 	sub1: {{ dumps(bootstrap.sub1) }},
 	sub2: {{ dumps(bootstrap.sub2) }}
@@ -65,7 +66,16 @@ __XDRSetup = {
 {{ bootstrap.XDRSetup_contents }}
 </script>
 
+{% if dev_mode %}
+<script>CLOSURE_NO_DEPS = true;</script>
+<script src="/JSPATH/closure/goog/base.js"></script>
+<script src="/JSPATH/all_deps.js"></script>
+<script>
+goog.require('whiteboard');
+</script>
+{% else %}
 <script src="/compiled/whiteboard.js"></script>
+{% endif %}
 <script>
 __whiteboard_init();
 </script>
