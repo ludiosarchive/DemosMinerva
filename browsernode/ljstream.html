@@ -33,10 +33,12 @@
 <div id="log"></div>
 
 <script>
+{#
 // Use just one preamble <script> to reduce page load time.
 
 // We don't define anything on "window" to avoid possible IE stack limit of 12
 // when calling through window.
+#}
 CSRF_TOKEN = {{ dumps(bootstrap.csrf_token) }};
 __XDRSetup = {
 	dev: {{ dumps(dev_mode) }},
