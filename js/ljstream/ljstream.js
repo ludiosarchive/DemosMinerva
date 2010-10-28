@@ -502,7 +502,13 @@ ljstream.LjView = function() {
 ljstream.LjView.prototype.setup = function() {
 	// Scroll to the top because we might be scroll down after page reload,
 	// but there's no real content below anyway.
-	window.scrollTo(0, 0);
+	// A synchronous scrollTo(...) doesn't work in at least Firefox, so
+	// do this instead.
+	goog.events.listen(goog.global, goog.events.EventType.LOAD,
+		function() {
+			window.scrollTo(0, 0);
+		}
+	);
 
 	goog.events.listen(goog.dom.getElement('include_russian_posts'),
 		goog.events.EventType.CLICK,
