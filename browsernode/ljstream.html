@@ -40,13 +40,7 @@
 // when calling through window.
 #}
 CSRF_TOKEN = {{ dumps(bootstrap.csrf_token) }};
-__XDRSetup = {
-	dev: {{ dumps(dev_mode) }},
-	domain: {{ dumps(domain) }},
-	sub1: {{ dumps(bootstrap.sub1) }},
-	sub2: {{ dumps(bootstrap.sub2) }}
-};
-{{ bootstrap.XDRSetup_contents }}
+{{ bootstrap.getXDRSetup(dev_mode, domain) }}
 </script>
 
 {% if dev_mode %}
