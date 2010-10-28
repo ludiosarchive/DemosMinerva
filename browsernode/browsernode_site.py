@@ -27,7 +27,7 @@ requireFile(FilePath(__file__).parent().child('index.html').path)
 
 class BrowserNodeRoot(BetterResource):
 
-	def __init__(self, reactor, httpFace, csrfStopper, cookieInstaller, domain):
+	def __init__(self, reactor, httpFace, fileCache, csrfStopper, cookieInstaller, domain):
 		import cwtools
 		import minerva
 		import browsernode
@@ -51,18 +51,19 @@ class BrowserNodeRoot(BetterResource):
 		self.putChild('@testres_Coreweb', BetterFile(testres_Coreweb))
 
 		self.putChild('httpface', httpFace)
-		self.putChild('forum', ForumResource(csrfStopper, cookieInstaller, domain))
-		self.putChild('forum_dev', ForumDevResource(csrfStopper, cookieInstaller, domain))
-		self.putChild('whiteboard', WhiteboardResource(csrfStopper, cookieInstaller, domain))
-		self.putChild('whiteboard_dev', WhiteboardDevResource(csrfStopper, cookieInstaller, domain))
-		self.putChild('livejournal-stream', LjStreamResource(csrfStopper, cookieInstaller, domain))
-		self.putChild('livejournal-stream_dev', LjStreamDevResource(csrfStopper, cookieInstaller, domain))
-		self.putChild('xdrframe', XDRFrame(domain))
-		self.putChild('xdrframe_dev', XDRFrameDev(domain))
+		commonArgs = (fileCache, csrfStopper, cookieInstaller, domain)
+		self.putChild('forum', ForumResource(*commonArgs))
+		self.putChild('forum_dev', ForumDevResource(*commonArgs))
+		self.putChild('whiteboard', WhiteboardResource(*commonArgs))
+		self.putChild('whiteboard_dev', WhiteboardDevResource(*commonArgs))
+		self.putChild('livejournal-stream', LjStreamResource(*commonArgs))
+		self.putChild('livejournal-stream_dev', LjStreamDevResource(*commonArgs))
+		self.putChild('xdrframe', XDRFrame(fileCache, domain))
+		self.putChild('xdrframe_dev', XDRFrameDev(fileCache, domain))
 
 
 
-def makeMinervaAndHttp(reactor, csrfSecret, domain):
+def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain):
 	clock = reactor
 
 	cookieInstaller = CookieInstaller(randgen.secureRandom)
@@ -87,7 +88,7 @@ def makeMinervaAndHttp(reactor, csrfSecret, domain):
 	httpFace = HttpFace(clock, tracker, firewall)
 	socketFace = SocketFace(clock, tracker, firewall, policyString=policyString)
 
-	root = BrowserNodeRoot(reactor, httpFace, csrfStopper, cookieInstaller, domain)
+	root = BrowserNodeRoot(reactor, httpFace, fileCache, csrfStopper, cookieInstaller, domain)
 
 	def _disconnectInactive():
 		"""

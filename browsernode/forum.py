@@ -16,12 +16,12 @@ class ForumResource(BetterResource):
 	templateFile = FilePath(__file__).parent().child('forum.html')
 	dictionary = {'dev_mode': False}
 
-	def __init__(self, csrfStopper, cookieInstaller, domain):
+	def __init__(self, fileCache, csrfStopper, cookieInstaller, domain):
 		BetterResource.__init__(self)
 
 		self.putChild('', MinervaBootstrap(
-			csrfStopper, cookieInstaller, self.templateFile, dict(
-				domain=domain, **self.dictionary)))
+			fileCache, csrfStopper, cookieInstaller, self.templateFile,
+				dict(domain=domain, **self.dictionary)))
 		self.putChild('static', BetterFile(FilePath(__file__).parent().child('static').path))
 
 
