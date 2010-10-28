@@ -65,7 +65,11 @@ Host: atom.services.livejournal.com\r
 
 	def connectionLost(self, reason):
 		self.factory.stopActivityTimeout()
-		self.factory.protos.pop(0)
+		try:
+			self.factory.protos.remove(self)
+		except ValueError:
+			log.msg("I wasn't in factory.protos?")
+			pass
 
 
 	def feedStringReceived(self, feedString):
