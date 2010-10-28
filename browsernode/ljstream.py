@@ -319,7 +319,7 @@ class LjStreamFactory(BasicMinervaFactory):
 
 	def broadcastPost(self, post):
 		##print "POST", post
-		for proto in self.protos:
+		for proto in list(self.protos): # Make a copy
 			if post['lang'] == 'ru' and not proto.includeRussianPosts:
 				continue
 			if proto.stream.queue.getMaxConsumption() > 2 * 1024 * 1024:
