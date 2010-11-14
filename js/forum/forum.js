@@ -39,9 +39,11 @@ forum.ChatProtocol = function() {
 
 };
 
-forum.ChatProtocol.prototype.streamStarted = function(stream) {
+forum.ChatProtocol.prototype.setStream = function(stream) {
 	this.stream_ = stream;
-	forum.logger.info('streamStarted');
+};
+
+forum.ChatProtocol.prototype.sendInitialStrings = function() {
 	this.stream_.sendStrings(['subprotocol:forum']);
 };
 
@@ -158,6 +160,8 @@ forum.startStream = function() {
 		}
 		var stream = new cw.net.Stream(
 			forum.callQueue, forum.lastProto, endpoint, streamPolicy);
+		forum.lastProto.setStream(stream);
+		forum.lastProto.sendInitialStrings();
 		stream.start();
 	});
 };

@@ -52,9 +52,11 @@ whiteboard.WhiteboardProtocol = function() {
 	this.pbLiteSerializer_ = new goog.proto2.PbLiteSerializer();
 };
 
-whiteboard.WhiteboardProtocol.prototype.streamStarted = function(stream) {
+whiteboard.WhiteboardProtocol.prototype.setStream = function(stream) {
 	this.stream_ = stream;
-	whiteboard.logger.info('streamStarted');
+};
+
+whiteboard.WhiteboardProtocol.prototype.sendInitialStrings = function() {
 	this.stream_.sendStrings(['subprotocol:whiteboard']);
 };
 
@@ -213,6 +215,8 @@ whiteboard.startStream = function() {
 		}
 		var stream = new cw.net.Stream(
 			whiteboard.callQueue, whiteboard.lastProto, endpoint, streamPolicy);
+		whiteboard.lastProto.setStream(stream);
+		whiteboard.lastProto.sendInitialStrings();
 		stream.start();
 	});
 };

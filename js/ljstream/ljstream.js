@@ -43,8 +43,13 @@ ljstream.ChatProtocol = function() {
 	this.pbLiteSerializer_ = new goog.proto2.PbLiteSerializer();
 };
 
-ljstream.ChatProtocol.prototype.streamStarted = function(stream) {
+ljstream.ChatProtocol.prototype.setStream = function(stream) {
 	this.stream_ = stream;
+};
+
+ljstream.ChatProtocol.prototype.sendInitialStrings = function() {
+	this.stream_.sendStrings(['subprotocol:ljstream']);
+	this.sendPreferences();
 };
 
 ljstream.ChatProtocol.prototype.streamReset = function(reasonString, applicationLevel) {
@@ -275,11 +280,8 @@ ljstream.startStream = function() {
 		}
 		var stream = new cw.net.Stream(
 			ljstream.callQueue, ljstream.lastProto, endpoint, streamPolicy);
-
-		// assign it early because sendPreferences expects stream_ to exist
-		ljstream.lastProto.stream_ = stream;
-		stream.sendStrings(['subprotocol:ljstream']);
-		ljstream.lastProto.sendPreferences();
+		ljstream.lastProto.setStream(stream);
+		ljstream.lastProto.sendInitialStrings();
 		stream.start();
 	});
 };
