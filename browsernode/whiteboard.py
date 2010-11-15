@@ -17,12 +17,12 @@ from brequire import requireFile, requireFiles
 from browsernode import whiteboard_messages_pb2 as wm
 
 
-requireFile(FilePath(__file__).parent().child('whiteboard.html').path)
-requireFiles([f.path for f in FilePath(__file__).parent().child('static').children()])
-requireFile(FilePath(__file__).parent().child('compiled').child('whiteboard.js').path)
+requireFile(FilePath(__file__).sibling('whiteboard.html').path)
+requireFiles([f.path for f in FilePath(__file__).sibling('static').children()])
+requireFile(FilePath(__file__).sibling('compiled').child('whiteboard.js').path)
 
 class WhiteboardResource(BetterResource):
-	templateFile = FilePath(__file__).parent().child('whiteboard.html')
+	templateFile = FilePath(__file__).sibling('whiteboard.html')
 	dictionary = {'dev_mode': False}
 
 	def __init__(self, fileCache, csrfStopper, cookieInstaller, domain):
@@ -31,7 +31,7 @@ class WhiteboardResource(BetterResource):
 		self.putChild('', MinervaBootstrap(
 			fileCache, csrfStopper, cookieInstaller, self.templateFile,
 				dict(domain=domain, **self.dictionary)))
-		self.putChild('static', BetterFile(FilePath(__file__).parent().child('static').path))
+		self.putChild('static', BetterFile(FilePath(__file__).sibling('static').path))
 
 
 

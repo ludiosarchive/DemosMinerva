@@ -23,7 +23,7 @@ from webmagic.untwist import (
 from brequire import requireFile
 
 
-requireFile(FilePath(__file__).parent().child('index.html').path)
+requireFile(FilePath(__file__).sibling('index.html').path)
 
 class BrowserNodeRoot(BetterResource):
 

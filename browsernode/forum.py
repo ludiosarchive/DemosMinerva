@@ -8,12 +8,12 @@ from minerva.website import MinervaBootstrap
 from brequire import requireFile, requireFiles
 
 
-requireFile(FilePath(__file__).parent().child('forum.html').path)
-requireFiles([f.path for f in FilePath(__file__).parent().child('static').children()])
-requireFile(FilePath(__file__).parent().child('compiled').child('forum.js').path)
+requireFile(FilePath(__file__).sibling('forum.html').path)
+requireFiles([f.path for f in FilePath(__file__).sibling('static').children()])
+requireFile(FilePath(__file__).sibling('compiled').child('forum.js').path)
 
 class ForumResource(BetterResource):
-	templateFile = FilePath(__file__).parent().child('forum.html')
+	templateFile = FilePath(__file__).sibling('forum.html')
 	dictionary = {'dev_mode': False}
 
 	def __init__(self, fileCache, csrfStopper, cookieInstaller, domain):
@@ -22,7 +22,7 @@ class ForumResource(BetterResource):
 		self.putChild('', MinervaBootstrap(
 			fileCache, csrfStopper, cookieInstaller, self.templateFile,
 				dict(domain=domain, **self.dictionary)))
-		self.putChild('static', BetterFile(FilePath(__file__).parent().child('static').path))
+		self.putChild('static', BetterFile(FilePath(__file__).sibling('static').path))
 
 
 

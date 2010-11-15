@@ -212,12 +212,12 @@ class DownloaderFactory(protocol.ReconnectingClientFactory):
 
 
 
-requireFile(FilePath(__file__).parent().child('ljstream.html').path)
-requireFiles([f.path for f in FilePath(__file__).parent().child('static').children()])
-requireFile(FilePath(__file__).parent().child('compiled').child('ljstream.js').path)
+requireFile(FilePath(__file__).sibling('ljstream.html').path)
+requireFiles([f.path for f in FilePath(__file__).sibling('static').children()])
+requireFile(FilePath(__file__).sibling('compiled').child('ljstream.js').path)
 
 class LjStreamResource(BetterResource):
-	templateFile = FilePath(__file__).parent().child('ljstream.html')
+	templateFile = FilePath(__file__).sibling('ljstream.html')
 	dictionary = {'dev_mode': False}
 
 	def __init__(self, fileCache, csrfStopper, cookieInstaller, domain):
@@ -226,7 +226,7 @@ class LjStreamResource(BetterResource):
 		self.putChild('', MinervaBootstrap(
 			fileCache, csrfStopper, cookieInstaller, self.templateFile,
 				dict(domain=domain, **self.dictionary)))
-		self.putChild('static', BetterFile(FilePath(__file__).parent().child('static').path))
+		self.putChild('static', BetterFile(FilePath(__file__).sibling('static').path))
 
 
 
