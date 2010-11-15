@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="charset" content="text/html; charset=utf-8">
 	<title>Forum demo{{ " (dev)" if dev_mode else "" }} | BrowserNode</title>
-	<link rel="stylesheet" type="text/css" href="static/forum.css">
+	<link rel="stylesheet" type="text/css" href="{{ cacheBreakLink('static/forum.css') }}">
 </head>
 <body>
 
@@ -30,7 +30,7 @@ CSRF_TOKEN = {{ dumps(bootstrap.csrf_token) }};
 goog.require('forum');
 </script>
 {% else %}
-<script src="/compiled/forum.js"></script>
+<script src="{{ cacheBreakLink('/compiled/forum.js') }}"></script>
 {% endif %}
 <script>
 __forum_init();

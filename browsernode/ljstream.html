@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="charset" content="text/html; charset=utf-8">
 	<title>LiveJournal stream demo{{ " (dev)" if dev_mode else "" }} | BrowserNode</title>
-	<link rel="stylesheet" type="text/css" href="static/ljstream.css">
+	<link rel="stylesheet" type="text/css" href="{{ cacheBreakLink('static/ljstream.css') }}">
 </head>
 <body>
 
@@ -51,7 +51,7 @@ CSRF_TOKEN = {{ dumps(bootstrap.csrf_token) }};
 goog.require('ljstream');
 </script>
 {% else %}
-<script src="/compiled/ljstream.js"></script>
+<script src="{{ cacheBreakLink('/compiled/ljstream.js') }}"></script>
 {% endif %}
 <script>
 __ljstream_init();

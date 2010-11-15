@@ -15,7 +15,7 @@
 		}
 	</style>
 	{% endif %}
-	<link rel="stylesheet" type="text/css" href="static/whiteboard.css">
+	<link rel="stylesheet" type="text/css" href="{{ cacheBreakLink('static/whiteboard.css') }}">
 </head>
 <body>
 <div id="whiteboard-container">
@@ -70,7 +70,7 @@ CSRF_TOKEN = {{ dumps(bootstrap.csrf_token) }};
 goog.require('whiteboard');
 </script>
 {% else %}
-<script src="/compiled/whiteboard.js"></script>
+<script src="{{ cacheBreakLink('/compiled/whiteboard.js') }}"></script>
 {% endif %}
 <script>
 __whiteboard_init();
