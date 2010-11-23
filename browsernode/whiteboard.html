@@ -58,7 +58,7 @@
 // We don't define anything on "window" to avoid possible IE stack limit of 12
 // when calling through window.
 #}
-CSRF_TOKEN = {{ dumps(bootstrap.csrf_token) }};
+CSRF_TOKEN = {{ htmldumps(bootstrap.csrf_token) }};
 {{ bootstrap.getXDRSetup(dev_mode, domain) }}
 </script>
 
