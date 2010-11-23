@@ -57,6 +57,11 @@ class BrowserNodeRoot(BetterResource):
 		testres_Coreweb = FilePath(cwtools.__path__[0]).child('testres').path
 		self.putChild('@testres_Coreweb', BetterFile(testres_Coreweb))
 
+		self.putChild('browsernode_static', BetterFile(
+			FilePath(__file__).sibling('static').path,
+			fileCache=fileCache,
+			rewriteCss=True,
+			cacheOptions=cacheOptions))
 		self.putChild('httpface', httpFace)
 		commonArgs = (fileCache, csrfStopper, cookieInstaller, domain, cacheOptions)
 		self.putChild('forum', ForumResource(*commonArgs))

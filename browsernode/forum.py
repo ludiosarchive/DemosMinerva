@@ -22,11 +22,6 @@ class ForumResource(BetterResource):
 		self.putChild('', MinervaBootstrap(
 			fileCache, csrfStopper, cookieInstaller, self.templateFile,
 				dict(domain=domain, **self.dictionary)))
-		self.putChild('static', BetterFile(
-			FilePath(__file__).sibling('static').path,
-			fileCache=fileCache,
-			rewriteCss=True,
-			cacheOptions=cacheOptions))
 
 
 
