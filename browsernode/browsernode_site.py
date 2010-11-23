@@ -18,7 +18,8 @@ from browsernode.whiteboard import WhiteboardResource, WhiteboardDevResource, Wh
 from browsernode.ljstream import LjStreamResource, LjStreamDevResource, LjStreamFactory
 
 from webmagic.untwist import (
-	CookieInstaller, BetterResource, BetterFile, ConnectionTrackingSite)
+	CacheOptions, CookieInstaller, BetterResource, BetterFile,
+	ConnectionTrackingSite)
 
 from brequire import requireFile
 
@@ -37,6 +38,12 @@ class BrowserNodeRoot(BetterResource):
 		self._reactor = reactor
 
 		JSPATH = FilePath(os.environ['JSPATH'])
+		# Cache for just two days so that corrupt cached copies don't break
+		# users for a long time.
+		cacheOptions = CacheOptions(
+			cacheTime=60*60*24*2,
+			httpCachePublic=False,
+			httpsCachePublic=True)
 
 		minervaPath = FilePath(minerva.__path__[0])
 		browsernodePath = FilePath(browsernode.__path__[0])
@@ -51,7 +58,7 @@ class BrowserNodeRoot(BetterResource):
 		self.putChild('@testres_Coreweb', BetterFile(testres_Coreweb))
 
 		self.putChild('httpface', httpFace)
-		commonArgs = (fileCache, csrfStopper, cookieInstaller, domain)
+		commonArgs = (fileCache, csrfStopper, cookieInstaller, domain, cacheOptions)
 		self.putChild('forum', ForumResource(*commonArgs))
 		self.putChild('forum_dev', ForumDevResource(*commonArgs))
 		self.putChild('whiteboard', WhiteboardResource(*commonArgs))
