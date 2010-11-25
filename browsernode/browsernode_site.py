@@ -31,6 +31,7 @@ class BrowserNodeRoot(BetterResource):
 	def __init__(self, reactor, httpFace, fileCache, csrfStopper, cookieInstaller, domain):
 		import cwtools
 		import minerva
+		import googstyle
 		import browsernode
 
 		BetterResource.__init__(self)
@@ -61,6 +62,9 @@ class BrowserNodeRoot(BetterResource):
 			FilePath(__file__).sibling('static').path,
 			fileCache=fileCache,
 			rewriteCss=True,
+			cacheOptions=cacheOptions))
+		self.putChild('goog-images', BetterFile(
+			FilePath(googstyle.__file__).sibling('goog-images').path,
 			cacheOptions=cacheOptions))
 		self.putChild('httpface', httpFace)
 		commonArgs = (fileCache, csrfStopper, cookieInstaller, domain, cacheOptions)
