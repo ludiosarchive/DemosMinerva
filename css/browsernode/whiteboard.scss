@@ -1,0 +1,87 @@
+@import "goog/inline-block.scss";
+@import "goog/palette.scss";
+@import "goog/custom-button.scss";
+
+
+* {
+	font-family: Verdana, sans-serif;
+	font-size: 13px;
+}
+
+pre, code {
+	font-family: Consolas, monospace;
+	font-size: 0.8em;
+}
+
+body, html {
+	background-color: #eee;
+}
+
+#whiteboard {
+	width: 800px;
+}
+
+#whiteboard-doc {
+
+}
+
+.clearer {
+	clear: both;
+}
+
+#whiteboard-controls-left {
+	float: left;
+}
+
+#whiteboard-controls-right {
+	float: right;
+}
+
+.clear-board-button {
+}
+
+#whiteboard-controls-left * {
+	vertical-align: top;
+}
+
+#whiteboard-cp {
+}
+
+#whiteboard-cp-value {
+	width: 148px;
+	height: 54px;
+	line-height: 54px; /* to vertically center */
+	border: 1px solid #666;
+	margin: 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#drawAreaContainer {
+	border: 2px solid #aaa;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	/* float just to constrain width */
+	float: left;
+	margin-bottom: 9px;
+}
+
+#drawAreaOverlay {
+	width: 800px;
+	height: 600px;
+	position: absolute;
+	z-index: 2;
+}
+
+#drawArea {
+	position: relative;
+	width: 800px;
+	height: 600px;
+}
+
+#log {
+	clear: both;
+}
