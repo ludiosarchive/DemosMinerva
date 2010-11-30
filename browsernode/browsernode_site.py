@@ -18,7 +18,7 @@ from browsernode.whiteboard import WhiteboardResource, WhiteboardDevResource, Wh
 from browsernode.ljstream import LjStreamResource, LjStreamDevResource, LjStreamFactory
 
 from webmagic.untwist import (
-	CacheOptions, CookieInstaller, BetterResource, BetterFile,
+	ResponseCacheOptions, CookieInstaller, BetterResource, BetterFile,
 	ConnectionTrackingSite)
 
 from brequire import requireFile
@@ -41,7 +41,7 @@ class BrowserNodeRoot(BetterResource):
 		JSPATH = FilePath(os.environ['JSPATH'])
 		# Cache for just two days so that corrupt cached copies don't break
 		# users for a long time.
-		cacheOptions = CacheOptions(
+		responseCacheOptions = ResponseCacheOptions(
 			cacheTime=60*60*24*2,
 			httpCachePublic=False,
 			httpsCachePublic=True)
@@ -62,12 +62,13 @@ class BrowserNodeRoot(BetterResource):
 			FilePath(__file__).sibling('static').path,
 			fileCache=fileCache,
 			rewriteCss=True,
-			cacheOptions=cacheOptions))
+			responseCacheOptions=responseCacheOptions))
 		self.putChild('goog-images', BetterFile(
 			FilePath(googstyle.__file__).sibling('goog-images').path,
-			cacheOptions=cacheOptions))
+			responseCacheOptions=responseCacheOptions))
 		self.putChild('httpface', httpFace)
-		commonArgs = (fileCache, csrfStopper, cookieInstaller, domain, cacheOptions)
+		commonArgs = (fileCache, csrfStopper, cookieInstaller, domain,
+			responseCacheOptions)
 		self.putChild('forum', ForumResource(*commonArgs))
 		self.putChild('forum_dev', ForumDevResource(*commonArgs))
 		self.putChild('whiteboard', WhiteboardResource(*commonArgs))

@@ -25,7 +25,8 @@ class WhiteboardResource(BetterResource):
 	templateFile = FilePath(__file__).sibling('whiteboard.html')
 	dictionary = {'dev_mode': False}
 
-	def __init__(self, fileCache, csrfStopper, cookieInstaller, domain, cacheOptions):
+	def __init__(self, fileCache, csrfStopper, cookieInstaller, domain,
+	responseCacheOptions):
 		BetterResource.__init__(self)
 
 		self.putChild('', MinervaBootstrap(
