@@ -3,11 +3,11 @@
 
 targets = [
 	{"inputs": ["whiteboard/whiteboard.js"],
-	"output": "browsernode/compiled/whiteboard.js"},
+	"output": "browsernode/static/whiteboard.js"},
 
 	{"inputs": ["forum/forum.js"],
-	"output": "browsernode/compiled/forum.js"},
+	"output": "browsernode/static/forum.js"},
 
 	{"inputs": ["ljstream/ljstream.js"],
-	"output": "browsernode/compiled/ljstream.js"},
+	"output": "browsernode/static/ljstream.js"},
 ]

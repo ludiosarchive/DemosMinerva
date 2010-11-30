@@ -49,7 +49,6 @@ class BrowserNodeRoot(BetterResource):
 		minervaPath = FilePath(minerva.__path__[0])
 		browsernodePath = FilePath(browsernode.__path__[0])
 		self.putChild('', BetterFile(browsernodePath.child('index.html').path))
-		self.putChild('compiled', BetterFile(browsernodePath.child('compiled').path))
 		self.putChild('JSPATH', BetterFile(JSPATH.path))
 		self.putChild('compiled_client', BetterFile(minervaPath.child('compiled_client').path))
 		self.putChild('@tests', testing.TestPage(['browsernode'], JSPATH))
