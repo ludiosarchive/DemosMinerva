@@ -283,6 +283,7 @@ ljstream.startStream = function() {
 		ljstream.lastProto.setStream(stream);
 		ljstream.lastProto.sendInitialStrings();
 		stream.start();
+		return null;
 	});
 };
 

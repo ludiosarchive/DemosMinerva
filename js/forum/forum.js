@@ -163,6 +163,7 @@ forum.startStream = function() {
 		forum.lastProto.setStream(stream);
 		forum.lastProto.sendInitialStrings();
 		stream.start();
+		return null;
 	});
 };
 

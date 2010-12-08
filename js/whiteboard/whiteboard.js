@@ -218,6 +218,7 @@ whiteboard.startStream = function() {
 		whiteboard.lastProto.setStream(stream);
 		whiteboard.lastProto.sendInitialStrings();
 		stream.start();
+		return null;
 	});
 };
 
