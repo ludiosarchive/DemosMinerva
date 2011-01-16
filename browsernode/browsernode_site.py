@@ -21,9 +21,12 @@ from webmagic.untwist import (
 	ResponseCacheOptions, CookieInstaller, BetterResource, BetterFile,
 	ConnectionTrackingSite)
 
-from brequire import requireFile
+import googstyle
+
+from brequire import requireFile, requireFiles
 
 
+requireFiles([f.path for f in FilePath(googstyle.__file__).sibling('goog-images').children()])
 requireFile(FilePath(__file__).sibling('index.html').path)
 
 class BrowserNodeRoot(BetterResource):
@@ -31,7 +34,6 @@ class BrowserNodeRoot(BetterResource):
 	def __init__(self, reactor, httpFace, fileCache, csrfStopper, cookieInstaller, domain):
 		import cwtools
 		import minerva
-		import googstyle
 		import browsernode
 
 		BetterResource.__init__(self)
