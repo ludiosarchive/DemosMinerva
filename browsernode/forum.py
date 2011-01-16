@@ -10,7 +10,7 @@ from brequire import requireFile, requireFiles
 
 requireFile(FilePath(__file__).sibling('forum.html').path)
 requireFiles([f.path for f in FilePath(__file__).sibling('static').children()])
-requireFile(FilePath(__file__).sibling('compiled').child('forum.js').path)
+requireFile(FilePath(__file__).sibling('static').child('forum.js').path)
 
 class ForumResource(BetterResource):
 	templateFile = FilePath(__file__).sibling('forum.html')
