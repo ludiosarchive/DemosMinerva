@@ -158,7 +158,8 @@ class DownloaderFactory(protocol.ReconnectingClientFactory):
 	factor = 1.8
 
 	def __init__(self, clock, feedReceivedCallable):
-		self._clock = clock
+		# Note: ReconnectingClientFactory also uses self.clock
+		self.clock = clock
 		self._feedReceivedCallable = feedReceivedCallable
 		self._activityDc = None
 		self.protos = []
@@ -177,7 +178,7 @@ class DownloaderFactory(protocol.ReconnectingClientFactory):
 
 	def resetActivityTimeout(self):
 		self.stopActivityTimeout()
-		self._activityDc = self._clock.callLater(10, self._noActivity)
+		self._activityDc = self.clock.callLater(10, self._noActivity)
 
 
 	def startedConnecting(self, connector):
