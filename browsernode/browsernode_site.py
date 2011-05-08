@@ -31,16 +31,19 @@ requireFile(FilePath(__file__).sibling('index.html').path)
 
 class BrowserNodeRoot(BetterResource):
 
-	def __init__(self, reactor, httpFace, fileCache, csrfStopper, cookieInstaller, domain):
+	def __init__(self, reactor, httpFace, fileCache, csrfStopper, cookieInstaller, domain, closureLibrary):
 		import cwtools
 		import minerva
 		import browsernode
+
+		import js_coreweb
+		import js_minerva
+		import js_browsernode
 
 		BetterResource.__init__(self)
 
 		self._reactor = reactor
 
-		JSPATH = FilePath(os.environ['JSPATH'])
 		# Cache for just two days so that corrupt cached copies don't break
 		# users for a long time.
 		responseCacheOptions = ResponseCacheOptions(
@@ -51,11 +54,13 @@ class BrowserNodeRoot(BetterResource):
 		minervaPath = FilePath(minerva.__path__[0])
 		browsernodePath = FilePath(browsernode.__path__[0])
 		self.putChild('', BetterFile(browsernodePath.child('index.html').path))
-		self.putChild('JSPATH', BetterFile(JSPATH.path))
+		self.putChild('closure-library', BetterFile(closureLibrary.path))
+		self.putChild('js_coreweb', BetterFile(FilePath(js_coreweb.__file__).parent().path))
+		self.putChild('js_minerva', BetterFile(FilePath(js_coreweb.__file__).parent().path))
+		self.putChild('js_browsernode', BetterFile(FilePath(js_coreweb.__file__).parent().path))
 		self.putChild('compiled_client', BetterFile(
 			minervaPath.child('compiled_client').path,
 			responseCacheOptions=responseCacheOptions))
-		self.putChild('@tests', testing.TestPage(['browsernode'], JSPATH))
 
 		# testres_Coreweb always needed for running tests.
 		testres_Coreweb = FilePath(cwtools.__path__[0]).child('testres').path
@@ -83,7 +88,7 @@ class BrowserNodeRoot(BetterResource):
 
 
 
-def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain):
+def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain, closureLibrary):
 	clock = reactor
 
 	cookieInstaller = CookieInstaller(randgen.secureRandom)
@@ -108,7 +113,8 @@ def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain):
 	httpFace = HttpFace(clock, tracker, firewall)
 	socketFace = SocketFace(clock, tracker, firewall, policyString=policyString)
 
-	root = BrowserNodeRoot(reactor, httpFace, fileCache, csrfStopper, cookieInstaller, domain)
+	root = BrowserNodeRoot(reactor, httpFace, fileCache, csrfStopper,
+		cookieInstaller, domain, closureLibrary)
 	httpSite = ConnectionTrackingSite(root, timeout=75)
 
 	return (socketFace, httpSite)
