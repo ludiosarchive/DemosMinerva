@@ -82,7 +82,7 @@ def makeService(config):
 	csrfSecret = config['secret']
 	domain = config['domain']
 
-	doReloading = bool(os.environ.get('PYRELOADING'))
+	doReloading = bool(int(os.environ.get('PYRELOADING', '0')))
 	fileCache = FileCache(lambda: reactor.seconds(), 0.1 if doReloading else -1)
 	socketFace, httpSite = browsernode_site.makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain)
 	httpSite.displayTracebacks = not config["notracebacks"]
