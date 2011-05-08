@@ -1,8 +1,0 @@
-package browsernode.whiteboard_messages;
-
-import "js/javascript_package.proto";
-option (javascript_package) = "forum";
-
-message NewNode {
-	required string body = 1;
-}

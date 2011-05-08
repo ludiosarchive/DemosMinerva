@@ -13,7 +13,6 @@ from minerva.website import (
 	CsrfTransportFirewall, NoopTransportFirewall, CsrfStopper, XDRFrame,
 	XDRFrameDev)
 
-from browsernode.forum import ForumResource, ForumDevResource, ForumFactory
 from browsernode.whiteboard import WhiteboardResource, WhiteboardDevResource, WhiteboardFactory
 from browsernode.ljstream import LjStreamResource, LjStreamDevResource, LjStreamFactory
 
@@ -77,8 +76,6 @@ class BrowserNodeRoot(BetterResource):
 		self.putChild('httpface', httpFace)
 		commonArgs = (fileCache, csrfStopper, cookieInstaller, domain,
 			responseCacheOptions)
-		self.putChild('forum', ForumResource(*commonArgs))
-		self.putChild('forum_dev', ForumDevResource(*commonArgs))
 		self.putChild('whiteboard', WhiteboardResource(*commonArgs))
 		self.putChild('whiteboard_dev', WhiteboardDevResource(*commonArgs))
 		self.putChild('livejournal-stream', LjStreamResource(*commonArgs))
@@ -105,7 +102,6 @@ def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain, closureLibrary):
 	firewall = CsrfTransportFirewall(NoopTransportFirewall(), csrfStopper)
 	tracker = StreamTracker(reactor, clock, SuperFactory(
 		clock, subfactories={
-			'forum': ForumFactory(clock),
 			'whiteboard': WhiteboardFactory(clock),
 			'ljstream': LjStreamFactory(reactor, clock),
 		}))
