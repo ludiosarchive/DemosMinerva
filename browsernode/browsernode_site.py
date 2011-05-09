@@ -4,7 +4,6 @@ from twisted.python.filepath import FilePath
 from twisted.internet.task import LoopingCall
 
 from cwtools import testing
-from mypy import randgen
 
 from minerva.newlink import (
 	SuperFactory, StreamTracker, HttpFace, SocketFace)
@@ -88,7 +87,7 @@ class BrowserNodeRoot(BetterResource):
 def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain, closureLibrary):
 	clock = reactor
 
-	cookieInstaller = CookieInstaller(randgen.secureRandom)
+	cookieInstaller = CookieInstaller(os.urandom)
 
 	# In the real world, you might want this to be more restrictive.
 	# Minerva has its own CSRF protection, so it's not critical.
