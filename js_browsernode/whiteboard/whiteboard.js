@@ -205,7 +205,8 @@ whiteboard.clickListen = goog.events.listen(
 
 
 whiteboard.startStream = function() {
-	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
+	var streamPolicy = new cw.net.demo.DemoStreamPolicy(
+		'browsernode_site_uaid', 'browsernode_site_uaid_secure');
 	whiteboard.lastProto = new whiteboard.WhiteboardProtocol();
 	whiteboard.activityDetected(null);
 	var endpointD = cw.net.demo.getEndpointByQueryArgs(whiteboard.callQueue);

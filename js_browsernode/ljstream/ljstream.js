@@ -270,7 +270,8 @@ ljstream.appendPost = function(title, url, body) {
 
 
 ljstream.startStream = function() {
-	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
+	var streamPolicy = new cw.net.demo.DemoStreamPolicy(
+		'browsernode_site_uaid', 'browsernode_site_uaid_secure');
 	ljstream.lastProto = new ljstream.ChatProtocol();
 	ljstream.activityDetected(null);
 	var endpointD = cw.net.demo.getEndpoint(ljstream.callQueue, true, false, '/httpface/');

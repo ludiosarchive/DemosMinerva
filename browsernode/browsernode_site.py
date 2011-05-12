@@ -87,7 +87,8 @@ class BrowserNodeRoot(BetterResource):
 def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain, closureLibrary):
 	clock = reactor
 
-	cookieInstaller = CookieInstaller(os.urandom)
+	cookieInstaller = CookieInstaller(
+		os.urandom, 'browsernode_site_uaid', 'browsernode_site_uaid_secure')
 
 	# In the real world, you might want this to be more restrictive.
 	# Minerva has its own CSRF protection, so it's not critical.
