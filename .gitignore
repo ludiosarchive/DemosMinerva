@@ -4,5 +4,6 @@
 /MANIFEST
 *.pyc
 *.pyo
+/.sass-cache
 /twistd.pid
 /twisted/plugins/dropin.cache
