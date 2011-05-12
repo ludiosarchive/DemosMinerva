@@ -34,8 +34,3 @@ $COMMON \
 --namespace="ljstream" \
 --output_file=browsernode/static/ljstream.js \
 2>&1 | tee browsernode/static/ljstream.js.log
-
-$COMMON \
---namespace="forum" \
---output_file=browsernode/static/forum.js \
-2>&1 | tee browsernode/static/forum.js.log
