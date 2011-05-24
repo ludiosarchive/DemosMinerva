@@ -5,7 +5,7 @@ from twisted.python.filepath import FilePath
 
 from webmagic.untwist import BetterResource, BetterFile
 
-from minerva.newlink import BasicMinervaProtocol, BasicMinervaFactory
+from minerva.newlink import BasicMinervaFactory
 from minerva.website import MinervaBootstrap
 from minerva.decoders import strictDecodeOne
 
@@ -40,7 +40,7 @@ class WhiteboardDevResource(WhiteboardResource):
 
 
 
-class WhiteboardProtocol(BasicMinervaProtocol):
+class WhiteboardProtocol(object):
 
 	def __init__(self, clock):
 		self._clock = clock
@@ -80,21 +80,16 @@ class WhiteboardProtocol(BasicMinervaProtocol):
 		self.factory.addCircle(point.x, point.y, point.color, dontTell=(self,))
 
 
-	def stringsReceived(self, strings):
-		"""
-		Note: C{strings} may be a mix of C{str}s and C{StringFragment}s.
-		"""
+	def stringReceived(self, s):
 		try:
-			for s in strings:
-				s = str(s) # maybe StringFragment -> str
-				payload = strictDecodeOne(s)
-				if len(payload) == 2:
-					msgType = payload[0]
-					body = payload[1]
-					if msgType == 1: # new circle
-						self._handleNewCircle(body)
-					elif msgType == 2: # reset
-						self.factory.clearBoard(dontTell=(self,))
+			payload = strictDecodeOne(s)
+			if len(payload) == 2:
+				msgType = payload[0]
+				body = payload[1]
+				if msgType == 1: # new circle
+					self._handleNewCircle(body)
+				elif msgType == 2: # reset
+					self.factory.clearBoard(dontTell=(self,))
 		except:
 			log.err()
 

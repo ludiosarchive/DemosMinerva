@@ -9,7 +9,7 @@ from twisted.internet import protocol
 from twisted.python import log
 
 from webmagic.untwist import BetterResource, BetterFile
-from minerva.newlink import BasicMinervaProtocol, BasicMinervaFactory
+from minerva.newlink import BasicMinervaFactory
 from minerva.decoders import strictDecodeOne
 from minerva.website import MinervaBootstrap
 from brequire import requireFile, requireFiles
@@ -236,7 +236,7 @@ class LjStreamDevResource(LjStreamResource):
 
 
 
-class LjStreamProtocol(BasicMinervaProtocol):
+class LjStreamProtocol(object):
 
 	def __init__(self, clock):
 		self._clock = clock
@@ -262,21 +262,17 @@ class LjStreamProtocol(BasicMinervaProtocol):
 		self.includeRussianPosts = sp.include_russian_posts
 
 
-	def stringsReceived(self, strings):
-		"""
-		Note: C{strings} may be a mix of C{str}s and C{StringFragment}s.
-		"""
+	def stringReceived(self, s):
 		try:
-			for s in strings:
-				s = str(s) # maybe StringFragment -> str
-				payload = strictDecodeOne(s)
-				if len(payload) == 2:
-					msgType = payload[0]
-					body = payload[1]
-					if msgType == 2: # SetPreferences
-						self._setPreferences(body)
+			payload = strictDecodeOne(s)
+			if len(payload) == 2:
+				msgType = payload[0]
+				body = payload[1]
+				if msgType == 2: # SetPreferences
+					self._setPreferences(body)
 		except:
 			log.err()
+
 
 
 class LjStreamFactory(BasicMinervaFactory):
