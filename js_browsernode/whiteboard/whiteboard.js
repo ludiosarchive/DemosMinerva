@@ -96,21 +96,15 @@ whiteboard.WhiteboardProtocol.prototype.handleString_ = function(s) {
 	}
 };
 
+// TODO: add back "suspend drawing" / "resume drawing" by implementing
+// two new commands.  Need suspend because CanvasGraphics is slow to
+// redraw - exhbits O(N^2) behavior, at least in Mobile WebKit.  See graphics.js.
+
 /**
- * @param {!Array.<string>} strings
+ * @param {string} s
  */
-whiteboard.WhiteboardProtocol.prototype.stringsReceived = function(strings) {
-	// Suspend because CanvasGraphics is slow to redraw - exhbits O(N^2)
-	// behavior, at least in WebKit.  It's especially bad with iPhone 2G.
-	whiteboard.lastDrawArea.suspend();
-	try {
-		for(var i=0; i < strings.length; i++) {
-			var s = strings[i];
-			this.handleString_(s);
-		}
-	} finally {
-		whiteboard.lastDrawArea.resume();
-	}
+whiteboard.WhiteboardProtocol.prototype.stringReceived = function(s) {
+	this.handleString_(s);
 };
 
 /**

@@ -99,13 +99,10 @@ ljstream.ChatProtocol.prototype.sendPreferences = function() {
 };
 
 /**
- * @param {!Array.<string>} strings
+ * @param {string} s
  */
-ljstream.ChatProtocol.prototype.stringsReceived = function(strings) {
-	for(var i=0; i < strings.length; i++) {
-		var s = strings[i];
-		this.handleString_(s);
-	}
+ljstream.ChatProtocol.prototype.stringReceived = function(s) {
+	this.handleString_(s);
 };
 
 /**
