@@ -3,8 +3,6 @@ import os
 from twisted.python.filepath import FilePath
 from twisted.internet.task import LoopingCall
 
-from cwtools import testing
-
 from minerva.newlink import (
 	SuperFactory, StreamTracker, HttpFace, SocketFace)
 
@@ -30,7 +28,7 @@ requireFile(FilePath(__file__).sibling('index.html').path)
 class BrowserNodeRoot(BetterResource):
 
 	def __init__(self, reactor, httpFace, fileCache, csrfStopper, cookieInstaller, domain, closureLibrary):
-		import cwtools
+		import coreweb
 		import minerva
 		import browsernode
 
@@ -61,7 +59,7 @@ class BrowserNodeRoot(BetterResource):
 			responseCacheOptions=responseCacheOptions))
 
 		# testres_Coreweb always needed for running tests.
-		testres_Coreweb = FilePath(cwtools.__path__[0]).child('testres').path
+		testres_Coreweb = FilePath(coreweb.__path__[0]).child('testres').path
 		self.putChild('@testres_Coreweb', BetterFile(testres_Coreweb))
 
 		self.putChild('browsernode_static', BetterFile(
