@@ -9,7 +9,6 @@ from twisted.internet import protocol
 from twisted.python import log
 
 from webmagic.untwist import BetterResource, BetterFile
-from minerva.newlink import BasicMinervaFactory
 from minerva.decoders import strictDecodeOne
 from minerva.website import MinervaBootstrap
 from brequire import requireFile, requireFiles
@@ -275,8 +274,7 @@ class LjStreamProtocol(object):
 
 
 
-class LjStreamFactory(BasicMinervaFactory):
-	protocol = LjStreamProtocol
+class LjStreamFactory(object):
 
 	def __init__(self, reactor, clock):
 		self._reactor = reactor
@@ -331,7 +329,7 @@ class LjStreamFactory(BasicMinervaFactory):
 
 
 	def buildProtocol(self):
-		stream = self.protocol(self._clock)
+		stream = LjStreamProtocol(self._clock)
 		stream.factory = self
 		return stream
 

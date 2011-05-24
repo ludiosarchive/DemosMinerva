@@ -5,7 +5,6 @@ from twisted.python.filepath import FilePath
 
 from webmagic.untwist import BetterResource, BetterFile
 
-from minerva.newlink import BasicMinervaFactory
 from minerva.website import MinervaBootstrap
 from minerva.decoders import strictDecodeOne
 
@@ -95,8 +94,7 @@ class WhiteboardProtocol(object):
 
 
 
-class WhiteboardFactory(BasicMinervaFactory):
-	protocol = WhiteboardProtocol
+class WhiteboardFactory(object):
 	maxInactivity = 20 * 60
 
 	def __init__(self, clock):
@@ -149,6 +147,6 @@ class WhiteboardFactory(BasicMinervaFactory):
 
 
 	def buildProtocol(self):
-		stream = self.protocol(self._clock)
+		stream = WhiteboardProtocol(self._clock)
 		stream.factory = self
 		return stream
