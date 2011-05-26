@@ -15,5 +15,5 @@ looper python -N \
 -h tcp:80:interface=$INTERFACE \
 -h ssl:443:privateKey=dev_keys/x.linuxwan.com-key.pem:interface=$INTERFACE \
 -m tcp:843:interface=$INTERFACE \
---secretfile dev_keys/csrf_secret \
+--secret-file dev_keys/csrf_secret \
 --domain 'devbrowsernode.com' \

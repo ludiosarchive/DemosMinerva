@@ -15,9 +15,9 @@ from browsernode import browsernode_site
 
 class Options(sharedopts.WebOptions):
 	"""
-	Define the options accepted by the I{twistd minervarun} plugin.
+	Define the options accepted by the I{twistd browsernode_site} plugin.
 	"""
-	synopsis = "[minervarun options]"
+	synopsis = "[browsernode_site options]"
 
 	optParameters = [
 		["http", "h", None,
@@ -91,7 +91,7 @@ def makeService(config):
 	fileCache = FileCache(lambda: reactor.seconds(), 0.1 if doReloading else -1)
 	socketFace, httpSite = browsernode_site.makeMinervaAndHttp(
 		reactor, fileCache, csrfSecret, domain, closureLibrary)
-	httpSite.displayTracebacks = not config["notracebacks"]
+	httpSite.displayTracebacks = not config["no-tracebacks"]
 
 	for httpStrport in config['http']:
 		httpServer = strports.service(httpStrport, httpSite)
