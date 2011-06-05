@@ -6,9 +6,7 @@ from twisted.internet.task import LoopingCall
 from minerva.newlink import (
 	SuperFactory, StreamTracker, HttpFace, SocketFace)
 
-from minerva.website import (
-	CsrfTransportFirewall, NoopTransportFirewall, CsrfStopper, XDRFrame,
-	XDRFrameDev)
+from minerva.website import CsrfStopper, XDRFrame, XDRFrameDev
 
 from browsernode.whiteboard import WhiteboardResource, WhiteboardDevResource, WhiteboardFactory
 from browsernode.ljstream import LjStreamResource, LjStreamDevResource, LjStreamFactory
@@ -97,15 +95,14 @@ def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain, closureLibrary):
 </cross-domain-policy>'''.strip() % (domain, domain)
 
 	csrfStopper = CsrfStopper(csrfSecret)
-	firewall = CsrfTransportFirewall(NoopTransportFirewall(), csrfStopper)
 	tracker = StreamTracker(reactor, clock, SuperFactory(
 		clock, subfactories={
 			'whiteboard': WhiteboardFactory(clock),
 			'ljstream': LjStreamFactory(reactor, clock),
 		}))
 
-	httpFace = HttpFace(clock, tracker, firewall)
-	socketFace = SocketFace(clock, tracker, firewall, policyString=policyString)
+	httpFace = HttpFace(clock, tracker)
+	socketFace = SocketFace(clock, tracker, policyString=policyString)
 
 	root = BrowserNodeRoot(reactor, httpFace, fileCache, csrfStopper,
 		cookieInstaller, domain, closureLibrary)
