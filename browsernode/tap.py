@@ -38,8 +38,9 @@ class Options(sharedopts.WebOptions):
 		# some browsers will allow setting document.domain to 'com',
 		# for example.)  We require that the document.domain be
 		# manually specified.
-		["domain", "d", None, "The domain to set document.domain values to.  " +
-			"Also used for Flash socket policy.  Do not include the port number."],
+		["domain", "d", None, "The domain to set document.domain values to. " +
+			"Do not include the port number.  If this option is not specified, " +
+			"Minerva over HTTP might work simultaneously in just one or two tabs."],
 
 		["closure-library", "c", "../closure-library",
 			'Path to closure-library'],
@@ -85,6 +86,15 @@ def makeService(config):
 
 	csrfSecret = config['secret']
 	domain = config['domain']
+
+	if not domain:
+		reactor.callWhenRunning(log.msg,
+			"Warning: --domain not specified.  Browser clients will "
+			"only connect to the default hostname; they will not use subdomains "
+			"to bypass per-hostname connection limits.  Minerva over "
+			"HTTP might work simultaneously in just one or two "
+			"tabs.  Additional connections may stall erratically.")
+
 	closureLibrary = FilePath(config['closure-library'])
 
 	doReloading = bool(int(os.environ.get('PYRELOADING', '0')))
