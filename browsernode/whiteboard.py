@@ -11,9 +11,13 @@ from minerva.decoders import strictDecodeOne
 from protojson.pbliteserializer import PbLiteSerializer
 from protojson.error import PbDecodeError
 
-from brequire import requireFile, requireFiles
-
 from browsernode import whiteboard_messages_pb2 as wm
+
+try:
+	from brequire import requireFile, requireFiles
+except ImportError:
+	requireFile = requireFiles = lambda _: None
+
 
 
 requireFile(FilePath(__file__).sibling('whiteboard.html').path)

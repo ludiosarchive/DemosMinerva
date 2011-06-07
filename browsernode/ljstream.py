@@ -11,7 +11,6 @@ from twisted.python import log
 from webmagic.untwist import BetterResource, BetterFile
 from minerva.decoders import strictDecodeOne
 from minerva.website import MinervaBootstrap
-from brequire import requireFile, requireFiles
 
 from protojson.pbliteserializer import PbLiteSerializer
 from protojson.error import PbDecodeError
@@ -19,6 +18,12 @@ from protojson.error import PbDecodeError
 from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
 
 from browsernode import ljstream_messages_pb2 as ljm
+
+try:
+	from brequire import requireFile, requireFiles
+except ImportError:
+	requireFile = requireFiles = lambda _: None
+
 
 
 def unescapeXhtml(s):

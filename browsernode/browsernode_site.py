@@ -17,7 +17,11 @@ from webmagic.untwist import (
 
 import googstyle
 
-from brequire import requireFile, requireFiles
+try:
+	from brequire import requireFile, requireFiles
+except ImportError:
+	requireFile = requireFiles = lambda _: None
+
 
 
 requireFiles([f.path for f in FilePath(googstyle.__file__).sibling('goog-images').children()])
