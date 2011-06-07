@@ -25,7 +25,7 @@ requireFile(FilePath(__file__).sibling('index.html').path)
 
 class BrowserNodeRoot(BetterResource):
 
-	def __init__(self, reactor, httpFace, fileCache, csrfStopper, cookieInstaller, domain, closureLibrary):
+	def __init__(self, httpFace, fileCache, csrfStopper, cookieInstaller, domain, closureLibrary):
 		import coreweb
 		import minerva
 		import browsernode
@@ -35,8 +35,6 @@ class BrowserNodeRoot(BetterResource):
 		import js_browsernode
 
 		BetterResource.__init__(self)
-
-		self._reactor = reactor
 
 		# Cache for just two days so that corrupt cached copies don't break
 		# users for a long time.
@@ -95,7 +93,7 @@ def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain, closureLibrary):
 </cross-domain-policy>'''.strip() % (domain, domain)
 
 	csrfStopper = CsrfStopper(csrfSecret)
-	tracker = StreamTracker(reactor, clock, SuperFactory(
+	tracker = StreamTracker(clock, SuperFactory(
 		clock, subfactories={
 			'whiteboard': WhiteboardFactory(clock),
 			'ljstream': LjStreamFactory(reactor, clock),
@@ -104,7 +102,7 @@ def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain, closureLibrary):
 	httpFace = HttpFace(clock, tracker)
 	socketFace = SocketFace(clock, tracker, policyString=policyString)
 
-	root = BrowserNodeRoot(reactor, httpFace, fileCache, csrfStopper,
+	root = BrowserNodeRoot(httpFace, fileCache, csrfStopper,
 		cookieInstaller, domain, closureLibrary)
 	httpSite = ConnectionTrackingSite(root, timeout=75)
 
