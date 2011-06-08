@@ -4,7 +4,7 @@ from twisted.python.filepath import FilePath
 from twisted.internet.task import LoopingCall
 
 from minerva.newlink import (
-	SuperFactory, StreamTracker, HttpFace, SocketFace)
+	SubprotocolFactory, StreamTracker, HttpFace, SocketFace)
 
 from minerva.website import CsrfStopper, XDRFrame, XDRFrameDev
 
@@ -97,7 +97,7 @@ def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain, closureLibrary):
 </cross-domain-policy>'''.strip() % (domain, domain)
 
 	csrfStopper = CsrfStopper(csrfSecret)
-	tracker = StreamTracker(clock, SuperFactory(
+	tracker = StreamTracker(clock, SubprotocolFactory(
 		clock, subfactories={
 			'whiteboard': WhiteboardFactory(clock),
 			'ljstream': LjStreamFactory(reactor, clock),
