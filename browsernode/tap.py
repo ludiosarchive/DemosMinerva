@@ -11,6 +11,8 @@ from webmagic.filecache import FileCache
 from browsernode import browsernode_site
 
 
+_defaultClosureLibrary = FilePath(__file__).parent().parent().parent().child("closure-library").path
+assert isinstance(_defaultClosureLibrary, str), type(_defaultClosureLibrary)
 
 class Options(usage.Options):
 	"""
@@ -41,7 +43,7 @@ class Options(usage.Options):
 			"Do not include the port number.  If this option is not specified, " +
 			"Minerva over HTTP might work simultaneously in just one or two tabs."],
 
-		["closure-library", "c", "../closure-library",
+		["closure-library", "c", _defaultClosureLibrary,
 			'Path to closure-library'],
 	]
 
