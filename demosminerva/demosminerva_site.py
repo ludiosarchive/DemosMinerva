@@ -53,8 +53,8 @@ class DemosMinervaRoot(BetterResource):
 		self.putChild('', BetterFile(demosminervaPath.child('index.html').path))
 		self.putChild('closure-library', BetterFile(closureLibrary.path))
 		self.putChild('js_coreweb', BetterFile(FilePath(js_coreweb.__file__).parent().path))
-		self.putChild('js_minerva', BetterFile(FilePath(js_coreweb.__file__).parent().path))
-		self.putChild('js_demosminerva', BetterFile(FilePath(js_coreweb.__file__).parent().path))
+		self.putChild('js_minerva', BetterFile(FilePath(js_minerva.__file__).parent().path))
+		self.putChild('js_demosminerva', BetterFile(FilePath(js_demosminerva.__file__).parent().path))
 		self.putChild('compiled_client', BetterFile(
 			minervaPath.child('compiled_client').path,
 			responseCacheOptions=responseCacheOptions))
