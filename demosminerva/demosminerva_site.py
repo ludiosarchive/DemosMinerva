@@ -1,7 +1,6 @@
 import os
 
 from twisted.python.filepath import FilePath
-from twisted.internet.task import LoopingCall
 
 from minerva.newlink import (
 	SubprotocolFactory, StreamTracker, HttpFace, SocketFace)

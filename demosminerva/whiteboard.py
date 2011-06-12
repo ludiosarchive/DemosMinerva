@@ -3,7 +3,7 @@ import simplejson
 from twisted.python import log
 from twisted.python.filepath import FilePath
 
-from webmagic.untwist import BetterResource, BetterFile
+from webmagic.untwist import BetterResource
 
 from minerva.website import MinervaBootstrap
 from minerva.decoders import strictDecodeOne

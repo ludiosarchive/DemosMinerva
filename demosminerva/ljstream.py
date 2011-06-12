@@ -10,7 +10,7 @@ from twisted.python.filepath import FilePath
 from twisted.internet import protocol
 from twisted.python import log
 
-from webmagic.untwist import BetterResource, BetterFile
+from webmagic.untwist import BetterResource
 from minerva.decoders import strictDecodeOne
 from minerva.website import MinervaBootstrap
 
