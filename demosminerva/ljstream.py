@@ -97,10 +97,19 @@ Host: atom.services.livejournal.com\r
 
 		# The .string gives us over-escaped "HTML"; we turn it into
 		# a real HTML string with unescapeXhtml.
-		htmlContent = unescapeXhtml(soup.findAll('content')[0].string)
+		try:
+			htmlContent = unescapeXhtml(soup.findAll('content')[0].string)
+		except ValueError:
+			# BeautifulSoup raises tons of errors like this:
+			# exceptions.ValueError: invalid literal for int() with base 10: 'x192'
+			return # We can't continue processing.  Maybe someone should fix BS?
+
 		numImages = htmlContent.count('<img ')
 
-		htmlTitle = unescapeXhtml(htmlTitle)
+		try:
+			htmlTitle = unescapeXhtml(htmlTitle)
+		except ValueError:
+			return
 
 		try:
 			origBodyWidth = html2text.BODY_WIDTH
