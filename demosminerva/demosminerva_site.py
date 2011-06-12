@@ -26,6 +26,7 @@ except ImportError:
 
 requireFiles([f.path for f in FilePath(googstyle.__file__).sibling('goog-images').children()])
 requireFile(FilePath(__file__).sibling('index.html').path)
+requireFiles([f.path for f in FilePath(__file__).sibling('static').child('thumbnails').children()])
 
 class DemosMinervaRoot(BetterResource):
 
