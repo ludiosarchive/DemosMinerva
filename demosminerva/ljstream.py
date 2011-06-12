@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import re
 import sys
+import HTMLParser
+
 import simplejson
-import html2text
 
 from twisted.python.filepath import FilePath
 from twisted.internet import protocol
@@ -24,6 +26,22 @@ try:
 except ImportError:
 	requireFile = requireFiles = lambda _: None
 
+
+
+htmlParser = HTMLParser.HTMLParser()
+
+RE_P = re.compile('(<p.*?>)|(<tr.*?>)', re.I)
+RE_COMMENTS = re.compile('<!--.*?-->', re.M)
+RE_TAGS = re.compile('<.*?>', re.M)
+
+def _htmlToTextHack(s):
+	# This function is really terrible; it loses href= and img src=
+	# information.
+	s = s.replace("\r\n", " ").replace("\n", " ")
+	s = RE_P.sub('\n', s)
+	s = RE_COMMENTS.sub('', s)
+	s = RE_TAGS.sub(' ', s)
+	return s
 
 
 def unescapeXhtml(s):
@@ -111,13 +129,8 @@ Host: atom.services.livejournal.com\r
 		except ValueError:
 			return
 
-		try:
-			origBodyWidth = html2text.BODY_WIDTH
-			# Disable wrapping, because we don't need it.
-			html2text.BODY_WIDTH = 0
-			shortTextContent = html2text.html2text(htmlContent)[:400]
-		finally:
-			html2text.BODY_WIDTH = origBodyWidth
+		shortTextContent = _htmlToTextHack(
+			htmlParser.unescape(htmlContent))[:400]
 
 		if containsRussianVowels(htmlTitle):
 			lang = "ru"
