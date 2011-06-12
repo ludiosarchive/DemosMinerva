@@ -89,8 +89,6 @@ def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain, closureLibrary):
 	cookieInstaller = CookieInstaller(
 		os.urandom, 'demosminerva_site_uaid', 'demosminerva_site_uaid_secure')
 
-	# In the real world, you might want this to be more restrictive.
-	# Minerva has its own CSRF protection, so it's not critical.
 	policyString = '''\
 <cross-domain-policy>
 <allow-access-from domain="%s" to-ports="843"/>
