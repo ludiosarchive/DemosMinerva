@@ -17,7 +17,7 @@ from protojson.error import PbDecodeError
 
 from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
 
-from browsernode import ljstream_messages_pb2 as ljm
+from demosminerva import ljstream_messages_pb2 as ljm
 
 try:
 	from brequire import requireFile, requireFiles

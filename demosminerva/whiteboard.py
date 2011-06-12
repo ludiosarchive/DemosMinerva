@@ -11,7 +11,7 @@ from minerva.decoders import strictDecodeOne
 from protojson.pbliteserializer import PbLiteSerializer
 from protojson.error import PbDecodeError
 
-from browsernode import whiteboard_messages_pb2 as wm
+from demosminerva import whiteboard_messages_pb2 as wm
 
 try:
 	from brequire import requireFile, requireFiles

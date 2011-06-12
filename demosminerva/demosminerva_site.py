@@ -8,8 +8,8 @@ from minerva.newlink import (
 
 from minerva.website import CsrfStopper, XDRFrame, XDRFrameDev
 
-from browsernode.whiteboard import WhiteboardResource, WhiteboardDevResource, WhiteboardFactory
-from browsernode.ljstream import LjStreamResource, LjStreamDevResource, LjStreamFactory
+from demosminerva.whiteboard import WhiteboardResource, WhiteboardDevResource, WhiteboardFactory
+from demosminerva.ljstream import LjStreamResource, LjStreamDevResource, LjStreamFactory
 
 from webmagic.untwist import (
 	ResponseCacheOptions, CookieInstaller, BetterResource, BetterFile,
@@ -27,16 +27,16 @@ except ImportError:
 requireFiles([f.path for f in FilePath(googstyle.__file__).sibling('goog-images').children()])
 requireFile(FilePath(__file__).sibling('index.html').path)
 
-class BrowserNodeRoot(BetterResource):
+class DemosMinervaRoot(BetterResource):
 
 	def __init__(self, httpFace, fileCache, csrfStopper, cookieInstaller, domain, closureLibrary):
 		import coreweb
 		import minerva
-		import browsernode
+		import demosminerva
 
 		import js_coreweb
 		import js_minerva
-		import js_browsernode
+		import js_demosminerva
 
 		BetterResource.__init__(self)
 
@@ -48,12 +48,12 @@ class BrowserNodeRoot(BetterResource):
 			httpsCachePublic=True)
 
 		minervaPath = FilePath(minerva.__path__[0])
-		browsernodePath = FilePath(browsernode.__path__[0])
-		self.putChild('', BetterFile(browsernodePath.child('index.html').path))
+		demosminervaPath = FilePath(demosminerva.__path__[0])
+		self.putChild('', BetterFile(demosminervaPath.child('index.html').path))
 		self.putChild('closure-library', BetterFile(closureLibrary.path))
 		self.putChild('js_coreweb', BetterFile(FilePath(js_coreweb.__file__).parent().path))
 		self.putChild('js_minerva', BetterFile(FilePath(js_coreweb.__file__).parent().path))
-		self.putChild('js_browsernode', BetterFile(FilePath(js_coreweb.__file__).parent().path))
+		self.putChild('js_demosminerva', BetterFile(FilePath(js_coreweb.__file__).parent().path))
 		self.putChild('compiled_client', BetterFile(
 			minervaPath.child('compiled_client').path,
 			responseCacheOptions=responseCacheOptions))
@@ -62,7 +62,7 @@ class BrowserNodeRoot(BetterResource):
 		testres_Coreweb = FilePath(coreweb.__path__[0]).child('testres').path
 		self.putChild('@testres_Coreweb', BetterFile(testres_Coreweb))
 
-		self.putChild('browsernode_static', BetterFile(
+		self.putChild('demosminerva_static', BetterFile(
 			FilePath(__file__).sibling('static').path,
 			fileCache=fileCache,
 			rewriteCss=True,
@@ -86,7 +86,7 @@ def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain, closureLibrary):
 	clock = reactor
 
 	cookieInstaller = CookieInstaller(
-		os.urandom, 'browsernode_site_uaid', 'browsernode_site_uaid_secure')
+		os.urandom, 'demosminerva_site_uaid', 'demosminerva_site_uaid_secure')
 
 	# In the real world, you might want this to be more restrictive.
 	# Minerva has its own CSRF protection, so it's not critical.
@@ -106,7 +106,7 @@ def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain, closureLibrary):
 	httpFace = HttpFace(clock, tracker)
 	socketFace = SocketFace(clock, tracker, policyString=policyString)
 
-	root = BrowserNodeRoot(httpFace, fileCache, csrfStopper,
+	root = DemosMinervaRoot(httpFace, fileCache, csrfStopper,
 		cookieInstaller, domain, closureLibrary)
 	httpSite = ConnectionTrackingSite(root, timeout=75)
 

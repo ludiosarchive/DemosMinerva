@@ -2,15 +2,15 @@
 
 from distutils.core import setup
 
-import browsernode
+import demosminerva
 
 setup(
-	name='browsernode',
-	version=browsernode.__version__,
-	description="BrowserNode website",
-	packages=['browsernode', 'twisted.plugins', 'js_browsernode'],
+	name='demosminerva',
+	version=demosminerva.__version__,
+	description="Demos that use Minerva, a Comet server and client",
+	packages=['demosminerva', 'twisted.plugins', 'js_demosminerva'],
 	package_data={
-		'browsernode': ['*.html', 'static/*'],
-		'js_browsernode': ['*.js', '*/*.js', '*/*/*.js'],
+		'demosminerva': ['*.html', 'static/*'],
+		'js_demosminerva': ['*.js', '*/*.js', '*/*/*.js'],
 	},
 )

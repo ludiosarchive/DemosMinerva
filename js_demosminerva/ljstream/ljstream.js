@@ -18,7 +18,6 @@ goog.require('cw.net.Stream');
 goog.require('cw.net.IMinervaProtocol');
 goog.require('cw.net.HttpStreamingMode');
 goog.require('cw.net.demo.getEndpoint');
-goog.require('cw.net.demo.makeCredentialsData');
 goog.require('cw.repr');
 goog.require('cw.string');
 goog.require('cw.linkify');
@@ -268,7 +267,7 @@ ljstream.appendPost = function(title, url, body) {
 
 ljstream.startStream = function() {
 	var streamPolicy = new cw.net.demo.DemoStreamPolicy(
-		'browsernode_site_uaid', 'browsernode_site_uaid_secure');
+		'demosminerva_site_uaid', 'demosminerva_site_uaid_secure');
 	ljstream.lastProto = new ljstream.ChatProtocol();
 	ljstream.activityDetected(null);
 	var endpointD = cw.net.demo.getEndpoint(ljstream.callQueue, true, false, '/httpface/');

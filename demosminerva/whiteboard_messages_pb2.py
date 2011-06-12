@@ -10,36 +10,36 @@ from google.protobuf import descriptor_pb2
 
 
 DESCRIPTOR = descriptor.FileDescriptor(
-  name='browsernode/whiteboard_messages.proto',
-  package='browsernode.whiteboard_messages',
-  serialized_pb='\n%browsernode/whiteboard_messages.proto\x12\x1f\x62rowsernode.whiteboard_messages\x1a\x1bjs/javascript_package.proto\",\n\x05Point\x12\t\n\x01x\x18\x01 \x02(\x05\x12\t\n\x01y\x18\x02 \x02(\x05\x12\r\n\x05\x63olor\x18\x03 \x02(\t\"\x0c\n\nClearBoardB\x0e\x82\xb5\x18\nwhiteboard')
+  name='demosminerva/whiteboard_messages.proto',
+  package='demosminerva.whiteboard_messages',
+  serialized_pb='\n%demosminerva/whiteboard_messages.proto\x12\x1f\x62rowsernode.whiteboard_messages\x1a\x1bjs/javascript_package.proto\",\n\x05Point\x12\t\n\x01x\x18\x01 \x02(\x05\x12\t\n\x01y\x18\x02 \x02(\x05\x12\r\n\x05\x63olor\x18\x03 \x02(\t\"\x0c\n\nClearBoardB\x0e\x82\xb5\x18\nwhiteboard')
 
 
 
 
 _POINT = descriptor.Descriptor(
   name='Point',
-  full_name='browsernode.whiteboard_messages.Point',
+  full_name='demosminerva.whiteboard_messages.Point',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='x', full_name='browsernode.whiteboard_messages.Point.x', index=0,
+      name='x', full_name='demosminerva.whiteboard_messages.Point.x', index=0,
       number=1, type=5, cpp_type=1, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='y', full_name='browsernode.whiteboard_messages.Point.y', index=1,
+      name='y', full_name='demosminerva.whiteboard_messages.Point.y', index=1,
       number=2, type=5, cpp_type=1, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='color', full_name='browsernode.whiteboard_messages.Point.color', index=2,
+      name='color', full_name='demosminerva.whiteboard_messages.Point.color', index=2,
       number=3, type=9, cpp_type=9, label=2,
       has_default_value=False, default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
@@ -61,7 +61,7 @@ _POINT = descriptor.Descriptor(
 
 _CLEARBOARD = descriptor.Descriptor(
   name='ClearBoard',
-  full_name='browsernode.whiteboard_messages.ClearBoard',
+  full_name='demosminerva.whiteboard_messages.ClearBoard',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -86,12 +86,12 @@ class Point(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _POINT
   
-  # @@protoc_insertion_point(class_scope:browsernode.whiteboard_messages.Point)
+  # @@protoc_insertion_point(class_scope:demosminerva.whiteboard_messages.Point)
 
 class ClearBoard(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _CLEARBOARD
   
-  # @@protoc_insertion_point(class_scope:browsernode.whiteboard_messages.ClearBoard)
+  # @@protoc_insertion_point(class_scope:demosminerva.whiteboard_messages.ClearBoard)
 
 # @@protoc_insertion_point(module_scope)

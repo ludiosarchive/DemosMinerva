@@ -1,4 +1,4 @@
-package browsernode.ljstream_messages;
+package demosminerva.ljstream_messages;
 
 import "js/javascript_package.proto";
 option (javascript_package) = "ljstream";

@@ -17,20 +17,20 @@ COMMON="../closure-library/closure/bin/build/closurebuilder.py \
 --root=../closure-library \
 --root=../Coreweb/js_coreweb \
 --root=../Minerva/js_minerva \
---root=js_browsernode \
+--root=js_demosminerva \
 --compiler_flags=--js=../closure-library/closure/goog/deps.js \
 --compiler_flags=--js=../closure-library/third_party/closure/goog/deps.js \
 --compiler_flags=--js=../Coreweb/js_coreweb/deps.js \
 --compiler_flags=--js=../Minerva/js_minerva/deps.js \
---compiler_flags=--js=js_browsernode/deps.js \
+--compiler_flags=--js=js_demosminerva/deps.js \
 "
 
 $COMMON \
 --namespace="whiteboard" \
---output_file=browsernode/static/whiteboard.js \
-2>&1 | tee browsernode/static/whiteboard.js.log
+--output_file=demosminerva/static/whiteboard.js \
+2>&1 | tee demosminerva/static/whiteboard.js.log
 
 $COMMON \
 --namespace="ljstream" \
---output_file=browsernode/static/ljstream.js \
-2>&1 | tee browsernode/static/ljstream.js.log
+--output_file=demosminerva/static/ljstream.js \
+2>&1 | tee demosminerva/static/ljstream.js.log

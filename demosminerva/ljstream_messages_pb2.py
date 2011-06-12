@@ -10,50 +10,50 @@ from google.protobuf import descriptor_pb2
 
 
 DESCRIPTOR = descriptor.FileDescriptor(
-  name='browsernode/ljstream_messages.proto',
-  package='browsernode.ljstream_messages',
-  serialized_pb='\n#browsernode/ljstream_messages.proto\x12\x1d\x62rowsernode.ljstream_messages\x1a\x1bjs/javascript_package.proto\"U\n\x07NewPost\x12\r\n\x05title\x18\x01 \x02(\t\x12\x0b\n\x03url\x18\x02 \x02(\t\x12\x0c\n\x04\x62ody\x18\x03 \x02(\t\x12\x12\n\nnum_images\x18\x04 \x02(\x05\x12\x0c\n\x04lang\x18\x05 \x02(\t\"/\n\x0eSetPreferences\x12\x1d\n\x15include_russian_posts\x18\x01 \x02(\x08\x42\x0c\x82\xb5\x18\x08ljstream')
+  name='demosminerva/ljstream_messages.proto',
+  package='demosminerva.ljstream_messages',
+  serialized_pb='\n#demosminerva/ljstream_messages.proto\x12\x1d\x62rowsernode.ljstream_messages\x1a\x1bjs/javascript_package.proto\"U\n\x07NewPost\x12\r\n\x05title\x18\x01 \x02(\t\x12\x0b\n\x03url\x18\x02 \x02(\t\x12\x0c\n\x04\x62ody\x18\x03 \x02(\t\x12\x12\n\nnum_images\x18\x04 \x02(\x05\x12\x0c\n\x04lang\x18\x05 \x02(\t\"/\n\x0eSetPreferences\x12\x1d\n\x15include_russian_posts\x18\x01 \x02(\x08\x42\x0c\x82\xb5\x18\x08ljstream')
 
 
 
 
 _NEWPOST = descriptor.Descriptor(
   name='NewPost',
-  full_name='browsernode.ljstream_messages.NewPost',
+  full_name='demosminerva.ljstream_messages.NewPost',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='title', full_name='browsernode.ljstream_messages.NewPost.title', index=0,
+      name='title', full_name='demosminerva.ljstream_messages.NewPost.title', index=0,
       number=1, type=9, cpp_type=9, label=2,
       has_default_value=False, default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='url', full_name='browsernode.ljstream_messages.NewPost.url', index=1,
+      name='url', full_name='demosminerva.ljstream_messages.NewPost.url', index=1,
       number=2, type=9, cpp_type=9, label=2,
       has_default_value=False, default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='body', full_name='browsernode.ljstream_messages.NewPost.body', index=2,
+      name='body', full_name='demosminerva.ljstream_messages.NewPost.body', index=2,
       number=3, type=9, cpp_type=9, label=2,
       has_default_value=False, default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='num_images', full_name='browsernode.ljstream_messages.NewPost.num_images', index=3,
+      name='num_images', full_name='demosminerva.ljstream_messages.NewPost.num_images', index=3,
       number=4, type=5, cpp_type=1, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='lang', full_name='browsernode.ljstream_messages.NewPost.lang', index=4,
+      name='lang', full_name='demosminerva.ljstream_messages.NewPost.lang', index=4,
       number=5, type=9, cpp_type=9, label=2,
       has_default_value=False, default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
@@ -75,13 +75,13 @@ _NEWPOST = descriptor.Descriptor(
 
 _SETPREFERENCES = descriptor.Descriptor(
   name='SetPreferences',
-  full_name='browsernode.ljstream_messages.SetPreferences',
+  full_name='demosminerva.ljstream_messages.SetPreferences',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='include_russian_posts', full_name='browsernode.ljstream_messages.SetPreferences.include_russian_posts', index=0,
+      name='include_russian_posts', full_name='demosminerva.ljstream_messages.SetPreferences.include_russian_posts', index=0,
       number=1, type=8, cpp_type=7, label=2,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -107,12 +107,12 @@ class NewPost(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _NEWPOST
   
-  # @@protoc_insertion_point(class_scope:browsernode.ljstream_messages.NewPost)
+  # @@protoc_insertion_point(class_scope:demosminerva.ljstream_messages.NewPost)
 
 class SetPreferences(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _SETPREFERENCES
   
-  # @@protoc_insertion_point(class_scope:browsernode.ljstream_messages.SetPreferences)
+  # @@protoc_insertion_point(class_scope:demosminerva.ljstream_messages.SetPreferences)
 
 # @@protoc_insertion_point(module_scope)

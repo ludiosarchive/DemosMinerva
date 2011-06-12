@@ -29,7 +29,6 @@ goog.require('cw.net.Stream');
 goog.require('cw.net.IMinervaProtocol');
 goog.require('cw.net.HttpStreamingMode');
 goog.require('cw.net.demo.getEndpointByQueryArgs');
-goog.require('cw.net.demo.makeCredentialsData');
 goog.require('cw.repr');
 goog.require('cw.string');
 goog.require('whiteboard.Point');
@@ -200,7 +199,7 @@ whiteboard.clickListen = goog.events.listen(
 
 whiteboard.startStream = function() {
 	var streamPolicy = new cw.net.demo.DemoStreamPolicy(
-		'browsernode_site_uaid', 'browsernode_site_uaid_secure');
+		'demosminerva_site_uaid', 'demosminerva_site_uaid_secure');
 	whiteboard.lastProto = new whiteboard.WhiteboardProtocol();
 	whiteboard.activityDetected(null);
 	var endpointD = cw.net.demo.getEndpointByQueryArgs(whiteboard.callQueue);

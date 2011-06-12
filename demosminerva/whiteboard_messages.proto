@@ -1,4 +1,4 @@
-package browsernode.whiteboard_messages;
+package demosminerva.whiteboard_messages;
 
 import "js/javascript_package.proto";
 option (javascript_package) = "whiteboard";

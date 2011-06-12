@@ -8,7 +8,7 @@ from twisted.application import service, strports
 
 from webmagic.filecache import FileCache
 
-from browsernode import browsernode_site
+from demosminerva import demosminerva_site
 
 
 _defaultClosureLibrary = FilePath(__file__).parent().parent().parent().child("closure-library").path
@@ -16,9 +16,9 @@ assert isinstance(_defaultClosureLibrary, str), type(_defaultClosureLibrary)
 
 class Options(usage.Options):
 	"""
-	Define the options accepted by the I{twistd browsernode_site} plugin.
+	Define the options accepted by the I{twistd demosminerva_site} plugin.
 	"""
-	synopsis = "[browsernode_site options]"
+	synopsis = "[demosminerva_site options]"
 
 	optParameters = [
 		["http", "t", None,
@@ -49,7 +49,7 @@ class Options(usage.Options):
 	]
 
 	longdesc = """\
-This starts the Minerva test server (browsernode_site), from which you can
+This starts the Minerva test server (demosminerva_site), from which you can
 run the client-side unit tests in a browser, and try a few demo applications
 that use Minerva.
 
@@ -105,7 +105,7 @@ def makeService(config):
 
 	doReloading = bool(int(os.environ.get('PYRELOADING', '0')))
 	fileCache = FileCache(lambda: reactor.seconds(), 0.1 if doReloading else -1)
-	socketFace, httpSite = browsernode_site.makeMinervaAndHttp(
+	socketFace, httpSite = demosminerva_site.makeMinervaAndHttp(
 		reactor, fileCache, csrfSecret, domain, closureLibrary)
 	httpSite.displayTracebacks = not config["no-tracebacks"]
 

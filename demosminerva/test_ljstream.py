@@ -1,6 +1,6 @@
 from twisted.trial import unittest
 
-from browsernode import ljstream
+from demosminerva import ljstream
 
 
 class TestUnescapeXhtml(unittest.TestCase):
