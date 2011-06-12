@@ -22,7 +22,9 @@ setup(
 	],
 	packages=['demosminerva', 'twisted.plugins', 'js_demosminerva'],
 	package_data={
-		'demosminerva': ['*.html', 'static/*'],
+		'demosminerva': [
+			'*.html', 'static/*.js', 'static/*.css', 'static/*.log',
+			'static/thumbnails/*'],
 		'js_demosminerva': ['*.js', '*/*.js', '*/*/*.js'],
 	},
 )
