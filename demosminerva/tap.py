@@ -76,8 +76,6 @@ descriptions.
 		usage.Options.postOptions(self)
 		if not self['http'] and not self['minerva']:
 			raise usage.UsageError("You probably want to start at least 1 http server or 1 minerva server.")
-		if not self['domain']:
-			raise usage.UsageError("You must specify a domain.")
 
 
 
