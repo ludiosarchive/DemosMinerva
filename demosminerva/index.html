@@ -70,8 +70,19 @@ code {
 	font-family: "Courier New", Consolas, monospace;
 }
 
-.copyright {
-	color: #777;
+.thumb {
+	float: left;
+	width: 275px;
+	margin: 0 16px 16px 0;
+}
+
+.thumb img {
+	width: 275px;
+	border: 1px solid #ccc;
+}
+
+.label {
+	font-weight: bold;
 }
 
 /*a {
@@ -91,16 +102,26 @@ a:visited {
 <hr>
 
 <p>
-These are demos that use the <a href="https://ludios.org/minerva/">Minerva Comet server and client</a>:
+These are demos that use the <a href="http://ludios.org/minerva/">Minerva Comet server and client</a>:
 </p>
 
-<p>
-<strong>&bull; <a href="/whiteboard/?mode=http">View a multi-user whiteboard demo, powered by Minerva.</a></strong>
-</p>
+<div class="thumb">
+	<a href="/whiteboard/?mode=http">
+	<img src="/demosminerva_static/thumbnails/whiteboard.png"><br>
+	<span class="label">Multi-user whiteboard</span>
+	</a>
+</div>
 
-<p>
-<strong>&bull; <a href="/livejournal-stream/?mode=http">View a stream of public LiveJournal posts, powered by Minerva.</a></strong>
-</p>
+<div class="thumb">
+	<a href="/livejournal-stream/?mode=http">
+	<img src="/demosminerva_static/thumbnails/ljstream.png"><br>
+	<span class="label">Stream of public LiveJournal posts</span>
+	</a>
+</div>
+
+<br style="clear:both">
+
+Started working on something that uses Minerva? Consider <a href="https://github.com/ludios/DemosMinerva">contributing</a> an early version to this set of demos.
 
 </body>
 </html>
