@@ -129,7 +129,6 @@ class WhiteboardFactory(object):
 		for proto in self.protos:
 			if proto in dontTell:
 				continue
-			# This almost never happens, but be careful anyway.
 			if proto.stream.queue.getMaxConsumption() > 2 * 1024 * 1024:
 				proto.stream.reset("> 2MB outgoing")
 				continue
