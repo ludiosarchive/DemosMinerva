@@ -27,4 +27,15 @@ setup(
 			'static/thumbnails/*'],
 		'js_demosminerva': ['*.js', '*/*.js', '*/*/*.js'],
 	},
+	install_requires=[
+		 'Twisted >= 8.2.0'
+		,'simplejson >= 2.1'
+		,'BeautifulSoup'
+		,'Minerva >= 11.6.21.2'
+		,'Coreweb >= 11.6.17'
+		,'Webmagic >= 11.6.20.1'
+		,'Googstyle >= 11.6.12'
+		,'Protojson >= 11.5.9'
+		# Also needs protobuf >= 2.3, but it's not installable with pip.
+	],
 )
