@@ -11,8 +11,8 @@ from twisted.internet import protocol
 from twisted.python import log
 
 from webmagic.untwist import BetterResource
-from minerva.decoders import strictDecodeOne
-from minerva.website import MinervaBootstrap
+from minerva.website import (
+	MinervaBootstrap, strictSecureDecodeJson, StrictDecodeError)
 
 from protojson.pbliteserializer import PbLiteSerializer
 from protojson.error import PbDecodeError
@@ -289,7 +289,7 @@ class LjStreamProtocol(object):
 
 	def stringReceived(self, s):
 		try:
-			payload = strictDecodeOne(s)
+			payload = strictSecureDecodeJson(s)
 			if len(payload) == 2:
 				msgType = payload[0]
 				body = payload[1]
