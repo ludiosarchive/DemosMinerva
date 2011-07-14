@@ -5,7 +5,7 @@ from distutils.core import setup
 import demosminerva
 
 setup(
-	name='demosminerva',
+	name='DemosMinerva',
 	version=demosminerva.__version__,
 	description="Demos that show off Minerva, a Comet server and client",
 	url="https://github.com/ludios/DemosMinerva",

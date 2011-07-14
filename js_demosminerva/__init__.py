@@ -1,2 +1,2 @@
 # Remember to update demosminerva/__init__.py, too
-__version__ = '11.6.21.1'
+__version__ = '11.6.22'

@@ -240,7 +240,7 @@ class DownloaderFactory(protocol.ReconnectingClientFactory):
 
 
 requireFile(FilePath(__file__).sibling('ljstream.html').path)
-requireFiles([f.path for f in FilePath(__file__).sibling('static').children()])
+requireFiles([f.path for f in FilePath(__file__).sibling('static').children() if not f.isdir()])
 
 class LjStreamResource(BetterResource):
 	templateFile = FilePath(__file__).sibling('ljstream.html')

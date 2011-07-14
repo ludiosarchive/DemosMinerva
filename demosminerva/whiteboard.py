@@ -21,7 +21,7 @@ except ImportError:
 
 
 requireFile(FilePath(__file__).sibling('whiteboard.html').path)
-requireFiles([f.path for f in FilePath(__file__).sibling('static').children()])
+requireFiles([f.path for f in FilePath(__file__).sibling('static').children() if not f.isdir()])
 
 class WhiteboardResource(BetterResource):
 	templateFile = FilePath(__file__).sibling('whiteboard.html')
