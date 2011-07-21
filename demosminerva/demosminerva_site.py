@@ -5,7 +5,7 @@ from twisted.python.filepath import FilePath
 from minerva.newlink import (
 	SubprotocolFactory, StreamTracker, HttpFace, SocketFace)
 
-from minerva.website import CsrfStopper, XDRFrame, XDRFrameDev
+from minerva.website import CsrfStopper
 
 from demosminerva.whiteboard import WhiteboardResource, WhiteboardDevResource, WhiteboardFactory
 from demosminerva.ljstream import LjStreamResource, LjStreamDevResource, LjStreamFactory
@@ -77,8 +77,6 @@ class DemosMinervaRoot(BetterResource):
 		self.putChild('whiteboard_dev', WhiteboardDevResource(*commonArgs))
 		self.putChild('livejournal-stream', LjStreamResource(*commonArgs))
 		self.putChild('livejournal-stream_dev', LjStreamDevResource(*commonArgs))
-		self.putChild('xdrframe', XDRFrame(fileCache, domain))
-		self.putChild('xdrframe_dev', XDRFrameDev(fileCache, domain))
 
 
 
@@ -101,7 +99,11 @@ def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain, closureLibrary):
 			'ljstream': LjStreamFactory(reactor, clock),
 		}))
 
-	httpFace = HttpFace(clock, tracker)
+	allowedDomains = []
+	if domain:
+		allowedDomains.append(domain)
+
+	httpFace = HttpFace(clock, tracker, fileCache, allowedDomains)
 	socketFace = SocketFace(clock, tracker, policyString=policyString)
 
 	root = DemosMinervaRoot(httpFace, fileCache, csrfStopper,
