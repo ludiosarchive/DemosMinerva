@@ -54,6 +54,11 @@
 <script>
 // In demosminerva_site, user specifies this with the command-line --domain option
 __demo_shared_domain = {{ htmldumps(domain) }};
+// document.domain must be set before JavaScript objects are created, or
+// else IE will become confused and spew "Access is denied" errors.
+if(__demo_shared_domain) {
+	document.domain = __demo_shared_domain;
+}
 </script>
 
 {% if dev_mode %}

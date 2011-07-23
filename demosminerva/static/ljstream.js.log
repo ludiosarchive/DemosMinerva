@@ -14,21 +14,17 @@ required: number
 	parts.push([text.substr(idx_prev)]);
 	                        ^
 
-../Minerva/js_minerva/cw/net/xdrtracker.js:209: WARNING - actual parameter 1 of cw.net.getDocumentDomain does not match formal parameter
+../Minerva/js_minerva/cw/net/xdrtracker.js:213: WARNING - actual parameter 1 of cw.net.getDocumentDomain does not match formal parameter
 found   : (null|string)
 required: string
 	var documentDomain = cw.net.getDocumentDomain(frameDomain, myDomain);
 	                                              ^
 
-../Minerva/js_minerva/cw/net/xdrtracker.js:209: WARNING - actual parameter 2 of cw.net.getDocumentDomain does not match formal parameter
+../Minerva/js_minerva/cw/net/xdrtracker.js:213: WARNING - actual parameter 2 of cw.net.getDocumentDomain does not match formal parameter
 found   : (null|string)
 required: string
 	var documentDomain = cw.net.getDocumentDomain(frameDomain, myDomain);
 	                                                           ^
-
-../Minerva/js_minerva/cw/net/xdrtracker.js:266: WARNING - Suspicious code. The result of the 'div' operator is not being used.
-	1/0;
-	 ^
 
 js_demosminerva/ljstream/ljstream.js:154: WARNING - condition always evaluates to false
 left : null
@@ -36,5 +32,5 @@ right: null
 	if(ljstream.idleTimeout != null) {
 	                        ^
 
-0 error(s), 6 warning(s), 97.2% typed
+0 error(s), 5 warning(s), 97.2% typed
 ../closure-library/closure/bin/build/closurebuilder.py: JavaScript compilation succeeded.

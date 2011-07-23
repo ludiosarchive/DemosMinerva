@@ -32,7 +32,7 @@ function q() {
 }
 function ea(a) {
   a.Na = function() {
-    return a.Qg || (a.Qg = new a)
+    return a.Rg || (a.Rg = new a)
   }
 }
 function fa(a) {
@@ -210,7 +210,7 @@ function Ga(a) {
   b.unshift(a);
   C.call(this, ra.apply(k, b));
   b.shift();
-  this.Oi = a
+  this.Pi = a
 }
 B(Ha, C);
 Ha.prototype.name = "AssertionError";
@@ -220,12 +220,12 @@ function Ia(a, b) {
 ;function Ja(a, b, c) {
   this.aa = a;
   this.H = b;
-  this.le = c.name;
-  this.yb = !!c.Ri;
-  this.Mi = !!c.required;
-  this.ac = c.Td;
-  this.Hf = c.type;
-  this.af = !1;
+  this.ne = c.name;
+  this.yb = !!c.Si;
+  this.Ni = !!c.required;
+  this.ac = c.Ud;
+  this.Jf = c.type;
+  this.df = !1;
   switch(this.ac) {
     case Ka:
     ;
@@ -236,9 +236,9 @@ function Ia(a, b) {
     case Na:
     ;
     case Oa:
-      this.af = !0
+      this.df = !0
   }
-  this.Ci = c.defaultValue
+  this.Di = c.defaultValue
 }
 var Ka = 3, La = 4, Ma = 6, Na = 16, Oa = 18;
 function Pa(a) {
@@ -377,10 +377,10 @@ function hb(a, b) {
   return a > b ? 1 : a < b ? -1 : 0
 }
 ;function ib(a, b, c) {
-  this.Ff = a;
-  this.le = b.name || k;
-  this.Di = b.ff || k;
-  this.zi = b.yi;
+  this.Hf = a;
+  this.ne = b.name || k;
+  this.Ei = b.jf || k;
+  this.Ai = b.zi;
   this.La = {};
   for(a = 0;a < c.length;a++) {
     b = c[a], this.La[b.H] = b
@@ -401,7 +401,7 @@ function jb(a) {
     b[c] = a[c]
   }
   this.La = b;
-  this.Xb = this.ie = k
+  this.Xb = this.je = k
 }
 function lb(a, b) {
   for(var c in a.u) {
@@ -453,7 +453,7 @@ n.n = function(a) {
   }
   return!0
 };
-n.Te = function(a) {
+n.We = function(a) {
   for(var b = jb(this.dc()), c = 0;c < b.length;c++) {
     var d = b[c];
     delete this.u[d.H];
@@ -476,18 +476,18 @@ n.Te = function(a) {
 };
 n.I = function() {
   var a = new this.constructor;
-  a.Te(this);
+  a.We(this);
   return a
 };
 function ob(a, b) {
   return b in a.u && ga(a.u[b])
 }
 function pb(a, b) {
-  if(a.ie) {
+  if(a.je) {
     var c = b.H;
     if(!(c in a.Xb)) {
       var d = a.u, f;
-      f = a.ie;
+      f = a.je;
       var g = a.u[c];
       if(g == k) {
         f = g
@@ -542,25 +542,25 @@ function yb() {
   kb.apply(this)
 }
 B(yb, kb);
-rb(xb, {0:{name:"Point", ff:"demosminerva.whiteboard_messages.Point"}, 1:{name:"x", Td:5, type:Number}, 2:{name:"y", Td:5, type:Number}, 3:{name:"color", Td:9, type:String}});
-rb(yb, {0:{name:"ClearBoard", ff:"demosminerva.whiteboard_messages.ClearBoard"}});
+rb(xb, {0:{name:"Point", jf:"demosminerva.whiteboard_messages.Point"}, 1:{name:"x", Ud:5, type:Number}, 2:{name:"y", Ud:5, type:Number}, 3:{name:"color", Ud:9, type:String}});
+rb(yb, {0:{name:"ClearBoard", jf:"demosminerva.whiteboard_messages.ClearBoard"}});
 function zb() {
 }
 zb.prototype.Rc = function(a, b) {
   return Pa(a) ? this.lb(b) : b
 };
-zb.prototype.Nd = function(a) {
-  new a.Ff;
+zb.prototype.Od = function(a) {
+  new a.Hf;
   e(Error("Unimplemented"))
 };
 zb.prototype.Qc = function(a, b) {
   if(Pa(a)) {
-    return this.Nd(a.Hf.ub, b)
+    return this.Od(a.Jf.ub, b)
   }
-  if(!a.af) {
+  if(!a.df) {
     return b
   }
-  var c = a.Hf;
+  var c = a.Jf;
   if(c === String) {
     if(typeof b === "number") {
       return String(b)
@@ -575,9 +575,9 @@ zb.prototype.Qc = function(a, b) {
 function Ab() {
 }
 B(Ab, zb);
-Ab.prototype.Nd = function(a, b) {
-  var c = new a.Ff;
-  c.ie = this;
+Ab.prototype.Od = function(a, b) {
+  var c = new a.Hf;
+  c.je = this;
   c.u = b;
   c.Xb = {};
   return c
@@ -699,7 +699,7 @@ function Gb(a, b) {
         if(Cb(a.A)) {
           a.A(b, c)
         }else {
-          if(Cb(a.mg)) {
+          if(Cb(a.ng)) {
             b.push("<cw.eq.Wildcard>")
           }else {
             if(a instanceof RegExp) {
@@ -832,12 +832,12 @@ function Ob(a, b) {
       this.set(arguments[d], arguments[d + 1])
     }
   }else {
-    a && this.Ad(a)
+    a && this.Bd(a)
   }
 }
 n = Pb.prototype;
 n.g = 0;
-n.Le = 0;
+n.Oe = 0;
 n.V = l("g");
 n.X = function() {
   Qb(this);
@@ -886,10 +886,10 @@ n.Pa = function() {
 };
 n.clear = function() {
   this.p = {};
-  this.Le = this.g = this.l.length = 0
+  this.Oe = this.g = this.l.length = 0
 };
 n.remove = function(a) {
-  return Rb(this.p, a) ? (delete this.p[a], this.g--, this.Le++, this.l.length > 2 * this.g && Qb(this), !0) : !1
+  return Rb(this.p, a) ? (delete this.p[a], this.g--, this.Oe++, this.l.length > 2 * this.g && Qb(this), !0) : !1
 };
 function Qb(a) {
   if(a.g != a.l.length) {
@@ -911,10 +911,10 @@ n.get = function(a, b) {
   return Rb(this.p, a) ? this.p[a] : b
 };
 n.set = function(a, b) {
-  Rb(this.p, a) || (this.g++, this.l.push(a), this.Le++);
+  Rb(this.p, a) || (this.g++, this.l.push(a), this.Oe++);
   this.p[a] = b
 };
-n.Ad = function(a) {
+n.Bd = function(a) {
   var b;
   a instanceof Pb ? (b = a.Ea(), a = a.X()) : (b = Sa(a), a = Ra(a));
   for(var c = 0;c < b.length;c++) {
@@ -1048,8 +1048,8 @@ function xc() {
   return wc[9] || (wc[9] = H && document.documentMode && document.documentMode >= 9)
 }
 ;var yc;
-var zc = {Eh:"click", Jh:"dblclick", di:"mousedown", hi:"mouseup", gi:"mouseover", fi:"mouseout", ei:"mousemove", ri:"selectstart", Yh:"keypress", Xh:"keydown", Zh:"keyup", Ch:"blur", Rh:"focus", Kh:"deactivate", Sh:H ? "focusin" : "DOMFocusIn", Th:H ? "focusout" : "DOMFocusOut", Dh:"change", qi:"select", si:"submit", Wh:"input", mi:"propertychange", Oh:"dragstart", Lh:"dragenter", Nh:"dragover", Mh:"dragleave", Ph:"drop", wi:"touchstart", vi:"touchmove", ui:"touchend", ti:"touchcancel", Gh:"contextmenu", 
-Qh:"error", Vh:"help", $h:"load", ai:"losecapture", ni:"readystatechange", oi:"resize", pi:"scroll", xi:"unload", Uh:"hashchange", ii:"pagehide", ji:"pageshow", li:"popstate", Hh:"copy", ki:"paste", Ih:"cut", zh:"beforecopy", Ah:"beforecut", Bh:"beforepaste", ci:"message", Fh:"connect"};
+var zc = {Fh:"click", Kh:"dblclick", ei:"mousedown", ii:"mouseup", hi:"mouseover", gi:"mouseout", fi:"mousemove", si:"selectstart", Zh:"keypress", Yh:"keydown", $h:"keyup", Dh:"blur", Sh:"focus", Lh:"deactivate", Th:H ? "focusin" : "DOMFocusIn", Uh:H ? "focusout" : "DOMFocusOut", Eh:"change", ri:"select", ti:"submit", Xh:"input", ni:"propertychange", Ph:"dragstart", Mh:"dragenter", Oh:"dragover", Nh:"dragleave", Qh:"drop", xi:"touchstart", wi:"touchmove", vi:"touchend", ui:"touchcancel", Hh:"contextmenu", 
+Rh:"error", Wh:"help", ai:"load", bi:"losecapture", oi:"readystatechange", pi:"resize", qi:"scroll", yi:"unload", Vh:"hashchange", ji:"pagehide", ki:"pageshow", mi:"popstate", Ih:"copy", li:"paste", Jh:"cut", Ah:"beforecopy", Bh:"beforecut", Ch:"beforepaste", di:"message", Gh:"connect"};
 var Ac = !H || xc(), Bc = H && !J("8");
 function K() {
 }
@@ -1060,7 +1060,7 @@ K.prototype.f = function() {
   }
 };
 K.prototype.c = function() {
-  this.xg && Cc.apply(k, this.xg)
+  this.yg && Cc.apply(k, this.yg)
 };
 function Cc(a) {
   for(var b = 0, c = arguments.length;b < c;++b) {
@@ -1112,7 +1112,7 @@ n.ctrlKey = !1;
 n.altKey = !1;
 n.shiftKey = !1;
 n.metaKey = !1;
-n.ah = !1;
+n.bh = !1;
 n.Ba = k;
 n.hc = function(a, b) {
   var c = this.type = a.type;
@@ -1157,7 +1157,7 @@ n.hc = function(a, b) {
   this.altKey = a.altKey;
   this.shiftKey = a.shiftKey;
   this.metaKey = a.metaKey;
-  this.ah = nc ? a.metaKey : a.ctrlKey;
+  this.bh = nc ? a.metaKey : a.ctrlKey;
   this.state = a.state;
   this.Ba = a;
   delete this.sc;
@@ -1196,43 +1196,43 @@ var Kc = 0;
 n = Jc.prototype;
 n.key = 0;
 n.jb = !1;
-n.Dd = !1;
+n.Ed = !1;
 n.hc = function(a, b, c, d, f, g) {
-  u(a) ? this.vf = !0 : a && a.handleEvent && u(a.handleEvent) ? this.vf = !1 : e(Error("Invalid listener argument"));
+  u(a) ? this.yf = !0 : a && a.handleEvent && u(a.handleEvent) ? this.yf = !1 : e(Error("Invalid listener argument"));
   this.Db = a;
-  this.Qf = b;
+  this.Sf = b;
   this.src = c;
   this.type = d;
   this.capture = !!f;
   this.Yc = g;
-  this.Dd = !1;
+  this.Ed = !1;
   this.key = ++Kc;
   this.jb = !1
 };
 n.handleEvent = function(a) {
-  return this.vf ? this.Db.call(this.Yc || this.src, a) : this.Db.handleEvent.call(this.Db, a)
+  return this.yf ? this.Db.call(this.Yc || this.src, a) : this.Db.handleEvent.call(this.Db, a)
 };
 var Lc, Mc = (Lc = "ScriptEngine" in o && o.ScriptEngine() == "JScript") ? o.ScriptEngineMajorVersion() + "." + o.ScriptEngineMinorVersion() + "." + o.ScriptEngineBuildVersion() : "0";
 function Nc(a, b) {
-  this.Bf = b;
+  this.Df = b;
   this.ab = [];
-  a > this.Bf && e(Error("[goog.structs.SimplePool] Initial cannot be greater than max"));
+  a > this.Df && e(Error("[goog.structs.SimplePool] Initial cannot be greater than max"));
   for(var c = 0;c < a;c++) {
     this.ab.push(this.ya ? this.ya() : {})
   }
 }
 B(Nc, K);
 Nc.prototype.ya = k;
-Nc.prototype.bf = k;
+Nc.prototype.ef = k;
 Nc.prototype.getObject = function() {
   return this.ab.length ? this.ab.pop() : this.ya ? this.ya() : {}
 };
 function Oc(a, b) {
-  a.ab.length < a.Bf ? a.ab.push(b) : Pc(a, b)
+  a.ab.length < a.Df ? a.ab.push(b) : Pc(a, b)
 }
 function Pc(a, b) {
-  if(a.bf) {
-    a.bf(b)
+  if(a.ef) {
+    a.ef(b)
   }else {
     if(ja(b)) {
       if(u(b.f)) {
@@ -1362,7 +1362,7 @@ function M(a, b, c, d, f) {
       ad[c] = h;
       bd[j] || (bd[j] = Sc());
       bd[j].push(h);
-      a.addEventListener ? (a == o || !a.Jd) && a.addEventListener(b, g, d) : a.attachEvent(b in cd ? cd[b] : cd[b] = "on" + b, g);
+      a.addEventListener ? (a == o || !a.Kd) && a.addEventListener(b, g, d) : a.attachEvent(b in cd ? cd[b] : cd[b] = "on" + b, g);
       return c
     }
   }else {
@@ -1377,7 +1377,7 @@ function dd(a, b, c, d, f) {
     return k
   }
   a = M(a, b, c, d, f);
-  ad[a].Dd = !0;
+  ad[a].Ed = !0;
   return a
 }
 function ed(a, b, c, d, f) {
@@ -1404,8 +1404,8 @@ function gd(a) {
   if(b.jb) {
     return!1
   }
-  var c = b.src, d = b.type, f = b.Qf, g = b.capture;
-  c.removeEventListener ? (c == o || !c.Jd) && c.removeEventListener(d, f, g) : c.detachEvent && c.detachEvent(d in cd ? cd[d] : cd[d] = "on" + d, f);
+  var c = b.src, d = b.type, f = b.Sf, g = b.capture;
+  c.removeEventListener ? (c == o || !c.Kd) && c.removeEventListener(d, f, g) : c.detachEvent && c.detachEvent(d in cd ? cd[d] : cd[d] = "on" + d, f);
   c = w(c);
   f = L[d][g][c];
   if(bd[c]) {
@@ -1414,16 +1414,16 @@ function gd(a) {
     h.length == 0 && delete bd[c]
   }
   b.jb = !0;
-  f.Jf = !0;
+  f.Lf = !0;
   hd(d, g, c, f);
   delete ad[a];
   return!0
 }
 function hd(a, b, c, d) {
-  if(!d.ed && d.Jf) {
+  if(!d.ed && d.Lf) {
     for(var f = 0, g = 0;f < d.length;f++) {
       if(d[f].jb) {
-        var h = d[f].Qf;
+        var h = d[f].Sf;
         h.src = k;
         Wc(h);
         Yc(d[f])
@@ -1432,7 +1432,7 @@ function hd(a, b, c, d) {
       }
     }
     d.length = g;
-    d.Jf = !1;
+    d.Lf = !1;
     g == 0 && (Tc(d), delete L[a][b][c], L[a][b].g--, L[a][b].g == 0 && (Rc(L[a][b]), delete L[a][b], L[a].g--), L[a].g == 0 && (Rc(L[a]), delete L[a]))
   }
 }
@@ -1482,7 +1482,7 @@ function jd(a, b, c, d, f) {
 }
 function kd(a, b) {
   var c = a.handleEvent(b);
-  a.Dd && gd(a.key);
+  a.Ed && gd(a.key);
   return c
 }
 Vc(function(a, b) {
@@ -1562,9 +1562,9 @@ function md() {
 }
 B(md, K);
 n = md.prototype;
-n.Jd = !0;
+n.Kd = !0;
 n.hd = k;
-n.xe = aa("hd");
+n.ze = aa("hd");
 n.addEventListener = function(a, b, c, d) {
   M(this, a, b, c, d)
 };
@@ -1621,22 +1621,22 @@ n.c = function() {
 function nd(a, b) {
   this.ad = a || 1;
   this.yc = b || od;
-  this.Cd = x(this.nh, this);
-  this.he = z()
+  this.Dd = x(this.oh, this);
+  this.ie = z()
 }
 B(nd, md);
 nd.prototype.enabled = !1;
 var od = o.window;
 n = nd.prototype;
 n.pa = k;
-n.nh = function() {
+n.oh = function() {
   if(this.enabled) {
-    var a = z() - this.he;
+    var a = z() - this.ie;
     if(a > 0 && a < this.ad * 0.8) {
-      this.pa = this.yc.setTimeout(this.Cd, this.ad - a)
+      this.pa = this.yc.setTimeout(this.Dd, this.ad - a)
     }else {
       if(this.dispatchEvent(pd), this.enabled) {
-        this.pa = this.yc.setTimeout(this.Cd, this.ad), this.he = z()
+        this.pa = this.yc.setTimeout(this.Dd, this.ad), this.ie = z()
       }
     }
   }
@@ -1644,7 +1644,7 @@ n.nh = function() {
 n.start = function() {
   this.enabled = !0;
   if(!this.pa) {
-    this.pa = this.yc.setTimeout(this.Cd, this.ad), this.he = z()
+    this.pa = this.yc.setTimeout(this.Dd, this.ad), this.ie = z()
   }
 };
 n.stop = function() {
@@ -1668,19 +1668,19 @@ ld++;
 */
 function qd(a, b) {
   this.Fc = [];
-  this.Pe = a;
-  this.Ye = b || k
+  this.Se = a;
+  this.af = b || k
 }
 n = qd.prototype;
 n.Ma = !1;
 n.ec = !1;
 n.nc = 0;
-n.Ce = !1;
-n.sg = !1;
+n.Ee = !1;
+n.tg = !1;
 n.cancel = function() {
-  this.Ma ? this.rc instanceof qd && this.rc.cancel() : (this.Pe ? this.Pe.call(this.Ye, this) : this.Ce = !0, this.Ma || this.$b(new rd(this)))
+  this.Ma ? this.rc instanceof qd && this.rc.cancel() : (this.Se ? this.Se.call(this.af, this) : this.Ee = !0, this.Ma || this.$b(new rd(this)))
 };
-n.Se = function(a, b) {
+n.Ve = function(a, b) {
   sd(this, a, b);
   this.nc--;
   this.nc == 0 && this.Ma && td(this)
@@ -1693,7 +1693,7 @@ function sd(a, b, c) {
 }
 function ud(a) {
   if(a.Ma) {
-    a.Ce || e(new vd(a)), a.Ce = !1
+    a.Ee || e(new vd(a)), a.Ee = !1
   }
 }
 function wd(a, b) {
@@ -1720,12 +1720,12 @@ function Ad(a) {
   })
 }
 function td(a) {
-  a.Ie && a.Ma && Ad(a) && (o.clearTimeout(a.Ie), delete a.Ie);
+  a.Le && a.Ma && Ad(a) && (o.clearTimeout(a.Le), delete a.Le);
   for(var b = a.rc, c = !1, d = !1;a.Fc.length && a.nc == 0;) {
     var f = a.Fc.shift(), g = f[0], h = f[1], f = f[2];
     if(g = a.ec ? h : g) {
       try {
-        var j = g.call(f || a.Ye, b);
+        var j = g.call(f || a.af, b);
         if(ga(j)) {
           a.ec = a.ec && (j == b || j instanceof Error), a.rc = b = j
         }
@@ -1737,10 +1737,10 @@ function td(a) {
   }
   a.rc = b;
   if(d && a.nc) {
-    yd(b, x(a.Se, a, !0), x(a.Se, a, !1)), b.sg = !0
+    yd(b, x(a.Ve, a, !0), x(a.Ve, a, !1)), b.tg = !0
   }
   if(c) {
-    a.Ie = o.setTimeout(function() {
+    a.Le = o.setTimeout(function() {
       e(b)
     }, 0)
   }
@@ -1757,30 +1757,30 @@ function Cd(a) {
 }
 function vd(a) {
   C.call(this);
-  this.wg = a
+  this.xg = a
 }
 B(vd, C);
 vd.prototype.message = "Already called";
 function rd(a) {
   C.call(this);
-  this.wg = a
+  this.xg = a
 }
 B(rd, C);
 rd.prototype.message = "Deferred was cancelled";
 function Dd(a) {
   this.M = a;
   this.Mc = [];
-  this.cf = [];
-  this.rg = x(this.rh, this)
+  this.ff = [];
+  this.sg = x(this.sh, this)
 }
 Dd.prototype.pa = k;
 function Ed(a, b, c, d) {
   a.Mc.push([b, c, d]);
   if(a.pa == k) {
-    a.pa = a.M.setTimeout(a.rg, 0)
+    a.pa = a.M.setTimeout(a.sg, 0)
   }
 }
-Dd.prototype.rh = function() {
+Dd.prototype.sh = function() {
   this.pa = k;
   var a = this.Mc;
   this.Mc = [];
@@ -1795,8 +1795,8 @@ Dd.prototype.rh = function() {
     }
   }
   if(this.Mc.length == 0) {
-    a = this.cf;
-    this.cf = [];
+    a = this.ff;
+    this.ff = [];
     for(b = 0;b < a.length;b++) {
       wd(a[b], k)
     }
@@ -1862,7 +1862,7 @@ function Ld(a) {
 }
 ;function Nd(a) {
   this.p = new Pb;
-  a && this.Ad(a)
+  a && this.Bd(a)
 }
 function Od(a) {
   var b = typeof a;
@@ -1875,12 +1875,12 @@ n.V = function() {
 n.add = function(a) {
   this.p.set(Od(a), a)
 };
-n.Ad = function(a) {
+n.Bd = function(a) {
   for(var a = Lb(a), b = a.length, c = 0;c < b;c++) {
     this.add(a[c])
   }
 };
-n.se = function(a) {
+n.ue = function(a) {
   for(var a = Lb(a), b = a.length, c = 0;c < b;c++) {
     this.remove(a[c])
   }
@@ -2000,22 +2000,22 @@ var Td = {};
 function Ud(a, b, c, d, f) {
   this.reset(a, b, c, d, f)
 }
-Ud.prototype.hh = 0;
+Ud.prototype.ih = 0;
+Ud.prototype.Sd = k;
 Ud.prototype.Rd = k;
-Ud.prototype.Qd = k;
 var Vd = 0;
 Ud.prototype.reset = function(a, b, c, d, f) {
-  this.hh = typeof f == "number" ? f : Vd++;
-  this.cg = d || z();
+  this.ih = typeof f == "number" ? f : Vd++;
+  this.dg = d || z();
   this.Cb = a;
-  this.Gf = b;
-  this.Tg = c;
-  delete this.Rd;
-  delete this.Qd
+  this.If = b;
+  this.Ug = c;
+  delete this.Sd;
+  delete this.Rd
 };
 Ud.prototype.od = aa("Cb");
 function Wd(a) {
-  this.le = a
+  this.ne = a
 }
 Wd.prototype.aa = k;
 Wd.prototype.Cb = k;
@@ -2042,8 +2042,8 @@ function ge(a) {
 }
 n.log = function(a, b, c) {
   if(a.value >= ge(this).value) {
-    a = this.Hg(a, b, c);
-    o.console && o.console.markTimeline && o.console.markTimeline("log:" + a.Gf);
+    a = this.Ig(a, b, c);
+    o.console && o.console.markTimeline && o.console.markTimeline("log:" + a.If);
     for(b = this;b;) {
       var c = b, d = a;
       if(c.gc) {
@@ -2055,10 +2055,10 @@ n.log = function(a, b, c) {
     }
   }
 };
-n.Hg = function(a, b, c) {
-  var d = new Ud(a, String(b), this.le);
+n.Ig = function(a, b, c) {
+  var d = new Ud(a, String(b), this.ne);
   if(c) {
-    d.Rd = c;
+    d.Sd = c;
     var f;
     var g = arguments.callee.caller;
     try {
@@ -2069,7 +2069,7 @@ n.Hg = function(a, b, c) {
       }else {
         var m, p, y = !1;
         try {
-          m = c.lineNumber || c.Ni || "Not available"
+          m = c.lineNumber || c.Oi || "Not available"
         }catch(r) {
           m = "Not available", y = !0
         }
@@ -2084,7 +2084,7 @@ n.Hg = function(a, b, c) {
     }catch(A) {
       f = "Exception trying to expose exception! You win, we lose. " + A
     }
-    d.Qd = f
+    d.Rd = f
   }
   return d
 };
@@ -2146,7 +2146,7 @@ function ne(a, b, c) {
   b == "frames" ? (a = a.Sa, oe(a.L), pe(a.L, c)) : b == "stillreceiving" ? (c = a.Sa, P(c.a, "onstillreceiving"), oe(c.L)) : b == "connect" ? (c = a.Sa, c.a.info("onconnect"), oe(c.L), a = c.Sb, c.Sb = k, a.length && (P(c.a, "onconnect: Writing " + a.length + " buffered frame(s)."), c.rd.Dc(a))) : b == "close" ? (a.gb = !1, a.f()) : b == "ioerror" ? (a.gb = !1, b = a.Sa, N(b.a, "onioerror: " + G(c)), qe(b.L, !1), a.f()) : b == "securityerror" ? (a.gb = !1, b = a.Sa, N(b.a, "onsecurityerror: " + 
   G(c)), qe(b.L, !1), a.f()) : e(Error("bad event: " + b))
 }
-n.Gd = function(a, b) {
+n.Hd = function(a, b) {
   try {
     var c = this.Wa.CallFunction(Gd("__FC_connect", this.S, a, b, "<int32/>\n"))
   }catch(d) {
@@ -2194,9 +2194,9 @@ function re(a, b) {
   this.K = a;
   this.Wa = b;
   this.wb = {};
-  this.Ed = "__FST_" + Hd();
-  o[this.Ed] = x(this.Ag, this);
-  var c = b.CallFunction(Gd("__FC_setCallbackFunc", this.Ed));
+  this.Fd = "__FST_" + Hd();
+  o[this.Fd] = x(this.Bg, this);
+  var c = b.CallFunction(Gd("__FC_setCallbackFunc", this.Fd));
   c != '"OK"' && e(Error("__FC_setCallbackFunc failed? ret: " + c))
 }
 B(re, K);
@@ -2207,17 +2207,17 @@ n.A = function(a, b) {
   F(this.wb, a, b);
   a.push(">")
 };
-n.Id = function(a) {
+n.Jd = function(a) {
   a = new me(this, a);
   return this.wb[a.S] = a
 };
-n.yg = function(a, b, c, d) {
+n.zg = function(a, b, c, d) {
   var f = this.wb[a];
   f ? b == "frames" && d ? (ne(f, "ioerror", "FlashConnector hadError while handling data."), f.f()) : ne(f, b, c) : N(this.a, "Cannot dispatch because we have no instance: " + G([a, b, c, d]))
 };
-n.Ag = function(a, b, c, d) {
+n.Bg = function(a, b, c, d) {
   try {
-    Ed(this.K, this.yg, this, [a, b, c, d])
+    Ed(this.K, this.zg, this, [a, b, c, d])
   }catch(f) {
     o.window.setTimeout(function() {
       e(f)
@@ -2231,7 +2231,7 @@ n.c = function() {
   }
   delete this.wb;
   delete this.Wa;
-  o[this.Ed] = i
+  o[this.Fd] = i
 };
 function se(a) {
   this.L = a;
@@ -2243,8 +2243,8 @@ n.a = Q("cw.net.FlashSocketConduit");
 n.Dc = function(a) {
   this.Sb ? (P(this.a, "writeFrames: Not connected, can't write " + a.length + " frame(s) yet."), this.Sb.push.apply(this.Sb, a)) : (P(this.a, "writeFrames: Writing " + a.length + " frame(s)."), this.rd.Dc(a))
 };
-n.Gd = function(a, b) {
-  this.rd.Gd(a, b)
+n.Hd = function(a, b) {
+  this.rd.Hd(a, b)
 };
 n.onclose = function() {
   this.a.info("onclose");
@@ -2264,7 +2264,7 @@ function ue(a) {
   return a * Math.PI / 180
 }
 ;var Md = Math.pow(2, 53);
-var ve = {mg:ba("<cw.eq.Wildcard>")};
+var ve = {ng:ba("<cw.eq.Wildcard>")};
 function we(a) {
   return a == "boolean" || a == "number" || a == "null" || a == "undefined" || a == "string"
 }
@@ -2306,7 +2306,7 @@ function xe(a, b, c) {
                   }
                 }
               }else {
-                if(a.lg == ac && b.lg == ac) {
+                if(a.mg == ac && b.mg == ac) {
                   a: {
                     c && c.push("descending into object");
                     for(var g in a) {
@@ -2364,25 +2364,25 @@ ze.prototype.A = function(a, b) {
   a.push(">")
 };
 function Ae(a) {
-  return[a.Ob, a.Of, a.qf, a.Sf, a.xc, a.Fe, a.If, a.Ef, a.ke, a.Cf, a.hg, a.bg, a.oa, a.dd]
+  return[a.Ob, a.Qf, a.tf, a.Uf, a.xc, a.He, a.Kf, a.Gf, a.me, a.Ef, a.ig, a.cg, a.oa, a.dd]
 }
 ze.prototype.ea = ye;
 ze.prototype.la = function(a) {
   var b = {};
   b.tnum = this.Ob;
-  b.ver = this.Of;
-  b.format = this.qf;
-  b["new"] = this.Sf;
+  b.ver = this.Qf;
+  b.format = this.tf;
+  b["new"] = this.Uf;
   b.id = this.xc;
-  b.ming = this.Fe;
-  b.pad = this.If;
-  b.maxb = this.Ef;
-  if(ga(this.ke)) {
-    b.maxt = this.ke
+  b.ming = this.He;
+  b.pad = this.Kf;
+  b.maxb = this.Gf;
+  if(ga(this.me)) {
+    b.maxt = this.me
   }
-  b.maxia = this.Cf;
-  b.tcpack = this.hg;
-  b.eeds = this.bg;
+  b.maxia = this.Ef;
+  b.tcpack = this.ig;
+  b.eeds = this.cg;
   b.sack = this.oa instanceof Vb ? Id((new Be(this.oa)).ea()) : this.oa;
   b.seenack = this.dd instanceof Vb ? Id((new Be(this.dd)).ea()) : this.dd;
   for(var c in b) {
@@ -2827,7 +2827,7 @@ n.createElement = function(a) {
 n.createTextNode = function(a) {
   return this.r.createTextNode(a)
 };
-n.Ve = function(a, b, c) {
+n.Ye = function(a, b, c) {
   for(var d = this.r, f = !!c, c = ["<tr>"], g = 0;g < b;g++) {
     c.push(f ? "<td>&nbsp;</td>" : "<td></td>")
   }
@@ -2850,21 +2850,21 @@ n.contains = hf;
 function pf(a, b, c, d) {
   this.contentWindow = a;
   this.Nc = b;
-  this.ag = c;
-  this.Fg = d
+  this.Ie = c;
+  this.Gg = d
 }
 pf.prototype.A = function(a, b) {
   a.push("<XDRFrame frameId=");
-  F(this.Fg, a, b);
+  F(this.Gg, a, b);
   a.push(", expandedUrl=");
   F(this.Nc, a, b);
   a.push(", streams=");
-  F(this.ag, a, b);
+  F(this.Ie, a, b);
   a.push(">")
 };
 function qf() {
   this.frames = [];
-  this.Af = new Pb
+  this.ke = new Pb
 }
 qf.prototype.a = Q("cw.net.XDRTracker");
 function rf(a) {
@@ -2875,7 +2875,7 @@ function rf(a) {
 function sf(a, b) {
   for(var c = tf, d = 0;d < c.frames.length;d++) {
     var f = c.frames[d], g;
-    if(g = f.ag.length == 0) {
+    if(g = f.Ie.length == 0) {
       g = f.Nc;
       var h = String(a).replace(/([-()\[\]{}+?*.$\^|,:#<!\\])/g, "\\$1").replace(/\x08/g, "\\x08").replace(/%random%/g, "ml" + Array(21).join("\\d"));
       g = RegExp("^" + h + "$").test(g)
@@ -2891,35 +2891,37 @@ function sf(a, b) {
   if(h == g) {
     c.a.info("No need to make a real XDRFrame for " + G(b)), c = Bd(new pf(o, f, [b], k))
   }else {
-    var j;
     g = g.split(".");
     h = h.split(".");
-    h.length > g.length && (j = h, h = g, g = j);
+    if(h.length > g.length) {
+      var j = h, h = g;
+      g = j
+    }
     for(g.splice(0, g.length - h.length);g.join(".") != h.join(".");) {
       g.splice(0, 1), h.splice(0, 1)
     }
-    j = g.join(".");
+    g = g.join(".");
     c.a.info("Creating new XDRFrame " + G(d) + "for " + G(b));
-    N(c.a, "Setting document.domain to " + G(j) + "; was " + G(document.domain));
-    document.domain = j;
+    document.domain != g && e(Error("document.domain needs to be " + G(g) + "; was " + G(document.domain) + ".  To avoid problems in IE, set document.domain very early, before loading any scripts or creating any JavaScript objects."));
     g = T("minerva-xdrframes");
     h = new qd;
-    c.Af.set(d, [h, f, b]);
-    c = af("iframe", {id:"minerva-xdrframe-" + d, width:16, height:16, src:f + "xdrframe/?domain=" + j + "&id=" + d});
+    c.ke.set(d, [h, f, b]);
+    c = af("iframe", {id:"minerva-xdrframe-" + d, width:16, height:16, src:f + "xdrframe/?domain=" + document.domain + "&id=" + d});
     g.appendChild(c);
     c = h
   }
   return c
 }
-qf.prototype.xh = function(a) {
-  var b = this.Af.get(a);
+qf.prototype.yh = function(a) {
+  var b = this.ke.get(a);
   b || e(Error("Unknown frameId " + G(a)));
+  this.ke.remove(b);
   var c = b[0], a = new pf(T("minerva-xdrframe-" + a).contentWindow || (I ? T("minerva-xdrframe-" + a).document || T("minerva-xdrframe-" + a).contentWindow.document : T("minerva-xdrframe-" + a).contentDocument || T("minerva-xdrframe-" + a).contentWindow.document).parentWindow || (I ? T("minerva-xdrframe-" + a).document || T("minerva-xdrframe-" + a).contentWindow.document : T("minerva-xdrframe-" + a).contentDocument || T("minerva-xdrframe-" + a).contentWindow.document).defaultView, b[1], [b[2]], a);
   this.frames.push(a);
   wd(c, a)
 };
 var tf = new qf;
-o.__XHRTracker_xdrFrameLoaded = x(tf.xh, tf);
+o.__XHRTracker_xdrFrameLoaded = x(tf.yh, tf);
 var uf;
 uf = !1;
 var vf = gc();
@@ -2932,28 +2934,28 @@ var wf = uf;
 */
 function xf(a, b, c, d, f, g) {
   qd.call(this, f, g);
-  this.zf = a;
-  this.Ld = [];
-  this.df = !!b;
-  this.Dg = !!c;
-  this.tg = !!d;
+  this.Cf = a;
+  this.Md = [];
+  this.gf = !!b;
+  this.Eg = !!c;
+  this.ug = !!d;
   for(b = 0;b < a.length;b++) {
-    yd(a[b], x(this.lf, this, b, !0), x(this.lf, this, b, !1))
+    yd(a[b], x(this.of, this, b, !0), x(this.of, this, b, !1))
   }
-  a.length == 0 && !this.df && wd(this, this.Ld)
+  a.length == 0 && !this.gf && wd(this, this.Md)
 }
 B(xf, qd);
-xf.prototype.Kf = 0;
-xf.prototype.lf = function(a, b, c) {
-  this.Kf++;
-  this.Ld[a] = [b, c];
-  this.Ma || (this.df && b ? wd(this, [a, c]) : this.Dg && !b ? this.$b(c) : this.Kf == this.zf.length && wd(this, this.Ld));
-  this.tg && !b && (c = k);
+xf.prototype.Mf = 0;
+xf.prototype.of = function(a, b, c) {
+  this.Mf++;
+  this.Md[a] = [b, c];
+  this.Ma || (this.gf && b ? wd(this, [a, c]) : this.Eg && !b ? this.$b(c) : this.Mf == this.Cf.length && wd(this, this.Md));
+  this.ug && !b && (c = k);
   return c
 };
 xf.prototype.$b = function(a) {
   xf.d.$b.call(this, a);
-  E(this.zf, function(a) {
+  E(this.Cf, function(a) {
     a.cancel()
   })
 };
@@ -2968,7 +2970,7 @@ function yf(a) {
 }
 ;function zf() {
   if(kc) {
-    this.Ya = {}, this.yd = {}, this.td = []
+    this.Ya = {}, this.zd = {}, this.td = []
   }
 }
 zf.prototype.a = Q("goog.net.xhrMonitor");
@@ -2997,16 +2999,16 @@ function Ef(a) {
     for(var c = 0;c < b.td.length;c++) {
       var d = b.td[c];
       Ff(b.Ya, d, a);
-      Ff(b.yd, a, d)
+      Ff(b.zd, a, d)
     }
   }
 }
 function Df(a, b) {
-  var c = a.yd[b], d = a.Ya[b];
+  var c = a.zd[b], d = a.Ya[b];
   c && d && (P(a.a, "Updating dependent contexts"), E(c, function(a) {
     E(d, function(b) {
       Ff(this.Ya, a, b);
-      Ff(this.yd, b, a)
+      Ff(this.zd, b, a)
     }, this)
   }, a))
 }
@@ -3033,19 +3035,19 @@ function Mf(a) {
   Lf(a) && (b[0] = !0, b[1] = !0);
   return b
 }
-Kf.prototype.be = k;
+Kf.prototype.ce = k;
 function Lf(a) {
-  if(!a.be && typeof XMLHttpRequest == "undefined" && typeof ActiveXObject != "undefined") {
+  if(!a.ce && typeof XMLHttpRequest == "undefined" && typeof ActiveXObject != "undefined") {
     for(var b = ["MSXML2.XMLHTTP.6.0", "MSXML2.XMLHTTP.3.0", "MSXML2.XMLHTTP", "Microsoft.XMLHTTP"], c = 0;c < b.length;c++) {
       var d = b[c];
       try {
-        return new ActiveXObject(d), a.be = d
+        return new ActiveXObject(d), a.ce = d
       }catch(f) {
       }
     }
     e(Error("Could not create ActiveXObject. ActiveX might be disabled, or MSXML might not be installed"))
   }
-  return a.be
+  return a.ce
 }
 Jf = new Kf;
 function Nf(a) {
@@ -3058,34 +3060,34 @@ var Of = /^https?:?$/i;
 n = Nf.prototype;
 n.Ia = !1;
 n.j = k;
-n.xd = k;
+n.yd = k;
 n.lc = "";
-n.wf = "";
+n.zf = "";
 n.ic = 0;
 n.jc = "";
-n.Od = !1;
+n.Pd = !1;
 n.$c = !1;
-n.ce = !1;
+n.de = !1;
 n.fb = !1;
 n.ud = 0;
 n.mb = k;
-n.Uf = "";
-n.th = !1;
+n.Wf = "";
+n.uh = !1;
 n.send = function(a, b, c, d) {
   this.j && e(Error("[goog.net.XhrIo] Object is active with another request"));
   b = b ? b.toUpperCase() : "GET";
   this.lc = a;
   this.jc = "";
   this.ic = 0;
-  this.wf = b;
-  this.Od = !1;
+  this.zf = b;
+  this.Pd = !1;
   this.Ia = !0;
   this.j = this.Qb ? If(this.Qb) : new Hf;
-  this.xd = this.Qb ? this.Qb.Ec || (this.Qb.Ec = Mf(this.Qb)) : Jf.Ec || (Jf.Ec = Mf(Jf));
+  this.yd = this.Qb ? this.Qb.Ec || (this.Qb.Ec = Mf(this.Qb)) : Jf.Ec || (Jf.Ec = Mf(Jf));
   Ef(this.j);
-  this.j.onreadystatechange = x(this.Lf, this);
+  this.j.onreadystatechange = x(this.Nf, this);
   try {
-    O(this.a, Pf(this, "Opening Xhr")), this.ce = !0, this.j.open(b, a, !0), this.ce = !1
+    O(this.a, Pf(this, "Opening Xhr")), this.de = !0, this.j.open(b, a, !0), this.de = !1
   }catch(f) {
     O(this.a, Pf(this, "Error opening Xhr: " + f.message));
     Qf(this, f);
@@ -3099,18 +3101,18 @@ n.send = function(a, b, c, d) {
   Nb(g, function(a, b) {
     this.j.setRequestHeader(b, a)
   }, this);
-  if(this.Uf) {
-    this.j.responseType = this.Uf
+  if(this.Wf) {
+    this.j.responseType = this.Wf
   }
   if("withCredentials" in this.j) {
-    this.j.withCredentials = this.th
+    this.j.withCredentials = this.uh
   }
   try {
     if(this.mb) {
       od.clearTimeout(this.mb), this.mb = k
     }
     if(this.ud > 0) {
-      O(this.a, Pf(this, "Will abort after " + this.ud + "ms if incomplete")), this.mb = od.setTimeout(x(this.ph, this), this.ud)
+      O(this.a, Pf(this, "Will abort after " + this.ud + "ms if incomplete")), this.mb = od.setTimeout(x(this.qh, this), this.ud)
     }
     O(this.a, Pf(this, "Sending request"));
     this.$c = !0;
@@ -3132,7 +3134,7 @@ n.dispatchEvent = function(a) {
     return Nf.d.dispatchEvent.call(this, a)
   }
 };
-n.ph = function() {
+n.qh = function() {
   if(typeof ca != "undefined" && this.j) {
     this.jc = "Timed out after " + this.ud + "ms, aborting", this.ic = 8, O(this.a, Pf(this, this.jc)), this.dispatchEvent("timeout"), this.abort(8)
   }
@@ -3148,8 +3150,8 @@ function Qf(a, b) {
   Sf(a)
 }
 function Rf(a) {
-  if(!a.Od) {
-    a.Od = !0, a.dispatchEvent("complete"), a.dispatchEvent("error")
+  if(!a.Pd) {
+    a.Pd = !0, a.dispatchEvent("complete"), a.dispatchEvent("error")
   }
 }
 n.abort = function(a) {
@@ -3166,19 +3168,19 @@ n.c = function() {
   }
   Nf.d.c.call(this)
 };
-n.Lf = function() {
-  !this.ce && !this.$c && !this.fb ? this.Zg() : Tf(this)
+n.Nf = function() {
+  !this.de && !this.$c && !this.fb ? this.$g() : Tf(this)
 };
-n.Zg = function() {
+n.$g = function() {
   Tf(this)
 };
 function Tf(a) {
   if(a.Ia && typeof ca != "undefined") {
-    if(a.xd[1] && a.Oa() == 4 && Uf(a) == 2) {
+    if(a.yd[1] && a.Oa() == 4 && Uf(a) == 2) {
       O(a.a, Pf(a, "Local request error detected and ignored"))
     }else {
       if(a.$c && a.Oa() == 4) {
-        od.setTimeout(x(a.Lf, a), 0)
+        od.setTimeout(x(a.Nf, a), 0)
       }else {
         if(a.dispatchEvent("readystatechange"), a.Oa() == 4) {
           O(a.a, Pf(a, "Request complete"));
@@ -3224,9 +3226,9 @@ function Tf(a) {
 }
 function Sf(a, b) {
   if(a.j) {
-    var c = a.j, d = a.xd[0] ? q : k;
+    var c = a.j, d = a.yd[0] ? q : k;
     a.j = k;
-    a.xd = k;
+    a.yd = k;
     if(a.mb) {
       od.clearTimeout(a.mb), a.mb = k
     }
@@ -3235,7 +3237,7 @@ function Sf(a, b) {
     if(f.Lc) {
       var g = w(c);
       O(f.a, "Closing XHR : " + g);
-      delete f.yd[g];
+      delete f.zd[g];
       for(var h in f.Ya) {
         ab(f.Ya[h], g), f.Ya[h].length == 0 && delete f.Ya[h]
       }
@@ -3247,7 +3249,7 @@ function Sf(a, b) {
     }
   }
 }
-n.ee = function() {
+n.fe = function() {
   return!!this.j
 };
 n.Oa = function() {
@@ -3264,27 +3266,27 @@ n.getResponseHeader = function(a) {
   return this.j && this.Oa() == 4 ? this.j.getResponseHeader(a) : i
 };
 function Pf(a, b) {
-  return b + " [" + a.wf + " " + a.lc + " " + Uf(a) + "]"
+  return b + " [" + a.zf + " " + a.lc + " " + Uf(a) + "]"
 }
 ;function Vf(a, b, c) {
   this.L = b;
   this.na = a;
-  this.Hd = c
+  this.Id = c
 }
 B(Vf, K);
 n = Vf.prototype;
 n.a = Q("cw.net.XHRMaster");
 n.Ua = -1;
-n.je = function(a, b, c) {
-  this.Hd.__XHRSlave_makeRequest(this.na, a, b, c)
+n.le = function(a, b, c) {
+  this.Id.__XHRSlave_makeRequest(this.na, a, b, c)
 };
 n.Oa = l("Ua");
-n.ne = function(a, b) {
+n.pe = function(a, b) {
   b != Wf && he(this.a, G(this.na) + " got status != OK: " + b + "; XHRSlave should dispose soon.");
   oe(this.L);
   pe(this.L, a)
 };
-n.oe = function(a) {
+n.qe = function(a) {
   O(this.a, "ongotheaders_: " + G(a));
   var b = k;
   "Content-Length" in a && (b = Ld(a["Content-Length"]));
@@ -3292,19 +3294,19 @@ n.oe = function(a) {
   O(a.a, a.s() + " got Content-Length: " + b);
   a.wa == Xf && (b == k && (N(a.a, "Expected to receive a valid Content-Length, but did not."), b = 5E5), Yf(a, 2E3 + b / 3072 * 1E3))
 };
-n.pe = function(a) {
+n.re = function(a) {
   a != 1 && O(this.a, this.L.s() + "'s XHR's readyState is " + a);
   this.Ua = a;
   this.Ua >= 2 && oe(this.L)
 };
-n.me = function() {
+n.oe = function() {
   this.L.f()
 };
 n.c = function() {
   Vf.d.c.call(this);
   delete Zf.Fa[this.na];
-  this.Hd.__XHRSlave_dispose(this.na);
-  delete this.Hd
+  this.Id.__XHRSlave_dispose(this.na);
+  delete this.Id
 };
 function $f() {
   this.Fa = {}
@@ -3312,25 +3314,25 @@ function $f() {
 B($f, K);
 n = $f.prototype;
 n.a = Q("cw.net.XHRMasterTracker");
-n.Id = function(a, b) {
+n.Jd = function(a, b) {
   var c = "_" + Hd(), d = new Vf(c, a, b);
   return this.Fa[c] = d
 };
-n.ne = function(a, b, c) {
+n.pe = function(a, b, c) {
   var b = bb(b), d = this.Fa[a];
-  d ? d.ne(b, c) : he(this.a, "onframes_: no master for " + G(a))
+  d ? d.pe(b, c) : he(this.a, "onframes_: no master for " + G(a))
 };
-n.oe = function(a, b) {
+n.qe = function(a, b) {
   var c = this.Fa[a];
-  c ? c.oe(b) : he(this.a, "ongotheaders_: no master for " + G(a))
+  c ? c.qe(b) : he(this.a, "ongotheaders_: no master for " + G(a))
 };
-n.pe = function(a, b) {
+n.re = function(a, b) {
   var c = this.Fa[a];
-  c ? c.pe(b) : he(this.a, "onreadystatechange_: no master for " + G(a))
+  c ? c.re(b) : he(this.a, "onreadystatechange_: no master for " + G(a))
 };
-n.me = function(a) {
+n.oe = function(a) {
   var b = this.Fa[a];
-  b ? (delete this.Fa[b.na], b.me()) : he(this.a, "oncomplete_: no master for " + G(a))
+  b ? (delete this.Fa[b.na], b.oe()) : he(this.a, "oncomplete_: no master for " + G(a))
 };
 n.c = function() {
   $f.d.c.call(this);
@@ -3340,14 +3342,14 @@ n.c = function() {
   delete this.Fa
 };
 var Zf = new $f;
-o.__XHRMaster_onframes = x(Zf.ne, Zf);
-o.__XHRMaster_oncomplete = x(Zf.me, Zf);
-o.__XHRMaster_ongotheaders = x(Zf.oe, Zf);
-o.__XHRMaster_onreadystatechange = x(Zf.pe, Zf);
+o.__XHRMaster_onframes = x(Zf.pe, Zf);
+o.__XHRMaster_oncomplete = x(Zf.oe, Zf);
+o.__XHRMaster_ongotheaders = x(Zf.qe, Zf);
+o.__XHRMaster_onreadystatechange = x(Zf.re, Zf);
 function ag(a, b, c) {
   this.host = a;
   this.port = b;
-  this.qh = c
+  this.rh = c
 }
 function bg(a, b) {
   b || (b = a);
@@ -3356,47 +3358,48 @@ function bg(a, b) {
 }
 function cg(a, b, c, d) {
   this.Gb = a;
-  this.Nf = b;
+  this.Pf = b;
   this.Ib = c;
-  this.Yf = d;
+  this.$f = d;
   (!(this.Gb.indexOf("http://") == 0 || this.Gb.indexOf("https://") == 0) || !(this.Ib.indexOf("http://") == 0 || this.Ib.indexOf("https://") == 0)) && e(Error("primaryUrl and secondUrl must be absolute URLs with http or https scheme"));
-  a = this.Nf.location.href;
+  a = this.Pf.location.href;
   Oe(this.Gb, a) || e(Error("primaryWindow not same origin as primaryUrl: " + a));
-  a = this.Yf.location.href;
+  a = this.$f.location.href;
   Oe(this.Ib, a) || e(Error("secondaryWindow not same origin as secondaryUrl: " + a))
 }
 var dg = new De(";)]}"), eg = "disconnected_" + ld++;
 function fg(a, b, c, d) {
   this.K = a;
-  this.Pf = b;
+  this.Rf = b;
   this.Q = c;
-  this.Vi = d;
+  this.Wi = d;
   this.zc = new Nd;
   this.xc = Hd() + Hd();
   this.Ta = new Wb;
-  this.de = new Yb;
+  this.ee = new Yb;
   this.Cc = k;
+  this.xd = [];
   if(I) {
-    this.Cc = dd(o, "load", this.gh, !1, this)
+    this.Cc = dd(o, "load", this.hh, !1, this)
   }
 }
 B(fg, md);
 n = fg.prototype;
 n.a = Q("cw.net.Stream");
-n.xf = new Vb(-1, []);
-n.yf = new Vb(-1, []);
-n.Wg = 50;
-n.Vg = 1048576;
-n.De = !1;
-n.te = !1;
+n.Af = new Vb(-1, []);
+n.Bf = new Vb(-1, []);
+n.Xg = 50;
+n.Wg = 1048576;
+n.Fe = !1;
+n.ve = !1;
 n.i = 1;
-n.fg = -1;
+n.gg = -1;
 n.k = k;
 n.B = k;
 n.qc = k;
-n.Ee = 0;
-n.Mf = 0;
-n.Xf = 0;
+n.Ge = 0;
+n.Of = 0;
+n.Zf = 0;
 n.A = function(a, b) {
   a.push("<Stream id=");
   F(this.xc, a, b);
@@ -3417,7 +3420,7 @@ function gg(a) {
 }
 function hg(a) {
   if(a.i != 1) {
-    var b = a.Ta.z.V() != 0, c = Zb(a.de), d = !c.n(a.yf) && !(a.k && c.n(a.k.Bb) || a.B && c.n(a.B.Bb)), f = gg(a);
+    var b = a.Ta.z.V() != 0, c = Zb(a.ee), d = !c.n(a.Bf) && !(a.k && c.n(a.k.Bb) || a.B && c.n(a.B.Bb)), f = gg(a);
     if((b = b && f < a.Ta.tb) || d) {
       var g = b && d ? "string(s)+SACK" : b ? "string(s)" : d ? "SACK" : "nothing!?";
       if(a.k.Tb) {
@@ -3428,21 +3431,21 @@ function hg(a) {
         b && jg(a.k, a.Ta, f + 1);
         a.k.Ca()
       }else {
-        a.B == k ? a.De ? (P(a.a, "tryToSend_: creating secondary to send " + g), a.B = kg(a, !1), b && jg(a.B, a.Ta, f + 1), a.B.Ca()) : (P(a.a, "tryToSend_: not creating a secondary because Stream might not exist on server"), a.te = !0) : P(a.a, "tryToSend_: need to send " + g + ", but can't right now")
+        a.B == k ? a.Fe ? (P(a.a, "tryToSend_: creating secondary to send " + g), a.B = kg(a, !1), b && jg(a.B, a.Ta, f + 1), a.B.Ca()) : (P(a.a, "tryToSend_: not creating a secondary because Stream might not exist on server"), a.ve = !0) : P(a.a, "tryToSend_: need to send " + g + ", but can't right now")
       }
     }
   }
 }
-n.gh = function() {
+n.hh = function() {
   this.Cc = k;
   if(this.k && this.k.xb()) {
     this.a.info("restartHttpRequests_: aborting primary");
     var a = this.k;
-    a.zd = !0;
+    a.Ad = !0;
     a.f()
   }
   if(this.B && this.B.xb()) {
-    this.a.info("restartHttpRequests_: aborting secondary"), a = this.B, a.zd = !0, a.f()
+    this.a.info("restartHttpRequests_: aborting secondary"), a = this.B, a.Ad = !0, a.f()
   }
 };
 function lg(a, b) {
@@ -3463,8 +3466,8 @@ function lg(a, b) {
 function kg(a, b) {
   var c;
   a.Q instanceof cg ? c = (Boolean(Number((new mg(document.location)).ia.get("httpStreaming", "0"))) ? 2 : 1) == 1 ? Xf : ng : a.Q instanceof ag ? c = og : e(Error("Don't support endpoint " + G(a.Q)));
-  a.fg += 1;
-  c = new pg(a.K, a, a.fg, c, a.Q, b);
+  a.gg += 1;
+  c = new pg(a.K, a, a.gg, c, a.Q, b);
   P(a.a, "Created: " + c.s());
   a.zc.add(c);
   return c
@@ -3478,42 +3481,42 @@ function qg(a, b, c) {
 function sg(a, b) {
   a.zc.remove(b) || e(Error("transportOffline_: Transport was not removed?"));
   O(a.a, "Offline: " + b.s());
-  b.oc ? a.Ee += b.oc : a.Ee = 0;
-  a.Ee >= 1 && (a.a.info("transportOffline_: Doing an internal reset because streamPenalty_ reached limit."), tg("stream penalty reached limit", !1), a.f());
+  b.oc ? a.Ge += b.oc : a.Ge = 0;
+  a.Ge >= 1 && (a.a.info("transportOffline_: Doing an internal reset because streamPenalty_ reached limit."), tg("stream penalty reached limit", !1), a.f());
   if(a.i > 3) {
-    a.i == 4 && b.kg ? (O(a.a, "Disposing because resettingTransport_ is done."), a.f()) : O(a.a, "Not creating a transport because Stream is in state " + a.i)
+    a.i == 4 && b.lg ? (O(a.a, "Disposing because resettingTransport_ is done."), a.f()) : O(a.a, "Not creating a transport because Stream is in state " + a.i)
   }else {
     var c;
     var d;
     c = b instanceof rg;
-    if(!c && b.zd) {
+    if(!c && b.Ad) {
       var f = I ? wf ? [0, 1] : [9, 20] : [0, 0];
       c = f[0];
       d = f[1];
       P(a.a, "getDelayForNextTransport_: " + G({delay:c, times:d}))
     }else {
-      d = b.Re();
+      d = b.Ue();
       if(b == a.k) {
         if(d) {
-          f = ++a.Mf
+          f = ++a.Of
         }else {
           if(!c) {
-            f = a.Mf = 0
+            f = a.Of = 0
           }
         }
       }else {
         if(d) {
-          f = ++a.Xf
+          f = ++a.Zf
         }else {
           if(!c) {
-            f = a.Xf = 0
+            f = a.Zf = 0
           }
         }
       }
       if(c || !f) {
         d = c = 0, P(a.a, "getDelayForNextTransport_: " + G({count:f, delay:c, times:d}))
       }else {
-        var g = 2E3 * Math.min(f, 3), h = Math.floor(Math.random() * 4E3) - 2E3, j = Math.max(0, b.gg - b.He);
+        var g = 2E3 * Math.min(f, 3), h = Math.floor(Math.random() * 4E3) - 2E3, j = Math.max(0, b.hg - b.Ke);
         d = (c = Math.max(0, g + h - j)) ? 1 : 0;
         P(a.a, "getDelayForNextTransport_: " + G({count:f, base:g, variance:h, oldDuration:j, delay:c, times:d}))
       }
@@ -3538,8 +3541,8 @@ n.reset = function(a) {
 };
 function vg(a, b, c, d) {
   var f;
-  f = a.de;
-  for(var g = a.Wg, h = a.Vg, j = [], m = !1, p = 0, y = c.length;p < y;p++) {
+  f = a.ee;
+  for(var g = a.Xg, h = a.Wg, j = [], m = !1, p = 0, y = c.length;p < y;p++) {
     var r = c[p], v = r[0], r = r[1];
     if(v == f.Ab + 1) {
       f.Ab += 1;
@@ -3576,7 +3579,7 @@ function vg(a, b, c, d) {
   f = f[1];
   if(c) {
     for(g = 0;g < c.length;g++) {
-      if(h = a.Pf, j = Db(c[g]), m = j[0], p = j[1], m == 1 ? (m = h.qe.Nd(xb.dc(), p), h = mb(m, 1), j = mb(m, 2), m = m.fa(), sb.Kc(h, j, 5, 5, new wg(1, "black"), new xg(m), i)) : m == 2 ? (sb.f(), yg()) : N(zg, "Strange message from server: " + G(j)), a.i == 4 || a.ra) {
+      if(h = a.Rf, j = Db(c[g]), m = j[0], p = j[1], m == 1 ? (m = h.se.Od(xb.dc(), p), h = mb(m, 1), j = mb(m, 2), m = m.fa(), sb.Kc(h, j, 5, 5, new wg(1, "black"), new xg(m), i)) : m == 2 ? (sb.f(), yg()) : N(zg, "Strange message from server: " + G(j)), a.i == 4 || a.ra) {
         return
       }
     }
@@ -3591,13 +3594,16 @@ n.start = function() {
   this.i = 2;
   if(this.Q instanceof bg) {
     var a = sf(this.Q.Gb, this), b = sf(this.Q.Ib, this);
-    xd(yf([a, b]), x(this.Cg, this))
+    xd(yf([a, b]), x(this.Dg, this))
   }else {
     Ag(this)
   }
 };
-n.Cg = function(a) {
-  this.Q = new cg(a[0].Nc, a[0].contentWindow, a[1].Nc, a[1].contentWindow);
+n.Dg = function(a) {
+  var b = a[0].contentWindow, c = a[1].contentWindow, d = a[0].Nc, f = a[1].Nc;
+  this.xd.push(a[0]);
+  this.xd.push(a[1]);
+  this.Q = new cg(d, b, f, c);
   Ag(this)
 };
 function Ag(a) {
@@ -3612,15 +3618,18 @@ n.c = function() {
   for(var a = this.zc.X(), b = 0;b < a.length;b++) {
     a[b].f()
   }
-  this.dispatchEvent({type:eg});
+  for(a = 0;a < this.xd.length;a++) {
+    ab(this.xd[a].Ie, this)
+  }
   if(I && this.Cc) {
     gd(this.Cc), this.Cc = k
   }
+  this.dispatchEvent({type:eg});
   delete this.zc;
   delete this.k;
   delete this.B;
   delete this.qc;
-  delete this.Pf;
+  delete this.Rf;
   fg.d.c.call(this)
 };
 var Xf = 1, ng = 2, og = 3;
@@ -3634,23 +3643,23 @@ function pg(a, b, c, d, f, g) {
   this.qb = g;
   this.Tb = !this.xb();
   this.Hb = this.wa != Xf;
-  this.qg = x(this.oh, this)
+  this.rg = x(this.ph, this)
 }
 B(pg, K);
 n = pg.prototype;
 n.a = Q("cw.net.ClientTransport");
 n.q = k;
-n.He = k;
-n.gg = k;
+n.Ke = k;
+n.hg = k;
 n.jd = k;
 n.Ha = !1;
 n.sd = !1;
 n.Bb = k;
-n.Ud = 0;
+n.Vd = 0;
 n.Eb = -1;
-n.re = -1;
-n.kg = !1;
-n.zd = !1;
+n.te = -1;
+n.lg = !1;
+n.Ad = !1;
 n.oc = 0;
 n.fc = !1;
 n.A = function(a) {
@@ -3659,8 +3668,8 @@ n.A = function(a) {
 n.s = function() {
   return(this.qb ? "Prim. T#" : "Sec. T#") + this.Ob
 };
-n.Re = function() {
-  return!(!this.fc && this.Ud)
+n.Ue = function() {
+  return!(!this.fc && this.Vd)
 };
 n.xb = function() {
   return this.wa == Xf || this.wa == ng
@@ -3674,10 +3683,10 @@ function Bg(a, b) {
 function Cg(a, b, c) {
   try {
     var d = Me(b);
-    a.Ud += 1;
+    a.Vd += 1;
     O(a.a, a.s() + " RECV " + G(d));
     var f;
-    a.Ud == 1 && !d.n(dg) && a.xb() ? (N(a.a, a.s() + " is closing soon because got bad preamble: " + G(d)), f = !0) : f = !1;
+    a.Vd == 1 && !d.n(dg) && a.xb() ? (N(a.a, a.s() + " is closing soon because got bad preamble: " + G(d)), f = !0) : f = !1;
     if(f) {
       return!0
     }
@@ -3685,12 +3694,12 @@ function Cg(a, b, c) {
       if(!/^([ -~]*)$/.test(d.Nb)) {
         return a.fc = !0
       }
-      a.re += 1;
-      c.push([a.re, d.Nb])
+      a.te += 1;
+      c.push([a.te, d.Nb])
     }else {
       if(d instanceof Be) {
         var g = a.D, h = d.oa;
-        g.xf = h;
+        g.Af = h;
         var j = g.Ta, m = h.ob, c = !1;
         m > j.tb && (c = !0);
         for(var p = Xb(j).concat(), d = 0;d < p.length;d++) {
@@ -3713,10 +3722,10 @@ function Cg(a, b, c) {
         }
       }else {
         if(d instanceof Ee) {
-          a.re = d.vc - 1
+          a.te = d.vc - 1
         }else {
           if(d instanceof Ge) {
-            a.D.yf = d.kc
+            a.D.Bf = d.kc
           }else {
             if(d instanceof Ie) {
               return P(a.a, a.s() + " is closing soon because got YouCloseItFrame"), !0
@@ -3728,9 +3737,9 @@ function Cg(a, b, c) {
                   if(d instanceof He) {
                     var A = a.D, mj = !a.Hb;
                     P(A.a, "Stream is now confirmed to exist at server.");
-                    A.De = !0;
-                    if(A.te && !mj) {
-                      A.te = !1, hg(A)
+                    A.Fe = !0;
+                    if(A.ve && !mj) {
+                      A.ve = !1, hg(A)
                     }
                   }else {
                     if(c.length && (Bg(a, c), $a(c)), d instanceof Je) {
@@ -3774,7 +3783,7 @@ function pe(a, b) {
     a.sd = !1
   }
 }
-n.oh = function() {
+n.ph = function() {
   N(this.a, this.s() + " timed out due to lack of connection or no data being received.");
   this.f()
 };
@@ -3786,7 +3795,7 @@ function Dg(a) {
 function Yf(a, b) {
   Dg(a);
   b = Math.round(b);
-  a.jd = a.K.M.setTimeout(a.qg, b);
+  a.jd = a.K.M.setTimeout(a.rg, b);
   O(a.a, a.s() + "'s receive timeout set to " + b + " ms.")
 }
 function oe(a) {
@@ -3795,24 +3804,24 @@ function oe(a) {
 function ig(a) {
   var b = new ze;
   b.Ob = a.Ob;
-  b.Of = 2;
-  b.qf = 2;
-  if(!a.D.De) {
-    b.Sf = !0
+  b.Qf = 2;
+  b.tf = 2;
+  if(!a.D.Fe) {
+    b.Uf = !0
   }
   b.xc = a.D.xc;
-  b.Fe = a.Hb;
-  if(b.Fe) {
-    b.If = 4096
+  b.He = a.Hb;
+  if(b.He) {
+    b.Kf = 4096
   }
-  b.Ef = 3E5;
-  b.Cf = a.Hb ? Math.floor(10) : 0;
-  b.hg = !1;
+  b.Gf = 3E5;
+  b.Ef = a.Hb ? Math.floor(10) : 0;
+  b.ig = !1;
   if(a.qb) {
-    b.bg = k, b.ke = Math.floor((a.Hb ? 358E4 : 25E3) / 1E3)
+    b.cg = k, b.me = Math.floor((a.Hb ? 358E4 : 25E3) / 1E3)
   }
-  b.oa = Zb(a.D.de);
-  b.dd = a.D.xf;
+  b.oa = Zb(a.D.ee);
+  b.dd = a.D.Af;
   a.F.push(b);
   a.Bb = b.oa
 }
@@ -3838,9 +3847,9 @@ n.Ca = function() {
       this.F = [];
       a = a.join("");
       b = this.qb ? this.Q.Gb : this.Q.Ib;
-      this.q = Zf.Id(this, this.qb ? this.Q.Nf : this.Q.Yf);
-      this.He = this.K.M === od ? z() : this.K.M.getTime();
-      this.q.je(b, "POST", a);
+      this.q = Zf.Jd(this, this.qb ? this.Q.Pf : this.Q.$f);
+      this.Ke = this.K.M === od ? z() : this.K.M.getTime();
+      this.q.le(b, "POST", a);
       Yf(this, 3E3 * (1.5 + (b.indexOf("https://") == 0 ? 3 : 1)) + 4E3 + (this.Hb ? 0 : this.qb ? 25E3 : 0))
     }else {
       if(this.wa == og) {
@@ -3850,7 +3859,7 @@ n.Ca = function() {
           a.push(this.F[b].ea())
         }
         this.F = [];
-        this.q ? this.q.Dc(a) : (b = this.Q, this.q = new se(this), this.q.rd = b.qh.Id(this.q), this.He = this.K.M === od ? z() : this.K.M.getTime(), this.q.Gd(b.host, b.port), this.q.ra || (this.q.Dc(a), this.q.ra || Yf(this, 8E3)))
+        this.q ? this.q.Dc(a) : (b = this.Q, this.q = new se(this), this.q.rd = b.rh.Jd(this.q), this.Ke = this.K.M === od ? z() : this.K.M.getTime(), this.q.Hd(b.host, b.port), this.q.ra || (this.q.Dc(a), this.q.ra || Yf(this, 8E3)))
       }else {
         e(Error("flush_: Don't know what to do for this transportType: " + this.wa))
       }
@@ -3871,7 +3880,7 @@ function jg(a, b, c) {
 n.c = function() {
   this.a.info(this.s() + " in disposeInternal.");
   pg.d.c.call(this);
-  this.gg = this.K.M === od ? z() : this.K.M.getTime();
+  this.hg = this.K.M === od ? z() : this.K.M.getTime();
   this.F = [];
   Dg(this);
   this.q && this.q.f();
@@ -3882,13 +3891,13 @@ n.c = function() {
 function ug(a, b) {
   !a.Ha && !a.F.length && ig(a);
   a.F.push(new Je(b, !0));
-  a.kg = !0
+  a.lg = !0
 }
 function rg(a, b, c, d) {
   this.K = a;
   this.D = b;
-  this.$e = c;
-  this.Ue = d
+  this.cf = c;
+  this.Xe = d
 }
 B(rg, K);
 n = rg.prototype;
@@ -3900,9 +3909,9 @@ n.a = Q("cw.net.DoNothingTransport");
 function Eg(a) {
   a.Uc = a.K.M.setTimeout(function() {
     a.Uc = k;
-    a.Ue--;
-    a.Ue ? Eg(a) : a.f()
-  }, a.$e)
+    a.Xe--;
+    a.Xe ? Eg(a) : a.f()
+  }, a.cf)
 }
 n.Ca = function() {
   this.Ha && !this.Tb && e(Error("flush_: Can't flush more than once to DoNothingTransport."));
@@ -3910,11 +3919,11 @@ n.Ca = function() {
   Eg(this)
 };
 n.A = function(a) {
-  a.push("<DoNothingTransport delay=", String(this.$e), ">")
+  a.push("<DoNothingTransport delay=", String(this.cf), ">")
 };
 n.xb = ba(!1);
 n.s = ba("Wast. T");
-n.Re = ba(!1);
+n.Ue = ba(!1);
 n.c = function() {
   this.a.info(this.s() + " in disposeInternal.");
   rg.d.c.call(this);
@@ -4014,13 +4023,13 @@ function Pg(a, b, c, d, f, g) {
   }
   return a
 }
-Ng.prototype.se = function() {
+Ng.prototype.ue = function() {
   E(this.l, gd);
   this.l.length = 0
 };
 Ng.prototype.c = function() {
   Ng.d.c.call(this);
-  this.se()
+  this.ue()
 };
 Ng.prototype.handleEvent = function() {
   e(Error("EventHandler.handleEvent not implemented"))
@@ -4028,14 +4037,14 @@ Ng.prototype.handleEvent = function() {
 function Qg() {
 }
 ea(Qg);
-Qg.prototype.Yg = 0;
+Qg.prototype.Zg = 0;
 Qg.Na();
 function V(a) {
   this.P = a || Ve();
   this.tc = Rg
 }
 B(V, md);
-V.prototype.Pg = Qg.Na();
+V.prototype.Qg = Qg.Na();
 var Rg = k;
 function Sg(a, b) {
   switch(a) {
@@ -4061,22 +4070,22 @@ n.S = k;
 n.t = !1;
 n.e = k;
 n.tc = k;
-n.Xg = k;
+n.Yg = k;
 n.aa = k;
 n.O = k;
 n.Vb = k;
-n.sh = !1;
+n.th = !1;
 function Tg(a) {
-  return a.S || (a.S = ":" + (a.Pg.Yg++).toString(36))
+  return a.S || (a.S = ":" + (a.Qg.Zg++).toString(36))
 }
 n.b = l("e");
 function Ug(a) {
   return a.vb || (a.vb = new Ng(a))
 }
 n.getParent = l("aa");
-n.xe = function(a) {
+n.ze = function(a) {
   this.aa && this.aa != a && e(Error("Method not supported"));
-  V.d.xe.call(this, a)
+  V.d.ze.call(this, a)
 };
 n.Da = l("P");
 n.h = function() {
@@ -4098,7 +4107,7 @@ n.$a = function() {
   Wg(this, function(a) {
     a.t && a.$a()
   });
-  this.vb && this.vb.se();
+  this.vb && this.vb.ue();
   this.t = !1
 };
 n.c = function() {
@@ -4108,8 +4117,8 @@ n.c = function() {
   Wg(this, function(a) {
     a.f()
   });
-  !this.sh && this.e && gf(this.e);
-  this.aa = this.Xg = this.e = this.Vb = this.O = k
+  !this.th && this.e && gf(this.e);
+  this.aa = this.Yg = this.e = this.Vb = this.O = k
 };
 n.cc = l("e");
 n.Lb = function(a) {
@@ -4130,7 +4139,7 @@ n.removeChild = function(a, b) {
       c = a;
       c == k && e(Error("Unable to set parent component"));
       c.aa = k;
-      V.d.xe.call(c, k)
+      V.d.ze.call(c, k)
     }
   }
   a || e(Error("Child is not in parent component"));
@@ -4138,7 +4147,7 @@ n.removeChild = function(a, b) {
 };
 function Xg(a, b) {
   a.setAttribute("role", b);
-  a.Si = b
+  a.Ti = b
 }
 ;function Yg() {
 }
@@ -4164,7 +4173,7 @@ n.Zb = function(a, b, c) {
     }
   }
 };
-n.sf = function(a) {
+n.vf = function(a) {
   if(a.tc == k) {
     a.tc = "rtl" == (Gg(a.t ? a.e : a.P.r.body, "direction") || ((a.t ? a.e : a.P.r.body).currentStyle ? (a.t ? a.e : a.P.r.body).currentStyle.direction : k) || (a.t ? a.e : a.P.r.body).style.direction)
   }
@@ -4177,7 +4186,7 @@ n.kd = function(a, b) {
 n.Lb = function(a, b) {
   this.Zb(a, this.v() + "-rtl", b)
 };
-n.uf = function(a) {
+n.xf = function(a) {
   var b;
   return a.va & 32 && (b = a.bb()) ? mf(b) : !1
 };
@@ -4189,14 +4198,14 @@ n.nd = function(a, b) {
         c.blur()
       }catch(d) {
       }
-      a.i & 32 && a.kf()
+      a.i & 32 && a.nf()
     }
     if(mf(c) != b) {
       b ? c.tabIndex = 0 : c.removeAttribute("tabIndex")
     }
   }
 };
-n.Be = function(a, b) {
+n.De = function(a, b) {
   a.style.display = b ? "" : "none"
 };
 n.ja = function(a, b, c) {
@@ -4254,11 +4263,11 @@ function ah(a, b) {
   return c
 }
 function bh(a, b) {
-  if(!a.Qe) {
+  if(!a.Te) {
     var c = a.v();
-    a.Qe = {1:c + "-disabled", 2:c + "-hover", 4:c + "-active", 8:c + "-selected", 16:c + "-checked", 32:c + "-focused", 64:c + "-open"}
+    a.Te = {1:c + "-disabled", 2:c + "-hover", 4:c + "-active", 8:c + "-selected", 16:c + "-checked", 32:c + "-focused", 64:c + "-open"}
   }
-  return a.Qe[b]
+  return a.Te[b]
 }
 ;function ch(a, b) {
   a || e(Error("Invalid class name " + a));
@@ -4348,20 +4357,20 @@ B(gh, md);
 n = gh.prototype;
 n.e = k;
 n.bd = k;
-n.fe = k;
+n.ge = k;
 n.cd = k;
 n.Ra = -1;
 n.Qa = -1;
 var jh = {3:13, 12:144, 63232:38, 63233:40, 63234:37, 63235:39, 63236:112, 63237:113, 63238:114, 63239:115, 63240:116, 63241:117, 63242:118, 63243:119, 63244:120, 63245:121, 63246:122, 63247:123, 63248:44, 63272:46, 63273:36, 63275:35, 63276:33, 63277:34, 63289:144, 63302:45}, kh = {Up:38, Down:40, Left:37, Right:39, Enter:13, F1:112, F2:113, F3:114, F4:115, F5:116, F6:117, F7:118, F8:119, F9:120, F10:121, F11:122, F12:123, "U+007F":46, Home:36, End:35, PageUp:33, PageDown:34, Insert:45}, lh = {61:187, 
 59:186}, mh = H || I && J("525");
 n = gh.prototype;
-n.Lg = function(a) {
+n.Mg = function(a) {
   if(I && (this.Ra == 17 && !a.ctrlKey || this.Ra == 18 && !a.altKey)) {
     this.Qa = this.Ra = -1
   }
   mh && !eh(a.keyCode, this.Ra, a.shiftKey, a.ctrlKey, a.altKey) ? this.handleEvent(a) : this.Qa = kc && a.keyCode in lh ? lh[a.keyCode] : a.keyCode
 };
-n.Mg = function() {
+n.Ng = function() {
   this.Qa = this.Ra = -1
 };
 n.handleEvent = function(a) {
@@ -4383,12 +4392,12 @@ function hh(a, b, c) {
   a.cd && a.detach();
   a.e = b;
   a.bd = M(a.e, "keypress", a, c);
-  a.fe = M(a.e, "keydown", a.Lg, c, a);
-  a.cd = M(a.e, "keyup", a.Mg, c, a)
+  a.ge = M(a.e, "keydown", a.Mg, c, a);
+  a.cd = M(a.e, "keyup", a.Ng, c, a)
 }
 n.detach = function() {
   if(this.bd) {
-    gd(this.bd), gd(this.fe), gd(this.cd), this.cd = this.fe = this.bd = k
+    gd(this.bd), gd(this.ge), gd(this.cd), this.cd = this.ge = this.bd = k
   }
   this.e = k;
   this.Qa = this.Ra = -1
@@ -4425,12 +4434,12 @@ n = W.prototype;
 n.da = k;
 n.i = 0;
 n.va = 39;
-n.Ne = 255;
-n.mh = 0;
+n.Qe = 255;
+n.nh = 0;
 n.Pb = !0;
 n.sa = k;
-n.$d = !0;
-n.Bd = !1;
+n.ae = !0;
+n.Cd = !1;
 n.bb = function() {
   return this.m.bb(this)
 };
@@ -4457,27 +4466,27 @@ n.h = function() {
   this.e = a;
   var b = this.m.Pc();
   b && Xg(a, b);
-  this.Bd || this.m.kd(a, !1);
-  this.Pb || this.m.Be(a, !1)
+  this.Cd || this.m.kd(a, !1);
+  this.Pb || this.m.De(a, !1)
 };
 n.cc = function() {
   return this.m.cc(this.b())
 };
 n.R = function() {
   W.d.R.call(this);
-  this.m.sf(this);
-  if(this.va & -2 && (this.$d && ph(this, !0), this.va & 32)) {
+  this.m.vf(this);
+  if(this.va & -2 && (this.ae && ph(this, !0), this.va & 32)) {
     var a = this.bb();
     if(a) {
       var b = this.zb || (this.zb = new gh);
       hh(b, a);
-      U(U(U(Ug(this), b, "key", this.nf), a, "focus", this.Jg), a, "blur", this.kf)
+      U(U(U(Ug(this), b, "key", this.qf), a, "focus", this.Kg), a, "blur", this.nf)
     }
   }
 };
 function ph(a, b) {
   var c = Ug(a), d = a.b();
-  b ? (U(U(U(U(c, d, "mouseover", a.Xc), d, "mousedown", a.Vc), d, "mouseup", a.of), d, "mouseout", a.Wc), H && U(c, d, "dblclick", a.mf)) : (Pg(Pg(Pg(Pg(c, d, "mouseover", a.Xc), d, "mousedown", a.Vc), d, "mouseup", a.of), d, "mouseout", a.Wc), H && Pg(c, d, "dblclick", a.mf))
+  b ? (U(U(U(U(c, d, "mouseover", a.Xc), d, "mousedown", a.Vc), d, "mouseup", a.rf), d, "mouseout", a.Wc), H && U(c, d, "dblclick", a.pf)) : (Pg(Pg(Pg(Pg(c, d, "mouseover", a.Xc), d, "mousedown", a.Vc), d, "mouseup", a.rf), d, "mouseout", a.Wc), H && Pg(c, d, "dblclick", a.pf))
 }
 n.$a = function() {
   W.d.$a.call(this);
@@ -4495,7 +4504,7 @@ n.ld = function(a) {
   this.md(a)
 };
 n.md = aa("da");
-n.gf = function() {
+n.kf = function() {
   var a = this.da;
   if(!a) {
     return""
@@ -4525,14 +4534,14 @@ n.Lb = function(a) {
   b && this.m.Lb(b, a)
 };
 n.kd = function(a) {
-  this.Bd = a;
+  this.Cd = a;
   var b = this.b();
   b && this.m.kd(b, a)
 };
-n.Be = function(a, b) {
+n.De = function(a, b) {
   if(b || this.Pb != a && this.dispatchEvent(a ? "show" : "hide")) {
     var c = this.b();
-    c && this.m.Be(c, a);
+    c && this.m.De(c, a);
     this.isEnabled() && this.m.nd(this, a);
     this.Pb = a;
     return!0
@@ -4545,13 +4554,13 @@ n.isEnabled = function() {
 function qh(a, b) {
   rh(a, 2, b) && a.ja(2, b)
 }
-n.ee = function() {
+n.fe = function() {
   return!!(this.i & 4)
 };
 n.setActive = function(a) {
   rh(this, 4, a) && this.ja(4, a)
 };
-n.ye = function(a) {
+n.Ae = function(a) {
   rh(this, 8, a) && this.ja(8, a)
 };
 n.ja = function(a, b) {
@@ -4560,10 +4569,10 @@ n.ja = function(a, b) {
   }
 };
 function X(a, b) {
-  return!!(a.Ne & b) && !!(a.va & b)
+  return!!(a.Qe & b) && !!(a.va & b)
 }
 function rh(a, b, c) {
-  return!!(a.va & b) && !!(a.i & b) != c && (!(a.mh & b) || a.dispatchEvent(Sg(b, c))) && !a.ra
+  return!!(a.va & b) && !!(a.i & b) != c && (!(a.nh & b) || a.dispatchEvent(Sg(b, c))) && !a.ra
 }
 n.Xc = function(a) {
   !sh(a, this.b()) && this.dispatchEvent("enter") && this.isEnabled() && X(this, 2) && qh(this, !0)
@@ -4576,14 +4585,14 @@ function sh(a, b) {
 }
 n.Vc = function(a) {
   if(this.isEnabled() && (X(this, 2) && qh(this, !0), Ic(a) && (!I || !nc || !a.ctrlKey))) {
-    X(this, 4) && this.setActive(!0), this.m.uf(this) && this.bb().focus()
+    X(this, 4) && this.setActive(!0), this.m.xf(this) && this.bb().focus()
   }
-  !this.Bd && Ic(a) && (!I || !nc || !a.ctrlKey) && a.preventDefault()
+  !this.Cd && Ic(a) && (!I || !nc || !a.ctrlKey) && a.preventDefault()
 };
-n.of = function(a) {
-  this.isEnabled() && (X(this, 2) && qh(this, !0), this.ee() && this.hb(a) && X(this, 4) && this.setActive(!1))
+n.rf = function(a) {
+  this.isEnabled() && (X(this, 2) && qh(this, !0), this.fe() && this.hb(a) && X(this, 4) && this.setActive(!1))
 };
-n.mf = function(a) {
+n.pf = function(a) {
   this.isEnabled() && this.hb(a)
 };
 n.hb = function(a) {
@@ -4591,7 +4600,7 @@ n.hb = function(a) {
     var b = !(this.i & 16);
     rh(this, 16, b) && this.ja(16, b)
   }
-  X(this, 8) && this.ye(!0);
+  X(this, 8) && this.Ae(!0);
   X(this, 64) && (b = !(this.i & 64), rh(this, 64, b) && this.ja(64, b));
   b = new Dc("action", this);
   if(a) {
@@ -4601,17 +4610,17 @@ n.hb = function(a) {
   }
   return this.dispatchEvent(b)
 };
-n.Jg = function() {
+n.Kg = function() {
   X(this, 32) && rh(this, 32, !0) && this.ja(32, !0)
 };
-n.kf = function() {
+n.nf = function() {
   X(this, 4) && this.setActive(!1);
   X(this, 32) && rh(this, 32, !1) && this.ja(32, !1)
 };
-n.nf = function(a) {
-  return this.Pb && this.isEnabled() && this.Zd(a) ? (a.preventDefault(), a.stopPropagation(), !0) : !1
+n.qf = function(a) {
+  return this.Pb && this.isEnabled() && this.$d(a) ? (a.preventDefault(), a.stopPropagation(), !0) : !1
 };
-n.Zd = function(a) {
+n.$d = function(a) {
   return a.keyCode == 13 && this.hb(a)
 };
 u(W) || e(Error("Invalid component class " + W));
@@ -4632,7 +4641,7 @@ n.Ac = function(a, b, c) {
 };
 n.h = function(a) {
   var b = uh.d.h.call(this, a), c = a.Sc();
-  c && this.Ae(b, c);
+  c && this.Ce(b, c);
   (c = a.Tc()) && this.qd(b, c);
   a.va & 16 && this.Ac(b, 16, !1);
   return b
@@ -4642,7 +4651,7 @@ n.qd = q;
 n.Sc = function(a) {
   return a.title
 };
-n.Ae = function(a, b) {
+n.Ce = function(a, b) {
   if(a) {
     a.title = b || ""
   }
@@ -4656,20 +4665,20 @@ n = vh.prototype;
 n.Pc = function() {
 };
 n.h = function(a) {
-  a.t && !1 != a.$d && ph(a, !1);
-  a.$d = !1;
-  a.Ne &= -256;
+  a.t && !1 != a.ae && ph(a, !1);
+  a.ae = !1;
+  a.Qe &= -256;
   a.t && a.i & 32 && e(Error("Component already rendered"));
   a.i & 32 && a.ja(32, !1);
   a.va &= -33;
-  return a.Da().h("button", {"class":$g(this, a).join(" "), disabled:!a.isEnabled(), title:a.Sc() || "", value:a.Tc() || ""}, a.gf() || "")
+  return a.Da().h("button", {"class":$g(this, a).join(" "), disabled:!a.isEnabled(), title:a.Sc() || "", value:a.Tc() || ""}, a.kf() || "")
 };
-n.sf = function(a) {
+n.vf = function(a) {
   U(Ug(a), a.b(), "click", a.hb)
 };
 n.kd = q;
 n.Lb = q;
-n.uf = function(a) {
+n.xf = function(a) {
   return a.isEnabled()
 };
 n.nd = q;
@@ -4693,29 +4702,29 @@ function wh(a, b, c) {
 }
 B(wh, W);
 n = wh.prototype;
-n.Tc = l("ig");
+n.Tc = l("jg");
 n.qd = function(a) {
-  this.ig = a;
+  this.jg = a;
   this.m.qd(this.b(), a)
 };
-n.Sc = l("dg");
-n.Ae = function(a) {
-  this.dg = a;
-  this.m.Ae(this.b(), a)
+n.Sc = l("eg");
+n.Ce = function(a) {
+  this.eg = a;
+  this.m.Ce(this.b(), a)
 };
 n.c = function() {
   wh.d.c.call(this);
-  delete this.ig;
-  delete this.dg
+  delete this.jg;
+  delete this.eg
 };
 n.R = function() {
   wh.d.R.call(this);
   if(this.va & 32) {
     var a = this.bb();
-    a && U(Ug(this), a, "keyup", this.Zd)
+    a && U(Ug(this), a, "keyup", this.$d)
   }
 };
-n.Zd = function(a) {
+n.$d = function(a) {
   return a.keyCode == 13 && a.type == "key" || a.keyCode == 32 && a.type == "keyup" ? this.hb(a) : a.keyCode == 32
 };
 ch("goog-button", function() {
@@ -4812,7 +4821,7 @@ n.Ka = "";
 n.Fb = k;
 n.N = "";
 n.bc = "";
-n.Rg = !1;
+n.Sg = !1;
 n.ua = !1;
 n.toString = function() {
   if(this.qa) {
@@ -4870,7 +4879,7 @@ n.Kb = function(a, b) {
 function Nh(a, b, c) {
   Vh(a);
   delete a.qa;
-  b instanceof Ph ? (a.ia = b, a.ia.Je = a, a.ia.Jb(a.ua)) : (c || (b = Qh(b, Wh)), a.ia = new Ph(b, a, a.ua))
+  b instanceof Ph ? (a.ia = b, a.ia.Me = a, a.ia.Jb(a.ua)) : (c || (b = Qh(b, Wh)), a.ia = new Ph(b, a, a.ua))
 }
 function Oh(a, b, c) {
   Vh(a);
@@ -4878,7 +4887,7 @@ function Oh(a, b, c) {
   a.bc = c ? b ? decodeURIComponent(b) : "" : b
 }
 function Vh(a) {
-  a.Rg && e(Error("Tried to modify a read-only Uri"))
+  a.Sg && e(Error("Tried to modify a read-only Uri"))
 }
 n.Jb = function(a) {
   this.ua = a;
@@ -4898,7 +4907,7 @@ function Yh(a) {
 var Rh = /[#\/\?@]/g, Th = /[\#\?:]/g, Sh = /[\#\?]/g, Wh = /[\#\?@]/g, Uh = /#/g;
 function Ph(a, b, c) {
   this.Aa = a || k;
-  this.Je = b || k;
+  this.Me = b || k;
   this.ua = !!c
 }
 function Zh(a) {
@@ -5038,14 +5047,14 @@ n.toString = function() {
   return this.Aa = a.join("")
 };
 function ai(a) {
-  delete a.Kd;
+  delete a.Ld;
   delete a.Aa;
-  a.Je && delete a.Je.qa
+  a.Me && delete a.Me.qa
 }
 n.I = function() {
   var a = new Ph;
-  if(this.Kd) {
-    a.Kd = this.Kd
+  if(this.Ld) {
+    a.Ld = this.Ld
   }
   if(this.Aa) {
     a.Aa = this.Aa
@@ -5108,37 +5117,37 @@ var bi;
 })();
 function ci(a, b) {
   V.call(this, b);
-  this.Eg = a;
-  this.Pd = new Ng(this);
+  this.Fg = a;
+  this.Qd = new Ng(this);
   this.Oc = new Pb
 }
 B(ci, V);
 n = ci.prototype;
 n.a = Q("goog.ui.media.FlashObject");
-n.uh = "window";
-n.Oe = "#000000";
-n.og = "sameDomain";
+n.vh = "window";
+n.Re = "#000000";
+n.pg = "sameDomain";
 n.ba = function(a, b) {
   this.nb = t(a) ? a : Math.round(a) + "px";
-  this.ae = t(b) ? b : Math.round(b) + "px";
-  this.b() && Hg(this.b() ? this.b().firstChild : k, this.nb, this.ae);
+  this.be = t(b) ? b : Math.round(b) + "px";
+  this.b() && Hg(this.b() ? this.b().firstChild : k, this.nb, this.be);
   return this
 };
 n.R = function() {
   ci.d.R.call(this);
   var a = this.b(), b;
   b = H ? '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" id="%s" name="%s" class="%s"><param name="movie" value="%s"/><param name="quality" value="high"/><param name="FlashVars" value="%s"/><param name="bgcolor" value="%s"/><param name="AllowScriptAccess" value="%s"/><param name="allowFullScreen" value="true"/><param name="SeamlessTabbing" value="false"/>%s</object>' : '<embed quality="high" id="%s" name="%s" class="%s" src="%s" FlashVars="%s" bgcolor="%s" AllowScriptAccess="%s" allowFullScreen="true" SeamlessTabbing="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" %s></embed>';
-  for(var c = H ? '<param name="wmode" value="%s"/>' : "wmode=%s", c = ra(c, this.uh), d = this.Oc.Ea(), f = this.Oc.X(), g = [], h = 0;h < d.length;h++) {
+  for(var c = H ? '<param name="wmode" value="%s"/>' : "wmode=%s", c = ra(c, this.vh), d = this.Oc.Ea(), f = this.Oc.X(), g = [], h = 0;h < d.length;h++) {
     var j = ta(d[h]), m = ta(f[h]);
     g.push(j + "=" + m)
   }
-  b = ra(b, Tg(this), Tg(this), "goog-ui-media-flash-object", va(this.Eg), va(g.join("&")), this.Oe, this.og, c);
+  b = ra(b, Tg(this), Tg(this), "goog-ui-media-flash-object", va(this.Fg), va(g.join("&")), this.Re, this.pg, c);
   a.innerHTML = b;
-  this.nb && this.ae && this.ba(this.nb, this.ae);
-  U(this.Pd, this.b(), Ra(zc), Ec)
+  this.nb && this.be && this.ba(this.nb, this.be);
+  U(this.Qd, this.b(), Ra(zc), Ec)
 };
 n.h = function() {
-  this.Tf != k && !(Ca(bi, this.Tf) >= 0) && (N(this.a, "Required flash version not found:" + this.Tf), e(Error("Method not supported")));
+  this.Vf != k && !(Ca(bi, this.Vf) >= 0) && (N(this.a, "Required flash version not found:" + this.Vf), e(Error("Method not supported")));
   var a = this.Da().createElement("div");
   a.className = "goog-ui-media-flash";
   this.e = a
@@ -5146,8 +5155,8 @@ n.h = function() {
 n.c = function() {
   ci.d.c.call(this);
   this.Oc = k;
-  this.Pd.f();
-  this.Pd = k
+  this.Qd.f();
+  this.Qd = k
 };
 function di(a) {
   C.call(this, a)
@@ -5192,31 +5201,31 @@ function fi(a, b, c) {
 }
 ;var Wf = 1;
 function gi(a, b) {
-  this.vh = a;
-  this.Df = b
+  this.wh = a;
+  this.Ff = b
 }
-gi.prototype.ge = 0;
+gi.prototype.he = 0;
 gi.prototype.gd = 0;
-gi.prototype.Sd = !1;
+gi.prototype.Td = !1;
 function hi(a) {
   var b = [];
-  if(a.Sd) {
+  if(a.Td) {
     return[b, 2]
   }
-  var c = a.ge, d = a.vh.responseText;
-  for(a.ge = d.length;;) {
+  var c = a.he, d = a.wh.responseText;
+  for(a.he = d.length;;) {
     c = d.indexOf("\n", c);
     if(c == -1) {
       break
     }
     var f = d.substr(a.gd, c - a.gd), f = f.replace(/\r$/, "");
-    if(f.length > a.Df) {
-      return a.Sd = !0, [b, 2]
+    if(f.length > a.Ff) {
+      return a.Td = !0, [b, 2]
     }
     b.push(f);
     a.gd = c += 1
   }
-  return a.ge - a.gd - 1 > a.Df ? (a.Sd = !0, [b, 2]) : [b, Wf]
+  return a.he - a.gd - 1 > a.Ff ? (a.Td = !0, [b, 2]) : [b, Wf]
 }
 ;var ii = !(H || I && !J("420+"));
 function ji(a, b) {
@@ -5227,13 +5236,13 @@ B(ji, K);
 n = ji.prototype;
 n.q = k;
 n.Ua = -1;
-n.jf = !1;
-n.pf = "Content-Length,Server,Date,Expires,Keep-Alive,Content-Type,Transfer-Encoding,Cache-Control".split(",");
+n.mf = !1;
+n.sf = "Content-Length,Server,Date,Expires,Keep-Alive,Content-Type,Transfer-Encoding,Cache-Control".split(",");
 function ki(a) {
-  var b = hi(a.Xe), c = b[0], b = b[1], d = o.parent;
+  var b = hi(a.$e), c = b[0], b = b[1], d = o.parent;
   d ? (d.__XHRMaster_onframes(a.na, c, b), b != Wf && a.f()) : a.f()
 }
-n.Og = function() {
+n.Pg = function() {
   ki(this);
   if(!this.ra) {
     var a = o.parent;
@@ -5241,19 +5250,19 @@ n.Og = function() {
     this.f()
   }
 };
-n.eh = function() {
+n.fh = function() {
   var a = o.parent;
   if(a) {
     this.Ua = this.q.Oa();
-    if(this.Ua >= 2 && !this.jf) {
-      for(var b = new Pb, c = this.pf.length;c--;) {
-        var d = this.pf[c];
+    if(this.Ua >= 2 && !this.mf) {
+      for(var b = new Pb, c = this.sf.length;c--;) {
+        var d = this.sf[c];
         try {
           b.set(d, this.q.j.getResponseHeader(d))
         }catch(f) {
         }
       }
-      if(b.V() && (this.jf = !0, a.__XHRMaster_ongotheaders(this.na, Tb(b)), this.ra)) {
+      if(b.V() && (this.mf = !0, a.__XHRMaster_ongotheaders(this.na, Tb(b)), this.ra)) {
         return
       }
     }
@@ -5263,16 +5272,16 @@ n.eh = function() {
     this.f()
   }
 };
-n.je = function(a, b, c) {
+n.le = function(a, b, c) {
   this.q = new Nf;
-  M(this.q, "readystatechange", x(this.eh, this));
-  M(this.q, "complete", x(this.Og, this));
+  M(this.q, "readystatechange", x(this.fh, this));
+  M(this.q, "complete", x(this.Pg, this));
   this.q.send(a, b, c, {"Content-Type":"application/octet-stream"});
-  this.Xe = new gi(this.q.j, 1048576)
+  this.$e = new gi(this.q.j, 1048576)
 };
 n.c = function() {
   ji.d.c.call(this);
-  delete this.Xe;
+  delete this.$e;
   this.q && this.q.f();
   delete this.vd.wc[this.na];
   delete this.vd
@@ -5281,12 +5290,12 @@ function li() {
   this.wc = {}
 }
 B(li, K);
-li.prototype.Ug = function(a, b, c, d) {
+li.prototype.Vg = function(a, b, c, d) {
   var f = new ji(this, a);
   this.wc[a] = f;
-  f.je(b, c, d)
+  f.le(b, c, d)
 };
-li.prototype.zg = function(a) {
+li.prototype.Ag = function(a) {
   (a = this.wc[a]) && a.f()
 };
 li.prototype.c = function() {
@@ -5297,8 +5306,8 @@ li.prototype.c = function() {
   delete this.wc
 };
 var mi = new li;
-o.__XHRSlave_makeRequest = x(mi.Ug, mi);
-o.__XHRSlave_dispose = x(mi.zg, mi);
+o.__XHRSlave_makeRequest = x(mi.Vg, mi);
+o.__XHRSlave_dispose = x(mi.Ag, mi);
 function ni(a) {
   this.r = a
 }
@@ -5343,7 +5352,7 @@ n.Ea = function() {
   return qi(this).keys
 };
 n.X = function() {
-  return qi(this).jg
+  return qi(this).kg
 };
 n.Pa = function() {
   return!this.r.cookie
@@ -5355,7 +5364,7 @@ n.ca = function(a) {
   return ga(this.get(a))
 };
 n.Ic = function(a) {
-  for(var b = qi(this).jg, c = 0;c < b.length;c++) {
+  for(var b = qi(this).kg, c = 0;c < b.length;c++) {
     if(b[c] == a) {
       return!0
     }
@@ -5371,17 +5380,17 @@ function qi(a) {
   for(var a = (a.r.cookie || "").split(oi), b = [], c = [], d, f, g = 0;f = a[g];g++) {
     d = f.indexOf("="), d == -1 ? (b.push(""), c.push(f)) : (b.push(f.substring(0, d)), c.push(f.substring(d + 1)))
   }
-  return{keys:b, jg:c}
+  return{keys:b, kg:c}
 }
 var pi = new ni(document);
-pi.bi = 3950;
+pi.ci = 3950;
 function ri() {
-  this.Ki = "demosminerva_site_uaid";
-  this.Li = "demosminerva_site_uaid_secure"
+  this.Li = "demosminerva_site_uaid";
+  this.Mi = "demosminerva_site_uaid_secure"
 }
 function si(a) {
   var b = new ci("/compiled_client/FlashConnector.swf?cb=2ae8d8a79afe8f3a96bb49e8a9339914");
-  b.Oe = "#777777";
+  b.Re = "#777777";
   b.ba(300, 30);
   var c = T("FlashConnectorSwf");
   c || e(Error("no FlashConnectorSwf?"));
@@ -5405,27 +5414,27 @@ function ui() {
   return ti(a, b, c)
 }
 ;function wi() {
-  this.Rf = z()
+  this.Tf = z()
 }
 var xi = new wi;
-wi.prototype.set = aa("Rf");
+wi.prototype.set = aa("Tf");
 wi.prototype.reset = function() {
   this.set(z())
 };
-wi.prototype.get = l("Rf");
+wi.prototype.get = l("Tf");
 function yi(a) {
-  this.bh = a || "";
-  this.lh = xi
+  this.dh = a || "";
+  this.mh = xi
 }
-yi.prototype.Zf = !0;
+yi.prototype.ag = !0;
+yi.prototype.kh = !0;
 yi.prototype.jh = !0;
-yi.prototype.ih = !0;
-yi.prototype.$f = !1;
+yi.prototype.bg = !1;
 function zi(a) {
   return a < 10 ? "0" + a : String(a)
 }
 function Ai(a, b) {
-  var c = (a.cg - b) / 1E3, d = c.toFixed(3), f = 0;
+  var c = (a.dg - b) / 1E3, d = c.toFixed(3), f = 0;
   if(c < 1) {
     f = 2
   }else {
@@ -5442,13 +5451,13 @@ function Bi(a) {
   yi.call(this, a)
 }
 B(Bi, yi);
-Bi.prototype.$f = !0;
+Bi.prototype.bg = !0;
 function Ci(a) {
-  this.dh = x(this.ng, this);
-  this.ef = new Bi;
-  this.tf = this.ef.Zf = !1;
+  this.eh = x(this.og, this);
+  this.hf = new Bi;
+  this.wf = this.hf.ag = !1;
   this.e = a;
-  this.Bg = this.e.ownerDocument || this.e.document;
+  this.Cg = this.e.ownerDocument || this.e.document;
   var a = Ve(this.e), b = k;
   if(H) {
     b = a.r.createStyleSheet(), Kg(b)
@@ -5461,10 +5470,10 @@ function Ci(a) {
   }
   this.e.className += " logdiv"
 }
-Ci.prototype.ng = function(a) {
-  var b = this.e.scrollHeight - this.e.scrollTop - this.e.clientHeight <= 100, c = this.Bg.createElement("div");
+Ci.prototype.og = function(a) {
+  var b = this.e.scrollHeight - this.e.scrollTop - this.e.clientHeight <= 100, c = this.Cg.createElement("div");
   c.className = "logmsg";
-  var d = this.ef, f;
+  var d = this.hf, f;
   switch(a.Cb.value) {
     case Zd.value:
       f = "dbg-sh";
@@ -5482,15 +5491,15 @@ Ci.prototype.ng = function(a) {
       f = "dbg-f"
   }
   var g = [];
-  g.push(d.bh, " ");
-  if(d.Zf) {
-    var h = new Date(a.cg);
+  g.push(d.dh, " ");
+  if(d.ag) {
+    var h = new Date(a.dg);
     g.push("[", zi(h.getFullYear() - 2E3) + zi(h.getMonth() + 1) + zi(h.getDate()) + " " + zi(h.getHours()) + ":" + zi(h.getMinutes()) + ":" + zi(h.getSeconds()) + "." + zi(Math.floor(h.getMilliseconds() / 10)), "] ")
   }
-  d.jh && g.push("[", Ba(Ai(a, d.lh.get())), "s] ");
-  d.ih && g.push("[", va(a.Tg), "] ");
-  g.push('<span class="', f, '">', ua(Ba(va(a.Gf))));
-  d.$f && a.Rd && g.push("<br>", ua(Ba(a.Qd || "")));
+  d.kh && g.push("[", Ba(Ai(a, d.mh.get())), "s] ");
+  d.jh && g.push("[", va(a.Ug), "] ");
+  g.push('<span class="', f, '">', ua(Ba(va(a.If))));
+  d.bg && a.Sd && g.push("<br>", ua(Ba(a.Rd || "")));
   g.push("</span><br>");
   c.innerHTML = g.join("");
   this.e.appendChild(c);
@@ -5518,7 +5527,7 @@ n.setTransform = function(a, b, c, d, f, g) {
   this.ha = g;
   return this
 };
-n.Te = function(a) {
+n.We = function(a) {
   this.Y = a.Y;
   this.T = a.T;
   this.Z = a.Z;
@@ -5560,13 +5569,13 @@ n.n = function(a) {
 function Y(a, b) {
   this.e = a;
   this.ta = b;
-  this.Jd = !1
+  this.Kd = !1
 }
 B(Y, md);
 n = Y.prototype;
 n.ta = k;
 n.e = k;
-n.eg = k;
+n.fg = k;
 n.b = l("e");
 n.addEventListener = function(a, b, c, d) {
   M(this.e, a, b, c, d)
@@ -5580,16 +5589,16 @@ n.c = function() {
 };
 function Z(a, b, c, d) {
   Y.call(this, a, b);
-  this.Ge = c;
-  this.ta.we(this, c);
+  this.Je = c;
+  this.ta.ye(this, c);
   this.fill = d;
-  this.ta.ve(this, d)
+  this.ta.xe(this, d)
 }
 B(Z, Y);
 Z.prototype.fill = k;
-Z.prototype.Ge = k;
-Z.prototype.Gg = l("fill");
-Z.prototype.Ig = l("Ge");
+Z.prototype.Je = k;
+Z.prototype.Hg = l("fill");
+Z.prototype.Jg = l("Je");
 function Ei(a, b, c, d) {
   Z.call(this, a, b, c, d)
 }
@@ -5630,16 +5639,16 @@ Li.prototype.ba = function(a, b) {
 function Mi() {
 }
 ;function xg(a, b) {
-  this.Fd = a;
+  this.Gd = a;
   this.mc = b || 1
 }
 B(xg, Mi);
-xg.prototype.fa = l("Fd");
+xg.prototype.fa = l("Gd");
 function wg(a, b) {
   this.nb = a;
-  this.Fd = b
+  this.Gd = b
 }
-wg.prototype.fa = l("Fd");
+wg.prototype.fa = l("Gd");
 function Ni() {
   this.C = [];
   this.g = [];
@@ -5677,7 +5686,7 @@ n.lineTo = function(a) {
   this.U = [c, d];
   return this
 };
-n.We = function(a) {
+n.Ze = function(a) {
   var b = this.C[this.C.length - 1];
   b == k && e(Error("Path cannot start with curve"));
   b != 2 && (this.C.push(2), this.g.push(0));
@@ -5706,7 +5715,7 @@ n.arcTo = function(a, b, c, d) {
   this.U = [f, g];
   return this
 };
-n.pg = function(a, b, c, d) {
+n.qg = function(a, b, c, d) {
   var f = this.U[0] - a * Math.cos(ue(c)), g = this.U[1] - b * Math.sin(ue(c)), h = ue(d), d = Math.ceil(Math.abs(h) / Math.PI * 2);
   h /= d;
   for(var c = ue(c), j = 0;j < d;j++) {
@@ -5714,7 +5723,7 @@ n.pg = function(a, b, c, d) {
     c += h;
     m = Math.cos(c);
     p = Math.sin(c);
-    this.We(r, v, f + (m + y * p) * a, g + (p - y * m) * b, f + m * a, g + p * b)
+    this.Ze(r, v, f + (m + y * p) * a, g + (p - y * m) * b, f + m * a, g + p * b)
   }
   return this
 };
@@ -5739,8 +5748,8 @@ var Qi = {};
 Qi[0] = Ni.prototype.moveTo;
 Qi[1] = Ni.prototype.lineTo;
 Qi[4] = Ni.prototype.close;
-Qi[2] = Ni.prototype.We;
-Qi[3] = Ni.prototype.pg;
+Qi[2] = Ni.prototype.Ze;
+Qi[3] = Ni.prototype.qg;
 function Ri(a) {
   if(a.Mb) {
     return a.I()
@@ -5766,7 +5775,7 @@ n = Si.prototype;
 n.G = k;
 n.Ja = 0;
 n.Za = 0;
-n.hf = function() {
+n.lf = function() {
   return this.W()
 };
 n.W = function() {
@@ -5778,8 +5787,8 @@ function Ti(a) {
 }
 ;function Ui(a, b, c, d, f) {
   Si.call(this, a, b, c, d, f);
-  this.Ze = {};
-  this.Ke = I && !J(526);
+  this.bf = {};
+  this.Ne = I && !J(526);
   this.cb = new Ng(this)
 }
 var Vi;
@@ -5798,11 +5807,11 @@ n = Ui.prototype;
 n.pb = function(a, b) {
   (b || this.G).b().appendChild(a.b())
 };
-n.ve = function(a, b) {
+n.xe = function(a, b) {
   var c = a.b();
   b instanceof xg ? (c.setAttribute("fill", b.fa()), c.setAttribute("fill-opacity", b.mc)) : c.setAttribute("fill", "none")
 };
-n.we = function(a, b) {
+n.ye = function(a, b) {
   var c = a.b();
   if(b) {
     c.setAttribute("stroke", b.fa());
@@ -5814,13 +5823,13 @@ n.we = function(a, b) {
 };
 n.h = function() {
   var a = Wi(this, "svg", {width:this.width, height:this.height, overflow:"hidden"}), b = Wi(this, "g");
-  this.Md = Wi(this, "defs");
+  this.Nd = Wi(this, "defs");
   this.G = new Ii(b, this);
-  a.appendChild(this.Md);
+  a.appendChild(this.Nd);
   a.appendChild(b);
   this.e = a;
   if(this.ka || this.Ja || this.Za) {
-    this.b().setAttribute("preserveAspectRatio", "none"), this.Ke ? this.wd() : this.b().setAttribute("viewBox", this.Ja + " " + this.Za + " " + (this.ka ? this.ka + " " + this.Wb : ""))
+    this.b().setAttribute("preserveAspectRatio", "none"), this.Ne ? this.wd() : this.b().setAttribute("viewBox", this.Ja + " " + this.Za + " " + (this.ka ? this.ka + " " + this.Wb : ""))
   }
 };
 n.wd = function() {
@@ -5855,8 +5864,8 @@ n.W = function() {
 };
 n.clear = function() {
   this.G.clear();
-  ff(this.Md);
-  this.Ze = {}
+  ff(this.Nd);
+  this.bf = {}
 };
 n.Kc = function(a, b, c, d, f, g, h) {
   a = Wi(this, "ellipse", {cx:a, cy:b, rx:c, ry:d});
@@ -5875,7 +5884,7 @@ n.R = function() {
   var a = this.W();
   Ui.d.R.call(this);
   a || this.dispatchEvent("resize");
-  if(this.Ke) {
+  if(this.Ne) {
     var a = this.width, b = this.height;
     typeof a == "string" && a.indexOf("%") != -1 && typeof b == "string" && b.indexOf("%") != -1 && U(this.cb, Xi(), pd, this.wd);
     this.wd()
@@ -5883,11 +5892,11 @@ n.R = function() {
 };
 n.$a = function() {
   Ui.d.$a.call(this);
-  this.Ke && Pg(this.cb, Xi(), pd, this.wd)
+  this.Ne && Pg(this.cb, Xi(), pd, this.wd)
 };
 n.c = function() {
-  delete this.Ze;
-  delete this.Md;
+  delete this.bf;
+  delete this.Nd;
   delete this.G;
   Ui.d.c.call(this)
 };
@@ -5919,10 +5928,10 @@ Zi.prototype.ba = function(a, b) {
 function $i(a, b, c, d, f, g, h, j) {
   this.S = a.id;
   Z.call(this, a, b, h, j);
-  this.Ai = c;
-  this.Bi = d;
-  this.Ti = f;
-  this.Ui = g
+  this.Bi = c;
+  this.Ci = d;
+  this.Ui = f;
+  this.Vi = g
 }
 B($i, Gi);
 $i.prototype.b = Yi;
@@ -5963,7 +5972,7 @@ cj.prototype.pb = function(a, b) {
   (b || this.G).b().appendChild(a.b());
   fj(this)
 };
-cj.prototype.ve = function(a, b) {
+cj.prototype.xe = function(a, b) {
   var c = a.b();
   c.fillcolor = "";
   for(var d = 0;d < c.childNodes.length;d++) {
@@ -5973,14 +5982,14 @@ cj.prototype.ve = function(a, b) {
   b instanceof xg ? b.fa() == "transparent" ? c.filled = !1 : b.mc != 1 ? (c.filled = !0, d = ej(this, "fill"), d.opacity = Math.round(b.mc * 100) + "%", d.color = b.fa(), c.appendChild(d)) : (c.filled = !0, c.fillcolor = b.fa()) : c.filled = !1;
   fj(this)
 };
-cj.prototype.we = function(a, b) {
+cj.prototype.ye = function(a, b) {
   var c = a.b();
   if(b) {
     c.stroked = !0;
     var d = b.nb;
     t(d) && d.indexOf("px") == -1 ? d = parseFloat(d) : d *= Ti(this);
     var f = c.getElementsByTagName("stroke")[0];
-    d < 1 ? (f = f || ej(this, "stroke"), f.opacity = d, f.Wi = "1px", f.color = b.fa(), c.appendChild(f)) : (f && c.removeChild(f), c.strokecolor = b.fa(), c.strokeweight = d + "px")
+    d < 1 ? (f = f || ej(this, "stroke"), f.opacity = d, f.Xi = "1px", f.color = b.fa(), c.appendChild(f)) : (f && c.removeChild(f), c.strokecolor = b.fa(), c.strokeweight = d + "px")
   }else {
     c.stroked = !1
   }
@@ -6018,9 +6027,9 @@ n.h = function() {
   d.coordorigin = ga(this.Ja) ? $(this.Ja) + " " + $(this.Za) : "0 0";
   c.appendChild(d);
   this.G = new Zi(d, this);
-  M(c, "resize", x(this.Yd, this))
+  M(c, "resize", x(this.Zd, this))
 };
-n.Yd = function() {
+n.Zd = function() {
   var a = Jg(this.b()), b = this.G.b().style;
   if(a.width) {
     b.width = a.width + "px", b.height = a.height + "px"
@@ -6028,7 +6037,7 @@ n.Yd = function() {
     for(a = this.b();a && a.currentStyle && a.currentStyle.display != "none";) {
       a = a.parentNode
     }
-    a && a.currentStyle && U(this.cb, a, "propertychange", this.Yd)
+    a && a.currentStyle && U(this.cb, a, "propertychange", this.Zd)
   }
   this.dispatchEvent("resize")
 };
@@ -6059,7 +6068,7 @@ n.drawImage = function(a, b, c, d, f, g) {
 };
 n.R = function() {
   cj.d.R.call(this);
-  this.Yd();
+  this.Zd();
   fj(this)
 };
 n.c = function() {
@@ -6088,20 +6097,20 @@ ij.prototype.za = function() {
 };
 function lj(a, b, c, d, f, g, h, j) {
   Z.call(this, a, b, h, j);
-  this.ug = c;
-  this.vg = d;
-  this.Vf = f;
-  this.Wf = g;
+  this.vg = c;
+  this.wg = d;
+  this.Xf = f;
+  this.Yf = g;
   this.N = new Ni;
   this.N.clear();
-  this.N.moveTo(this.ug + this.Vf * Math.cos(ue(0)), this.vg + this.Wf * Math.sin(ue(0)));
-  this.N.arcTo(this.Vf, this.Wf, 0, 360);
+  this.N.moveTo(this.vg + this.Xf * Math.cos(ue(0)), this.wg + this.Yf * Math.sin(ue(0)));
+  this.N.arcTo(this.Xf, this.Yf, 0, 360);
   this.N.close();
-  this.$g = new oj(k, b, this.N, h, j)
+  this.ah = new oj(k, b, this.N, h, j)
 }
 B(lj, Gi);
 lj.prototype.za = function(a) {
-  this.$g.za(a)
+  this.ah.za(a)
 };
 function oj(a, b, c, d, f) {
   Z.call(this, a, b, d, f);
@@ -6140,24 +6149,24 @@ oj.prototype.za = function(a) {
 };
 function pj(a, b, c, d, f, g, h) {
   Y.call(this, a, b);
-  this.wh = c;
-  this.yh = d;
-  this.Me = f;
-  this.Xd = g;
-  this.kh = h
+  this.xh = c;
+  this.zh = d;
+  this.Pe = f;
+  this.Yd = g;
+  this.lh = h
 }
 B(pj, Hi);
 pj.prototype.Yb = !1;
 pj.prototype.ba = function(a, b) {
-  this.Me = a;
-  this.Xd = b;
+  this.Pe = a;
+  this.Yd = b;
   this.Yb && jj(this.ta)
 };
 pj.prototype.za = function(a) {
-  this.rf ? (this.Me && this.Xd && a.drawImage(this.rf, this.wh, this.yh, this.Me, this.Xd), this.Yb = !0) : (a = new Image, a.onload = x(this.Kg, this, a), a.src = this.kh)
+  this.uf ? (this.Pe && this.Yd && a.drawImage(this.uf, this.xh, this.zh, this.Pe, this.Yd), this.Yb = !0) : (a = new Image, a.onload = x(this.Lg, this, a), a.src = this.lh)
 };
-pj.prototype.Kg = function(a) {
-  this.rf = a;
+pj.prototype.Lg = function(a) {
+  this.uf = a;
   jj(this.ta)
 };
 function qj(a, b, c, d, f) {
@@ -6165,16 +6174,16 @@ function qj(a, b, c, d, f) {
 }
 B(qj, Si);
 n = qj.prototype;
-n.ve = function() {
+n.xe = function() {
   jj(this)
 };
-n.we = function() {
+n.ye = function() {
   jj(this)
 };
 function rj(a, b) {
   var c = a.getContext();
   c.save();
-  var d = b.eg ? b.eg.I() : new Di, f = d.ga, g = d.ha;
+  var d = b.fg ? b.fg.I() : new Di, f = d.ga, g = d.ha;
   (f || g) && c.translate(f, g);
   (d = d.T) && c.rotate(Math.asin(d))
 }
@@ -6183,8 +6192,8 @@ n.h = function() {
   this.e = a;
   this.Ub = this.P.h("canvas");
   a.appendChild(this.Ub);
-  this.Sg = this.G = new ij(this);
-  this.fh = 0;
+  this.Tg = this.G = new ij(this);
+  this.gh = 0;
   sj(this)
 };
 n.getContext = function() {
@@ -6234,8 +6243,8 @@ n.clear = function() {
   }
 };
 function jj(a) {
-  if(a.Qi) {
-    a.Pi = !0
+  if(a.Ri) {
+    a.Qi = !0
   }else {
     if(a.t) {
       a.reset();
@@ -6253,7 +6262,7 @@ function jj(a) {
 function kj(a, b) {
   var c = a.getContext();
   rj(a, b);
-  if(!b.Gg || !b.Ig) {
+  if(!b.Hg || !b.Jg) {
     b.za(c)
   }else {
     var d = b.fill;
@@ -6263,15 +6272,15 @@ function kj(a, b) {
           c.globalAlpha = d.mc, c.fillStyle = d.fa(), b.za(c), c.fill(), c.globalAlpha = 1
         }
       }else {
-        var f = c.createLinearGradient(d.Gi(), d.Ii(), d.Hi(), d.Ji());
-        f.addColorStop(0, d.Ei());
-        f.addColorStop(1, d.Fi());
+        var f = c.createLinearGradient(d.Hi(), d.Ji(), d.Ii(), d.Ki());
+        f.addColorStop(0, d.Fi());
+        f.addColorStop(1, d.Gi());
         c.fillStyle = f;
         b.za(c);
         c.fill()
       }
     }
-    if(d = b.Ge) {
+    if(d = b.Je) {
       b.za(c), c.strokeStyle = d.fa(), d = d.nb, t(d) && d.indexOf("px") != -1 && (d = parseFloat(d) / Ti(a)), c.lineWidth = d, c.stroke()
     }
   }
@@ -6283,7 +6292,7 @@ n.pb = function(a, b) {
 n.append = function(a, b) {
   b = b || this.G;
   b.appendChild(a);
-  this.t && !this.fh && !(b != this.G && b != this.Sg) && kj(this, a)
+  this.t && !this.gh && !(b != this.G && b != this.Tg) && kj(this, a)
 };
 n.Kc = function(a, b, c, d, f, g, h) {
   a = new lj(k, this, a, b, c, d, f, g);
@@ -6312,23 +6321,23 @@ function tj(a) {
 B(tj, md);
 n = tj.prototype;
 n.Va = k;
-n.ue = k;
+n.we = k;
 function uj(a, b) {
   b && (E(b, function(a) {
     this.uc(a, !1)
   }, a), db(a.z, b))
 }
-n.Wd = l("Va");
+n.Xd = l("Va");
 n.pd = function(a) {
   if(a != this.Va) {
     this.uc(this.Va, !1), this.Va = a, this.uc(a, !0)
   }
   this.dispatchEvent("select")
 };
-n.Vd = function() {
+n.Wd = function() {
   return this.Va ? Va(this.z, this.Va) : -1
 };
-n.ze = function(a) {
+n.Be = function(a) {
   this.pd(this.z[a] || k)
 };
 n.clear = function() {
@@ -6341,7 +6350,7 @@ n.c = function() {
   this.Va = k
 };
 n.uc = function(a, b) {
-  a && (typeof this.ue == "function" ? this.ue(a, b) : typeof a.ye == "function" && a.ye(b))
+  a && (typeof this.we == "function" ? this.we(a, b) : typeof a.Ae == "function" && a.Ae(b))
 };
 function vj() {
 }
@@ -6350,7 +6359,7 @@ ea(vj);
 var wj = 0;
 vj.prototype.h = function(a) {
   var b = $g(this, a);
-  return a.Da().h("div", b ? b.join(" ") : k, xj(this, a.da, a.hf(), a.Da()))
+  return a.Da().h("div", b ? b.join(" ") : k, xj(this, a.da, a.lf(), a.Da()))
 };
 function xj(a, b, c, d) {
   for(var f = [], g = 0, h = 0;g < c.height;g++) {
@@ -6360,9 +6369,9 @@ function xj(a, b, c, d) {
     }
     f.push(d.h("tr", a.v() + "-row", j))
   }
-  return a.Ve(f, d)
+  return a.Ye(f, d)
 }
-vj.prototype.Ve = function(a, b) {
+vj.prototype.Ye = function(a, b) {
   var c = b.h("table", this.v() + "-table", b.h("tbody", this.v() + "-body", a));
   c.cellSpacing = 0;
   c.cellPadding = 0;
@@ -6441,10 +6450,10 @@ n.c = function() {
 n.md = function(a) {
   Bj.d.md.call(this, a);
   Cj(this);
-  this.J ? (this.J.clear(), uj(this.J, a)) : (this.J = new tj(a), this.J.ue = x(this.uc, this), U(Ug(this), this.J, "select", this.Ng));
+  this.J ? (this.J.clear(), uj(this.J, a)) : (this.J = new tj(a), this.J.we = x(this.uc, this), U(Ug(this), this.J, "select", this.Og));
   this.eb = -1
 };
-n.gf = ba(k);
+n.kf = ba(k);
 n.Xc = function(a) {
   Bj.d.Xc.call(this, a);
   var b = zj(this.m, this, a.target);
@@ -6459,7 +6468,7 @@ n.Wc = function(a) {
 };
 n.Vc = function(a) {
   Bj.d.Vc.call(this, a);
-  if(this.ee() && (a = zj(this.m, this, a.target), a != Dj(this))) {
+  if(this.fe() && (a = zj(this.m, this, a.target), a != Dj(this))) {
     var b = this.da;
     Ej(this, b ? Va(b, a) : -1)
   }
@@ -6468,7 +6477,7 @@ n.hb = function() {
   var a = Dj(this);
   return a ? (this.pd(a), this.dispatchEvent("action")) : !1
 };
-n.nf = function(a) {
+n.qf = function(a) {
   var b = this.da, b = b ? b.length : 0, c = this.w.width;
   if(b == 0 || !this.isEnabled()) {
     return!1
@@ -6483,7 +6492,7 @@ n.nf = function(a) {
       return Ej(this, b - 1), !0
     }
   }
-  var d = this.eb < 0 ? this.Vd() : this.eb;
+  var d = this.eb < 0 ? this.Wd() : this.eb;
   switch(a.keyCode) {
     case 37:
       d == -1 && (d = b);
@@ -6509,9 +6518,9 @@ n.nf = function(a) {
   }
   return!1
 };
-n.Ng = function() {
+n.Og = function() {
 };
-n.hf = l("w");
+n.lf = l("w");
 n.ba = function(a, b) {
   this.b() && e(Error("Component already rendered"));
   this.w = ka(a) ? new S(a, b) : a;
@@ -6526,14 +6535,14 @@ function Ej(a, b) {
     Fj(a, a.eb, !1), a.eb = b, Fj(a, b, !0)
   }
 }
-n.Vd = function() {
-  return this.J ? this.J.Vd() : -1
-};
 n.Wd = function() {
-  return this.J ? this.J.Wd() : k
+  return this.J ? this.J.Wd() : -1
 };
-n.ze = function(a) {
-  this.J && this.J.ze(a)
+n.Xd = function() {
+  return this.J ? this.J.Xd() : k
+};
+n.Be = function(a) {
+  this.J && this.J.Be(a)
 };
 n.pd = function(a) {
   this.J && this.J.pd(a)
@@ -6580,7 +6589,7 @@ function Ij(a) {
       return Jj(a)
     })
   }
-  a.ze(b ? Va(a.fd, b) : -1)
+  a.Be(b ? Va(a.fd, b) : -1)
 }
 function Hj(a) {
   return Wa(a.Gc, function(a) {
@@ -6603,7 +6612,7 @@ window.onerror = function(a, b, c) {
   he(zg, "window.onerror: message: " + G(a) + "\nURL: " + b + "\nLine Number: " + c)
 };
 function Lj() {
-  this.qe = new Bb
+  this.se = new Bb
 }
 function tg(a, b) {
   zg.info("streamReset: reasonString=" + G(a) + ", applicationLevel=" + b);
@@ -6642,7 +6651,7 @@ function Rj() {
   yg();
   var a = Mj;
   zg.info("Telling server to clear the board.");
-  var b = a.D, a = [2, a.qe.lb(new yb)], a = (new Eb).lb(a);
+  var b = a.D, a = [2, a.se.lb(new yb)], a = (new Eb).lb(a);
   lg(b, [a])
 }
 function Sj(a) {
@@ -6654,7 +6663,7 @@ function Sj(a) {
   nb(g, 1, a);
   nb(g, 2, c);
   nb(g, 3, f);
-  a = d.qe.lb(g);
+  a = d.se.lb(g);
   lg(b, [(new Eb).lb([1, a])])
 }
 function yg() {
@@ -6668,7 +6677,7 @@ function yg() {
 var Kj = "#E06666";
 function Tj(a) {
   var b;
-  (a = a.target.Wd()) ? (a = a.style[Ga("background-color")] || "", b = Jj(a)) : b = k;
+  (a = a.target.Xd()) ? (a = a.style[Ga("background-color")] || "", b = Jj(a)) : b = k;
   b || (b = Kj);
   tb = b;
   pi.set("whiteboard_defaultColor", b);
@@ -6690,13 +6699,13 @@ function Uj() {
   if(wb = Boolean(Number(vb.get("logging", "0")))) {
     le().od(fe);
     var a = new Ci(document.getElementById("log"));
-    if(!0 != a.tf) {
-      var b = le(), c = a.dh;
+    if(!0 != a.wf) {
+      var b = le(), c = a.eh;
       if(!b.gc) {
         b.gc = []
       }
       b.gc.push(c);
-      a.tf = !0
+      a.wf = !0
     }
   }else {
     le().od(Yd)
