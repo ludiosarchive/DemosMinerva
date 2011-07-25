@@ -440,7 +440,7 @@ function jb(a) {
 }
 function lb(a, b) {
   for(var c in a.o) {
-    a.oa[c] || b.call(a, c, a.o[c])
+    a.oa[c] || b.call(a, Number(c), a.o[c])
   }
 }
 q = kb.prototype;
@@ -1961,7 +1961,9 @@ function Od(a) {
 q.log = function(a, b, c) {
   if(a.value >= Od(this).value) {
     a = this.tf(a, b, c);
-    r.console && r.console.markTimeline && r.console.markTimeline("log:" + a.xe);
+    b = "log:" + a.xe;
+    r.console && (r.console.timeStamp ? r.console.timeStamp(b) : r.console.markTimeline && r.console.markTimeline(b));
+    r.msWriteProfilerMark && r.msWriteProfilerMark(b);
     for(b = this;b;) {
       var c = b, d = a;
       if(c.Bb) {
@@ -2638,30 +2640,9 @@ function Se(a, b) {
   }
   d = nd() + nd();
   e = Re(a);
-  h = String(window.location).match(ne)[3] || l;
-  g = e.match(ne)[3] || l;
-  if(h == g) {
-    c.a.info("No need to make a real XDRFrame for " + G(b)), c = ld(new Pe(r, e, [b], l))
-  }else {
-    g = g.split(".");
-    h = h.split(".");
-    if(h.length > g.length) {
-      var j = h, h = g;
-      g = j
-    }
-    for(g.splice(0, g.length - h.length);g.join(".") != h.join(".");) {
-      g.splice(0, 1), h.splice(0, 1)
-    }
-    g = g.join(".");
-    c.a.info("Creating new XDRFrame " + G(d) + "for " + G(b));
-    document.domain != g && f(Error("document.domain needs to be " + G(g) + "; was " + G(document.domain) + ".  To avoid problems in IE, set document.domain very early, before loading any scripts or creating any JavaScript objects."));
-    g = W("minerva-xdrframes");
-    h = new cd;
-    c.bd.set(d, [h, e, b]);
-    c = Ee("iframe", {id:"minerva-xdrframe-" + d, width:16, height:16, src:e + "xdrframe/?domain=" + document.domain + "&id=" + d});
-    g.appendChild(c);
-    c = h
-  }
+  g = String(window.location).match(ne)[3] || l;
+  h = e.match(ne)[3] || l;
+  g == h ? (c.a.info("No need to make a real XDRFrame for " + G(b)), c = ld(new Pe(r, e, [b], l))) : (g = W("minerva-xdrframes"), h = new cd, c.bd.set(d, [h, e, b]), c.a.info("Creating new XDRFrame " + G(d) + "for " + G(b)), c = Ee("iframe", {id:"minerva-xdrframe-" + d, width:16, height:16, src:e + "xdrframe/?domain=" + document.domain + "&id=" + d}), g.appendChild(c), c = h);
   return c
 }
 Qe.prototype.bg = function(a) {
