@@ -14,7 +14,7 @@ goog.require('goog.ui.CustomButton');
 goog.require('goog.Uri');
 goog.require('cw.eventual');
 goog.require('cw.string');
-goog.require('cw.net.Stream');
+goog.require('cw.net.ClientStream');
 goog.require('cw.net.IMinervaProtocol');
 goog.require('cw.net.HttpStreamingMode');
 goog.require('cw.net.demo.getEndpoint');
@@ -266,8 +266,7 @@ ljstream.appendPost = function(title, url, body) {
 
 
 ljstream.startStream = function() {
-	var streamPolicy = new cw.net.demo.DemoStreamPolicy(
-		'demosminerva_site_uaid', 'demosminerva_site_uaid_secure');
+	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
 	ljstream.lastProto = new ljstream.ChatProtocol();
 	ljstream.activityDetected(null);
 	var endpointD = cw.net.demo.getEndpoint(ljstream.callQueue, true, false, '/httpface/');
@@ -275,7 +274,7 @@ ljstream.startStream = function() {
 		if(!ljstream.lastProto) {
 			throw Error("lastProto falsy?");
 		}
-		var stream = new cw.net.Stream(
+		var stream = new cw.net.ClientStream(
 			ljstream.callQueue, ljstream.lastProto, endpoint, streamPolicy);
 		ljstream.lastProto.setStream(stream);
 		ljstream.lastProto.sendInitialStrings();

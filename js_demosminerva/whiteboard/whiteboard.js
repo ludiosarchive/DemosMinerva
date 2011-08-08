@@ -25,7 +25,7 @@ goog.require('goog.ui.ColorPalette');
 goog.require('goog.Uri');
 goog.require('cw.eventual');
 goog.require('cw.string');
-goog.require('cw.net.Stream');
+goog.require('cw.net.ClientStream');
 goog.require('cw.net.IMinervaProtocol');
 goog.require('cw.net.HttpStreamingMode');
 goog.require('cw.net.demo.getEndpointByQueryArgs');
@@ -198,8 +198,7 @@ whiteboard.clickListen = goog.events.listen(
 
 
 whiteboard.startStream = function() {
-	var streamPolicy = new cw.net.demo.DemoStreamPolicy(
-		'demosminerva_site_uaid', 'demosminerva_site_uaid_secure');
+	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
 	whiteboard.lastProto = new whiteboard.WhiteboardProtocol();
 	whiteboard.activityDetected(null);
 	var endpointD = cw.net.demo.getEndpointByQueryArgs(whiteboard.callQueue);
@@ -207,7 +206,7 @@ whiteboard.startStream = function() {
 		if(!whiteboard.lastProto) {
 			throw Error("lastProto falsy?");
 		}
-		var stream = new cw.net.Stream(
+		var stream = new cw.net.ClientStream(
 			whiteboard.callQueue, whiteboard.lastProto, endpoint, streamPolicy);
 		whiteboard.lastProto.setStream(stream);
 		whiteboard.lastProto.sendInitialStrings();
