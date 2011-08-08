@@ -207,7 +207,7 @@ whiteboard.startStream = function() {
 			throw Error("lastProto falsy?");
 		}
 		var stream = new cw.net.ClientStream(
-			whiteboard.callQueue, endpoint, streamPolicy);
+			 endpoint, streamPolicy, whiteboard.callQueue);
 		stream.bindToProtocol(whiteboard.lastProto);
 		whiteboard.lastProto.setStream(stream);
 		whiteboard.lastProto.sendInitialStrings();

@@ -275,7 +275,7 @@ ljstream.startStream = function() {
 			throw Error("lastProto falsy?");
 		}
 		var stream = new cw.net.ClientStream(
-			ljstream.callQueue, endpoint, streamPolicy);
+			endpoint, streamPolicy, ljstream.callQueue);
 		stream.bindToProtocol(ljstream.lastProto);
 		ljstream.lastProto.setStream(stream);
 		ljstream.lastProto.sendInitialStrings();
