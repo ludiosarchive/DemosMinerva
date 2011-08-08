@@ -23,6 +23,7 @@ COMMON="../closure-library/closure/bin/build/closurebuilder.py \
 --compiler_flags=--js=../Coreweb/js_coreweb/deps.js \
 --compiler_flags=--js=../Minerva/js_minerva/deps.js \
 --compiler_flags=--js=js_demosminerva/deps.js \
+--compiler_flags=--externs=../Minerva/js_minerva/externs/normal-client.js \
 "
 
 $COMMON \
