@@ -235,7 +235,11 @@ class DownloaderFactory(protocol.ReconnectingClientFactory):
 
 
 	def abortLatestProtocol(self):
-		self._getLatestProtocol().transport.abortConnection()
+		latestTransport = self._getLatestProtocol().transport
+		if hasattr(latestTransport, 'abortConnection'):
+			latestTransport.abortConnection()
+		else:
+			latestTransport.loseConnection()
 
 
 
