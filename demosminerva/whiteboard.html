@@ -7,6 +7,9 @@
 	<title>Whiteboard demo{{ " (dev)" if dev_mode else "" }} | DemosMinerva</title>
 	{% if dev_mode %}
 	<style>
+		#minerva-elements {
+			clear: both;
+		}
 		#minerva-elements iframe {
 			width: 16px !important;
 			height: 16px !important;
@@ -20,7 +23,6 @@
 <body>
 <div id="whiteboard-container">
 	<div id="whiteboard-doc">
-		<div id="minerva-elements"></div>
 		<div id="demo-header"><b><a href="/">DemosMinerva</a></b> | <b>Whiteboard demo</b></div>
 		<p>
 			Click on the whiteboard below to add colored points.  The state of the whiteboard
@@ -48,6 +50,7 @@
 		<div id="drawArea"></div>
 	</div>
 </div>
+<div id="minerva-elements"></div>
 <div id="FlashConnectorSwf"></div>
 <div id="log"></div>
 
