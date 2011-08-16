@@ -2654,7 +2654,7 @@ function Ue(a, b) {
   e = Te(a);
   g = String(window.location).match(pe)[3] || k;
   h = e.match(pe)[3] || k;
-  g == h ? (c.a.info("No need to make a real XDRFrame for " + G(b)), c = md(new Re(r, e, [b], k))) : (g = W("minerva-xdrframes"), h = new dd, c.dd.set(d, [h, e, b]), c.a.info("Creating new XDRFrame " + G(d) + "for " + G(b)), c = Ge("iframe", {id:"minerva-xdrframe-" + d, width:16, height:16, src:e + "xdrframe/?domain=" + document.domain + "&id=" + d}), g.appendChild(c), c = h);
+  g == h ? (c.a.info("No need to make a real XDRFrame for " + G(b)), c = md(new Re(r, e, [b], k))) : (g = W("minerva-elements"), h = new dd, c.dd.set(d, [h, e, b]), c.a.info("Creating new XDRFrame " + G(d) + "for " + G(b)), c = Ge("iframe", {id:"minerva-xdrframe-" + d, width:16, height:16, src:e + "xdrframe/?domain=" + document.domain + "&id=" + d}), g.appendChild(c), c = h);
   return c
 }
 Se.prototype.jg = function(a) {
