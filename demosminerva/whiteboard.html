@@ -5,13 +5,13 @@
 	<!-- needed because VML performance in IE8 is abysmal -->
 	<meta http-equiv="X-UA-Compatible" content="IE=7">
 	<title>Whiteboard demo{{ " (dev)" if dev_mode else "" }} | DemosMinerva</title>
-	{% if not dev_mode %}
+	{% if dev_mode %}
 	<style>
 		#minerva-elements iframe {
-			width: 1px;
-			height: 1px;
-			border: 0;
-			position: absolute;
+			width: 16px !important;
+			height: 16px !important;
+			visibility: visible !important;
+			position: static !important;
 		}
 	</style>
 	{% endif %}

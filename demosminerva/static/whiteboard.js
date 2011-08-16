@@ -2906,7 +2906,7 @@ function tf(a, b) {
   f = sf(a);
   g = String(window.location).match(Oe)[3] || k;
   h = f.match(Oe)[3] || k;
-  g == h ? (c.a.info("No need to make a real XDRFrame for " + H(b)), c = Bd(new qf(q, f, [b], k))) : (g = U("minerva-elements"), h = new qd, c.me.set(d, [h, f, b]), c.a.info("Creating new XDRFrame " + H(d) + "for " + H(b)), c = bf("iframe", {id:"minerva-xdrframe-" + d, width:16, height:16, src:f + "xdrframe/?domain=" + document.domain + "&id=" + d}), g.appendChild(c), c = h);
+  g == h ? (c.a.info("No need to make a real XDRFrame for " + H(b)), c = Bd(new qf(q, f, [b], k))) : (g = U("minerva-elements"), h = new qd, c.me.set(d, [h, f, b]), c.a.info("Creating new XDRFrame " + H(d) + "for " + H(b)), c = bf("iframe", {id:"minerva-xdrframe-" + d, width:2, height:2, style:"visibility: hidden; position: absolute; top: -600px", src:f + "xdrframe/?domain=" + document.domain + "&id=" + d}), g.appendChild(c), c = h);
   return c
 }
 rf.prototype.Gh = function(a) {
