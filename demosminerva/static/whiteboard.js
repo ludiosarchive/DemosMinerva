@@ -1090,7 +1090,11 @@ o.preventDefault = function() {
 function Dc(a) {
   a.stopPropagation()
 }
-;var Ec = new Function("a", "return a");
+;function Ec(a) {
+  Ec[" "](a);
+  return a
+}
+Ec[" "] = s;
 function Fc(a, b) {
   a && this.ic(a, b)
 }
@@ -3493,8 +3497,8 @@ function dg(a, b, c) {
         }
       }
     }
-  }catch(ah) {
-    return ah instanceof S || e(ah), O(a.a, a.s() + " is closing soon because got InvalidFrame: " + H(b)), a.gc = !0
+  }catch(bh) {
+    return bh instanceof S || e(bh), O(a.a, a.s() + " is closing soon because got InvalidFrame: " + H(b)), a.gc = !0
   }
   return!1
 }
@@ -3963,7 +3967,7 @@ o.ja = function(a, b, c) {
   }
 };
 o.Bc = function(a, b, c) {
-  Cg || (Cg = {1:"disabled", 4:"pressed", 8:"selected", 16:"checked", 64:"expanded"});
+  Cg || (Cg = {1:"disabled", 8:"selected", 16:"checked", 64:"expanded"});
   (b = Cg[b]) && a.setAttribute("aria-" + b, c)
 };
 o.md = function(a, b) {
@@ -4482,13 +4486,13 @@ C($g, Xg);
 da($g);
 $g.prototype.h = function(a) {
   var b = {"class":"goog-inline-block " + Dg(this, a).join(" "), title:a.Tc() || ""};
-  return a.Da().h("div", b, bh(this, a.da, a.Da()))
+  return a.Da().h("div", b, ah(this, a.da, a.Da()))
 };
 $g.prototype.Qc = m("button");
 $g.prototype.dc = function(a) {
   return a && a.firstChild.firstChild
 };
-function bh(a, b, c) {
+function ah(a, b, c) {
   return c.h("div", "goog-inline-block " + (a.v() + "-outer-box"), c.h("div", "goog-inline-block " + (a.v() + "-inner-box"), b))
 }
 $g.prototype.v = m("goog-custom-button");

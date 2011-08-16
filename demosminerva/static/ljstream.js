@@ -1099,7 +1099,11 @@ q.stopPropagation = function() {
 q.preventDefault = function() {
   this.Nb = !1
 };
-var wc = new Function("a", "return a");
+function wc(a) {
+  wc[" "](a);
+  return a
+}
+wc[" "] = s;
 function xc(a, b) {
   a && this.Ha(a, b)
 }
@@ -1947,11 +1951,11 @@ function P(a, b) {
   this.value = b
 }
 P.prototype.toString = l("name");
-var Fd = new P("SHOUT", 1200), Gd = new P("SEVERE", 1E3), Hd = new P("WARNING", 900), Id = new P("INFO", 800), Jd = new P("CONFIG", 700), Kd = new P("FINE", 500), Ld = new P("FINEST", 300), Md = new P("ALL", 0), Od = [new P("OFF", Infinity), Fd, Gd, Hd, Id, Jd, Kd, new P("FINER", 400), Ld, Md], Pd = k;
+var Fd = new P("SHOUT", 1200), Gd = new P("SEVERE", 1E3), Hd = new P("WARNING", 900), Id = new P("INFO", 800), Jd = new P("CONFIG", 700), Kd = new P("FINE", 500), Ld = new P("FINEST", 300), Md = new P("ALL", 0), Nd = [new P("OFF", Infinity), Fd, Gd, Hd, Id, Jd, Kd, new P("FINER", 400), Ld, Md], Pd = k;
 function Qd(a) {
   if(!Pd) {
     Pd = {};
-    for(var b = 0, c;c = Od[b];b++) {
+    for(var b = 0, c;c = Nd[b];b++) {
       Pd[c.value] = c, Pd[c.name] = c
     }
   }
@@ -3247,8 +3251,8 @@ function ef(a, b, c) {
                     if(c.length) {
                       ff(a, c);
                       if(!t(c)) {
-                        for(var Nd = c.length - 1;Nd >= 0;Nd--) {
-                          delete c[Nd]
+                        for(var Od = c.length - 1;Od >= 0;Od--) {
+                          delete c[Od]
                         }
                       }
                       c.length = 0
@@ -3269,8 +3273,8 @@ function ef(a, b, c) {
         }
       }
     }
-  }catch(Of) {
-    return Of instanceof T || f(Of), Td(a.a, a.q() + " is closing soon because got InvalidFrame: " + G(b)), a.Bb = !0
+  }catch(Pf) {
+    return Pf instanceof T || f(Pf), Td(a.a, a.q() + " is closing soon because got InvalidFrame: " + G(b)), a.Bb = !0
   }
   return!1
 }
@@ -3450,7 +3454,7 @@ Mf.prototype.Ue = !1;
 function Nf(a) {
   return a < 10 ? "0" + a : String(a)
 }
-function Pf(a, b) {
+function Of(a, b) {
   var c = (a.We - b) / 1E3, d = c.toFixed(3), e = 0;
   if(c < 1) {
     e = 2
@@ -3593,7 +3597,7 @@ q.gf = function(a) {
       var e = new Date(a.We);
       d.push("[", Nf(e.getFullYear() - 2E3) + Nf(e.getMonth() + 1) + Nf(e.getDate()) + " " + Nf(e.getHours()) + ":" + Nf(e.getMinutes()) + ":" + Nf(e.getSeconds()) + "." + Nf(Math.floor(e.getMilliseconds() / 10)), "] ")
     }
-    b.Vf && d.push("[", Ea(Pf(a, b.Xf.get())), "s] ");
+    b.Vf && d.push("[", Ea(Of(a, b.Xf.get())), "s] ");
     b.Uf && d.push("[", ya(a.ve), "] ");
     d.push('<span class="', c, '">', xa(Ea(ya(a.Be))));
     b.Ue && a.Sc && d.push("<br>", xa(Ea(a.Rc || "")));
@@ -3711,8 +3715,8 @@ q.Mf = function() {
   return!1
 };
 function fg(a, b, c) {
-  for(var a = a.J, b = a.r("select", {id:b}), d = 0;d < Od.length;d++) {
-    var e = Od[d], g = a.r("option", {}, e.name);
+  for(var a = a.J, b = a.r("select", {id:b}), d = 0;d < Nd.length;d++) {
+    var e = Nd[d], g = a.r("option", {}, e.name);
     if(c == e.name) {
       g.selected = !0
     }
@@ -4009,7 +4013,7 @@ q.M = function(a, b, c) {
   }
 };
 q.Wb = function(a, b, c) {
-  tg || (tg = {1:"disabled", 4:"pressed", 8:"selected", 16:"checked", 64:"expanded"});
+  tg || (tg = {1:"disabled", 8:"selected", 16:"checked", 64:"expanded"});
   (b = tg[b]) && a.setAttribute("aria-" + b, c)
 };
 q.Fa = function(a) {
