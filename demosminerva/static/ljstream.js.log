@@ -20,5 +20,5 @@ right: null
 	if(ljstream.idleTimeout != null) {
 	                        ^
 
-0 error(s), 3 warning(s), 97.1% typed
+0 error(s), 3 warning(s), 97.2% typed
 ../closure-library/closure/bin/build/closurebuilder.py: JavaScript compilation succeeded.
