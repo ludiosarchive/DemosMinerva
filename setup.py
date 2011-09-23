@@ -74,3 +74,11 @@ setup(
 		# Also needs protobuf >= 2.3, but it's not installable with pip.
 	],
 )
+
+
+try:
+	from twisted.plugin import IPlugin, getPlugins
+except ImportError:
+	pass
+else:
+	list(getPlugins(IPlugin))
