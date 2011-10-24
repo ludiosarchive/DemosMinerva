@@ -81,6 +81,7 @@ def makeMinervaAndHttp(reactor, fileCache, socketPorts, domain, closureLibrary):
 	clock = reactor
 
 	toPorts = ",".join(str(p) for p in socketPorts)
+	# could be "" if no socketPorts
 
 	# TODO: what if there's no domain?
 	policyString = '''\
@@ -102,7 +103,7 @@ def makeMinervaAndHttp(reactor, fileCache, socketPorts, domain, closureLibrary):
 	httpFace = HttpFace(clock, tracker, fileCache, allowedDomains)
 	socketFace = SocketFace(clock, tracker, policyString=policyString)
 
-	mainSocketPort = socketPorts[0]
+	mainSocketPort = socketPorts[0] if socketPorts else None
 	root = DemosMinervaRoot(httpFace, fileCache, mainSocketPort, domain, closureLibrary)
 	httpSite = ConnectionTrackingSite(root, timeout=75)
 
