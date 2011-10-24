@@ -1,5 +1,8 @@
 #!/bin/sh -e
 
+# Windows users: this script can be run with MSYS bash.
+# Make sure you also have dos2unix.exe.
+
 #./build_autocachebreakers.py
 ./build_depsjs.sh
 
@@ -35,3 +38,12 @@ $COMMON \
 --namespace="ljstream" \
 --output_file=demosminerva/static/ljstream.js \
 2>&1 | tee demosminerva/static/ljstream.js.log
+
+UNAME_O=`uname -o`
+if [[ $UNAME_O == 'Msys' || $UNAME_O == 'Cygwin' ]]; then
+	echo "Fixing newlines..."
+	dos2unix demosminerva/static/whiteboard.js
+	dos2unix demosminerva/static/whiteboard.js.log
+	dos2unix demosminerva/static/ljstream.js
+	dos2unix demosminerva/static/ljstream.js.log
+fi
