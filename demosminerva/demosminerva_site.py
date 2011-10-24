@@ -5,8 +5,6 @@ from twisted.python.filepath import FilePath
 from minerva.newlink import (
 	SubprotocolFactory, StreamTracker, HttpFace, SocketFace)
 
-from minerva.website import CsrfStopper
-
 from demosminerva.whiteboard import WhiteboardResource, WhiteboardDevResource, WhiteboardFactory
 from demosminerva.ljstream import LjStreamResource, LjStreamDevResource, LjStreamFactory
 
@@ -29,7 +27,7 @@ requireFiles([f.path for f in FilePath(__file__).sibling('static').child('thumbn
 
 class DemosMinervaRoot(BetterResource):
 
-	def __init__(self, httpFace, fileCache, csrfStopper, cookieInstaller, domain, closureLibrary):
+	def __init__(self, httpFace, fileCache, mainSocketPort, domain, closureLibrary):
 		import coreweb
 		import minerva
 		import demosminerva
@@ -71,8 +69,7 @@ class DemosMinervaRoot(BetterResource):
 			FilePath(googstyle.__file__).sibling('goog-images').path,
 			responseCacheOptions=responseCacheOptions))
 		self.putChild('httpface', httpFace)
-		commonArgs = (fileCache, csrfStopper, cookieInstaller, domain,
-			responseCacheOptions)
+		commonArgs = (fileCache, mainSocketPort, domain, responseCacheOptions)
 		self.putChild('whiteboard', WhiteboardResource(*commonArgs))
 		self.putChild('whiteboard_dev', WhiteboardDevResource(*commonArgs))
 		self.putChild('livejournal-stream', LjStreamResource(*commonArgs))
@@ -80,19 +77,18 @@ class DemosMinervaRoot(BetterResource):
 
 
 
-def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain, closureLibrary):
+def makeMinervaAndHttp(reactor, fileCache, socketPorts, domain, closureLibrary):
 	clock = reactor
 
-	cookieInstaller = CookieInstaller(
-		os.urandom, 'demosminerva_site_uaid', 'demosminerva_site_uaid_secure')
+	toPorts = ",".join(str(p) for p in socketPorts)
 
+	# TODO: what if there's no domain?
 	policyString = '''\
 <cross-domain-policy>
-<allow-access-from domain="%s" to-ports="843"/>
-<allow-access-from domain="*.%s" to-ports="843"/>
-</cross-domain-policy>'''.strip() % (domain, domain)
+<allow-access-from domain="%s" to-ports="%s"/>
+<allow-access-from domain="*.%s" to-ports="%s"/>
+</cross-domain-policy>'''.strip() % (domain, toPorts, domain, toPorts)
 
-	csrfStopper = CsrfStopper(csrfSecret)
 	tracker = StreamTracker(clock, SubprotocolFactory(
 		clock, subfactories={
 			'whiteboard': WhiteboardFactory(clock),
@@ -106,8 +102,8 @@ def makeMinervaAndHttp(reactor, fileCache, csrfSecret, domain, closureLibrary):
 	httpFace = HttpFace(clock, tracker, fileCache, allowedDomains)
 	socketFace = SocketFace(clock, tracker, policyString=policyString)
 
-	root = DemosMinervaRoot(httpFace, fileCache, csrfStopper,
-		cookieInstaller, domain, closureLibrary)
+	mainSocketPort = socketPorts[0]
+	root = DemosMinervaRoot(httpFace, fileCache, mainSocketPort, domain, closureLibrary)
 	httpSite = ConnectionTrackingSite(root, timeout=75)
 
 	return (socketFace, httpSite)
