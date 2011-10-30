@@ -269,7 +269,7 @@ ljstream.startStream = function() {
 	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
 	ljstream.lastProto = new ljstream.ChatProtocol();
 	ljstream.activityDetected(null);
-	var endpointD = cw.net.demo.getEndpoint(ljstream.callQueue, true, false, '/httpface/');
+	var endpointD = cw.net.demo.getEndpointByQueryArgs(ljstream.callQueue);
 	endpointD.addCallback(function(endpoint) {
 		if(!ljstream.lastProto) {
 			throw Error("lastProto falsy?");
