@@ -38,20 +38,20 @@ window.onerror = function(msg, url, lineNumber) {
  * @implements {cw.net.IMinervaProtocol}
  * @constructor
  */
-ljstream.ChatProtocol = function() {
+ljstream.LjClientProtocol = function() {
 	this.pbLiteSerializer_ = new goog.proto2.PbLiteSerializer();
 };
 
-ljstream.ChatProtocol.prototype.setStream = function(stream) {
+ljstream.LjClientProtocol.prototype.setStream = function(stream) {
 	this.stream_ = stream;
 };
 
-ljstream.ChatProtocol.prototype.sendInitialStrings = function() {
+ljstream.LjClientProtocol.prototype.sendInitialStrings = function() {
 	this.stream_.sendStrings(['subprotocol:ljstream']);
 	this.sendPreferences();
 };
 
-ljstream.ChatProtocol.prototype.streamReset = function(reasonString, applicationLevel) {
+ljstream.LjClientProtocol.prototype.streamReset = function(reasonString, applicationLevel) {
 	ljstream.logger.info(
 		'streamReset: reasonString=' + cw.repr.repr(reasonString) +
 		', applicationLevel=' + applicationLevel);
@@ -62,7 +62,7 @@ ljstream.ChatProtocol.prototype.streamReset = function(reasonString, application
 /**
  * @param {string} s
  */
-ljstream.ChatProtocol.prototype.handleString_ = function(s) {
+ljstream.LjClientProtocol.prototype.handleString_ = function(s) {
 	function fail() {
 		ljstream.logger.severe('Could not handle string: ' + cw.repr.repr(s));
 	}
@@ -84,13 +84,13 @@ ljstream.ChatProtocol.prototype.handleString_ = function(s) {
  * @param {boolean} includeRussianPosts
  * @return {!Array}
  */
-ljstream.ChatProtocol.prototype.makePreferences_ = function(includeRussianPosts) {
+ljstream.LjClientProtocol.prototype.makePreferences_ = function(includeRussianPosts) {
 	var prefs = new ljstream.SetPreferences();
 	prefs.setIncludeRussianPosts(includeRussianPosts);
 	return this.pbLiteSerializer_.serialize(prefs);
 };
 
-ljstream.ChatProtocol.prototype.sendPreferences = function() {
+ljstream.LjClientProtocol.prototype.sendPreferences = function() {
 	ljstream.logger.info('Sending preferences to server');
 	var includeRussianPosts = ljstream.getIncludeRussianPosts();
 	var prefsArray = this.makePreferences_(includeRussianPosts);
@@ -100,20 +100,20 @@ ljstream.ChatProtocol.prototype.sendPreferences = function() {
 /**
  * @param {string} s
  */
-ljstream.ChatProtocol.prototype.stringReceived = function(s) {
+ljstream.LjClientProtocol.prototype.stringReceived = function(s) {
 	this.handleString_(s);
 };
 
 /**
  * @param {string} reason
  */
-ljstream.ChatProtocol.prototype.reset = function(reason) {
+ljstream.LjClientProtocol.prototype.reset = function(reason) {
 	ljstream.logger.info('resetting with reason: ' + reason);
 	this.stream_.reset(reason);
 };
 
 /**
- * @type {?ljstream.ChatProtocol}
+ * @type {?ljstream.LjClientProtocol}
  */
 ljstream.lastProto = null;
 
@@ -267,7 +267,7 @@ ljstream.appendPost = function(title, url, body) {
 
 ljstream.startStream = function() {
 	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
-	ljstream.lastProto = new ljstream.ChatProtocol();
+	ljstream.lastProto = new ljstream.LjClientProtocol();
 	ljstream.activityDetected(null);
 	var endpointD = cw.net.demo.getEndpointByQueryArgs(ljstream.callQueue);
 	endpointD.addCallback(function(endpoint) {
