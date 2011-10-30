@@ -5504,7 +5504,7 @@ ui.prototype.qf = function() {
   return Boolean(Number((new Ve(document.location)).U.get("httpStreaming", "0"))) ? 2 : 1
 };
 function vi(a) {
-  var b = new Nh("/compiled_client/FlashConnector.swf?cb=2ae8d8a79afe8f3a96bb49e8a9339914");
+  var b = new Nh("/compiled_client/FlashConnector.swf?cb=4bdfc178fc0e508c0cd5efc3fdb09920");
   b.Ve = "#777777";
   b.ba(300, 30);
   var c = U("FlashConnectorSwf");
@@ -5514,10 +5514,10 @@ function vi(a) {
 function wi(a, b, c) {
   var d = new Ve(document.location);
   if(c) {
-    var e = d.na, d = vi(a);
+    var e = d.na, g = t.__demo_mainSocketPort, d = vi(a);
     Bd(d, function(b) {
       b = new xe(a, b);
-      return new gg(e, 843, b)
+      return new gg(e, g, b)
     });
     return d
   }else {

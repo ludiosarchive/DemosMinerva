@@ -32,7 +32,7 @@ class WhiteboardResource(BetterResource):
 		BetterResource.__init__(self)
 
 		self.putChild('', MinervaBootstrap(fileCache, self.templateFile,
-			dict(domain=domain, **self.dictionary)))
+			dict(domain=domain, mainSocketPort=mainSocketPort, **self.dictionary)))
 
 
 

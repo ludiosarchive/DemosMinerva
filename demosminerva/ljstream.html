@@ -40,6 +40,8 @@ __demo_shared_domain = {{ htmldumps(domain) }};
 if(__demo_shared_domain) {
 	document.domain = __demo_shared_domain;
 }
+
+__demo_mainSocketPort = {{ htmldumps(mainSocketPort) }};
 </script>
 
 {% if dev_mode %}
