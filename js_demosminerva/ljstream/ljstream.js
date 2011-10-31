@@ -17,7 +17,7 @@ goog.require('cw.string');
 goog.require('cw.net.ClientStream');
 goog.require('cw.net.IMinervaProtocol');
 goog.require('cw.net.HttpStreamingMode');
-goog.require('cw.net.demo.getEndpoint');
+goog.require('cw.net.demo.getEndpointByQueryArgs');
 goog.require('cw.repr');
 goog.require('cw.string');
 goog.require('cw.linkify');
