@@ -12,7 +12,7 @@ from minerva import website
 from demosminerva import demosminerva_site
 
 
-_defaultClosureLibrary = FilePath(__file__).parent().parent().parent().child("closure-library").path
+_defaultClosureLibrary = FilePath(__file__).parent().parent().sibling("closure-library").path
 assert isinstance(_defaultClosureLibrary, str), type(_defaultClosureLibrary)
 
 class Options(usage.Options):
