@@ -22,24 +22,9 @@ class Options(usage.Options):
 	synopsis = "[demosminerva_site options]"
 
 	optParameters = [
-		["http", "t", None,
-			"strports description for the HTTP server. "
-			"Example: 'tcp:80:interface=127.0.0.1'. "
-			"Repeat this option for multiple servers."],
-
-		["minerva", "m", None,
-			"strports description for Minerva server's socket listener. "
-			"Example: 'ssl:444:privateKey=privateAndPublic.pem:interface=0'. "
-			"Repeat this option for multiple servers."],
-
-		# Automatically setting document.document based on a GET
-		# parameter or by looking at parent's URL is insecure (because
-		# some browsers will allow setting document.domain to 'com',
-		# for example.)  We require that the document.domain be
-		# manually specified.
-		["domain", "d", None, "The domain to set document.domain values to. " +
-			"Do not include the port number.  If this option is not specified, " +
-			"Minerva over HTTP might work simultaneously in just one or two tabs."],
+		website.optParameterHttpServer("http", "t"),
+		website.optParameterMinervaSocket("minerva", "m"),
+		website.optParameterDomain("domain", "d"),
 
 		["closure-library", "c", _defaultClosureLibrary,
 			'Path to closure-library'],
@@ -50,20 +35,14 @@ class Options(usage.Options):
 	]
 
 	longdesc = """\
-This starts the Minerva test server (demosminerva_site), from which you can
-run the client-side unit tests in a browser, and try a few demo applications
-that use Minerva.
-
-See http://twistedmatrix.com/documents/9.0.0/api/twisted.application.strports.html
-or the source code for twisted.application.strports to see examples of strports
-descriptions.
-"""
+This starts the DemosMinerva server (demosminerva_site), from which you can
+try a few demo applications that use Minerva.""" + website.strportsInfo()
 
 	def __init__(self):
 		usage.Options.__init__(self)
 		self['http'] = []
 		self['minerva'] = []
-	
+
 
 	def opt_http(self, option):
 		self['http'].append(option)
@@ -76,7 +55,8 @@ descriptions.
 	def postOptions(self):
 		usage.Options.postOptions(self)
 		if not self['http'] and not self['minerva']:
-			raise usage.UsageError("You probably want to start at least 1 http server or 1 minerva server.")
+			raise usage.UsageError("You probably want to start at " +
+				"least 1 http server or 1 minerva server.")
 
 
 
