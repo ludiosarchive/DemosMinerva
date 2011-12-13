@@ -60,3 +60,12 @@ Then run:
 ./build_compiled_js.sh
 ./build_css.sh
 ```
+
+
+
+Contributing
+============
+
+Patches and pull requests are welcome.
+
+This coding standard applies: http://ludios.org/coding-standard/
