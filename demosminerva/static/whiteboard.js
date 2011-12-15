@@ -1529,12 +1529,12 @@ ad++;
  The Closure Authors under the MIT license. All other code is Copyright
  2005-2009 The Closure Authors. All Rights Reserved.
 */
-function gd(a, b) {
+function fd(a, b) {
   this.Cc = [];
   this.Re = a;
   this.$e = b || k
 }
-q = gd.prototype;
+q = fd.prototype;
 q.Ma = m;
 q.fc = m;
 q.mc = 0;
@@ -1543,7 +1543,7 @@ q.qg = m;
 q.Bd = 0;
 q.cancel = function(a) {
   if(this.Ma) {
-    this.pc instanceof gd && this.pc.cancel()
+    this.pc instanceof fd && this.pc.cancel()
   }else {
     if(this.D) {
       var b = this.D;
@@ -1600,7 +1600,7 @@ function jd(a) {
       try {
         var l = g.call(e || a.$e, b);
         ga(l) && (a.fc = a.fc && (l == b || l instanceof Error), a.pc = b = l);
-        b instanceof gd && (d = j, a.mc++)
+        b instanceof fd && (d = j, a.mc++)
       }catch(o) {
         b = o, a.fc = j, qd(a) || (c = j)
       }
@@ -1614,12 +1614,12 @@ function jd(a) {
   }, 0))
 }
 function rd(a) {
-  var b = new gd;
+  var b = new fd;
   md(b, a);
   return b
 }
 function sd(a) {
-  var b = new gd;
+  var b = new fd;
   b.bc(a);
   return b
 }
@@ -3027,7 +3027,8 @@ function Ff(a, b) {
   e = g.toString();
   g = ("" + t.location).match(Fe)[3] || k;
   h = e.match(Fe)[3] || k;
-  g == h ? (c.a.info("No need to make a real XDRFrame for " + F(b)), c = rd(new Cf(t, e, [b], k))) : (g = S("minerva-elements"), h = new gd, c.ie.set(d, [h, e, b]), c.a.info("Creating new XDRFrame " + F(d) + "for " + F(b)), c = of("iframe", {id:"minerva-xdrframe-" + d, style:"visibility: hidden; height: 0; width: 0; border: 0; margin: 0;", src:e + "xdrframe/?domain=" + document.domain + "&id=" + d}), g.appendChild(c), c = h);
+  g == h ? (c.a.info("No need to make a real XDRFrame for " + F(b)), c = rd(new Cf(t, e, [b], k))) : ((g = S("minerva-elements")) || f(Error('makeWindowForUrl_: Page is missing an empty div with id "minerva-elements"; please add one.')), h = new fd, c.ie.set(d, [h, e, b]), c.a.info("Creating new XDRFrame " + F(d) + "for " + F(b)), c = of("iframe", {id:"minerva-xdrframe-" + d, style:"visibility: hidden; height: 0; width: 0; border: 0; margin: 0;", src:e + "xdrframe/?domain=" + document.domain + "&id=" + 
+  d}), g.appendChild(c), c = h);
   return c
 }
 Df.prototype.xh = function(a) {
@@ -3051,7 +3052,7 @@ var Jf = Hf;
  2005-2009 The Closure Library Authors. All Rights Reserved.
 */
 function Kf(a, b, c, d, e, g) {
-  gd.call(this, e, g);
+  fd.call(this, e, g);
   this.Bf = a;
   this.Kd = [];
   this.ef = !!b;
@@ -3062,7 +3063,7 @@ function Kf(a, b, c, d, e, g) {
   }
   0 == a.length && !this.ef && md(this, this.Kd)
 }
-z(Kf, gd);
+z(Kf, fd);
 Kf.prototype.Kf = 0;
 Kf.prototype.nf = function(a, b, c) {
   this.Kf++;
@@ -3577,9 +3578,9 @@ function pg(a, b, c) {
               }else {
                 c.length && (og(a, c), bb(c));
                 if(d instanceof Be) {
-                  var fd = a.H;
-                  fd.onreset && fd.onreset.call(fd.Qb, d.nc, d.Tb);
-                  fd.g();
+                  var gd = a.H;
+                  gd.onreset && gd.onreset.call(gd.Qb, d.nc, d.Tb);
+                  gd.g();
                   return j
                 }
                 f(Error(a.v() + " had unexpected state in framesReceived_."))
@@ -4700,7 +4701,7 @@ function Ah(a, b, c) {
   }
   var g;
   e = "_" + yd();
-  var h = new gd(d);
+  var h = new fd(d);
   t.__loadFlashObject_callbacks[e] = function() {
     a.setTimeout(function() {
       d();
@@ -5088,9 +5089,11 @@ function $h(a) {
   var b = new yh("/httpface/FlashConnector.swf?cb=4bdfc178fc0e508c0cd5efc3fdb09920");
   b.Qe = "#777777";
   b.fa(300, 30);
-  var c = S("FlashConnectorSwf");
-  c || f(Error("no FlashConnectorSwf?"));
-  return Bh(a.O, b, c)
+  var c = S("minerva-elements");
+  c || f(Error('loadFlashConnector: Page is missing an empty div with id "minerva-elements"; please add one.'));
+  var d = S("minerva-elements-FlashConnectorSwf");
+  d || (d = of("div", {id:"minerva-elements-FlashConnectorSwf"}), c.appendChild(d));
+  return Bh(a.O, b, d)
 }
 function ai(a, b, c) {
   var d = new He(document.location);

@@ -224,9 +224,9 @@ function Fa(a) {
 }
 function Ga(a, b) {
   for(var c = 0, d = wa("" + a).split("."), e = wa("" + b).split("."), g = Math.max(d.length, e.length), h = 0;0 == c && h < g;h++) {
-    var l = d[h] || "", n = e[h] || "", p = RegExp("(\\d*)(\\D*)", "g"), E = RegExp("(\\d*)(\\D*)", "g");
+    var l = d[h] || "", n = e[h] || "", p = RegExp("(\\d*)(\\D*)", "g"), F = RegExp("(\\d*)(\\D*)", "g");
     do {
-      var r = p.exec(l) || ["", "", ""], w = E.exec(n) || ["", "", ""];
+      var r = p.exec(l) || ["", "", ""], w = F.exec(n) || ["", "", ""];
       if(0 == r[0].length && 0 == w[0].length) {
         break
       }
@@ -301,8 +301,8 @@ function Ua(a, b) {
     }
   }
 }
-;var F = Array.prototype, Va = F.indexOf ? function(a, b, c) {
-  return F.indexOf.call(a, b, c)
+;var E = Array.prototype, Va = E.indexOf ? function(a, b, c) {
+  return E.indexOf.call(a, b, c)
 } : function(a, b, c) {
   c = c == k ? 0 : 0 > c ? Math.max(0, a.length + c) : c;
   if(v(a)) {
@@ -314,21 +314,21 @@ function Ua(a, b) {
     }
   }
   return-1
-}, Wa = F.forEach ? function(a, b, c) {
-  F.forEach.call(a, b, c)
+}, Wa = E.forEach ? function(a, b, c) {
+  E.forEach.call(a, b, c)
 } : function(a, b, c) {
   for(var d = a.length, e = v(a) ? a.split("") : a, g = 0;g < d;g++) {
     g in e && b.call(c, e[g], g, a)
   }
-}, Xa = F.map ? function(a, b, c) {
-  return F.map.call(a, b, c)
+}, Xa = E.map ? function(a, b, c) {
+  return E.map.call(a, b, c)
 } : function(a, b, c) {
   for(var d = a.length, e = Array(d), g = v(a) ? a.split("") : a, h = 0;h < d;h++) {
     h in g && (e[h] = b.call(c, g[h], h, a))
   }
   return e
-}, Ya = F.some ? function(a, b, c) {
-  return F.some.call(a, b, c)
+}, Ya = E.some ? function(a, b, c) {
+  return E.some.call(a, b, c)
 } : function(a, b, c) {
   for(var d = a.length, e = v(a) ? a.split("") : a, g = 0;g < d;g++) {
     if(g in e && b.call(c, e[g], g, a)) {
@@ -336,8 +336,8 @@ function Ua(a, b) {
     }
   }
   return m
-}, Za = F.every ? function(a, b, c) {
-  return F.every.call(a, b, c)
+}, Za = E.every ? function(a, b, c) {
+  return E.every.call(a, b, c)
 } : function(a, b, c) {
   for(var d = a.length, e = v(a) ? a.split("") : a, g = 0;g < d;g++) {
     if(g in e && !b.call(c, e[g], g, a)) {
@@ -351,10 +351,10 @@ function $a(a, b) {
 }
 function ab(a, b) {
   var c = Va(a, b);
-  0 <= c && F.splice.call(a, c, 1)
+  0 <= c && E.splice.call(a, c, 1)
 }
 function bb(a) {
-  return F.concat.apply(F, arguments)
+  return E.concat.apply(E, arguments)
 }
 function cb(a) {
   if(u(a)) {
@@ -382,13 +382,13 @@ function db(a, b) {
   }
 }
 function eb(a, b, c, d) {
-  F.splice.apply(a, fb(arguments, 1))
+  E.splice.apply(a, fb(arguments, 1))
 }
 function fb(a, b, c) {
-  return 2 >= arguments.length ? F.slice.call(a, b) : F.slice.call(a, b, c)
+  return 2 >= arguments.length ? E.slice.call(a, b) : E.slice.call(a, b, c)
 }
 function gb(a, b) {
-  F.sort.call(a, b || hb)
+  E.sort.call(a, b || hb)
 }
 function hb(a, b) {
   return a > b ? 1 : a < b ? -1 : 0
@@ -1389,7 +1389,7 @@ function Hc(a, b) {
           try {
             g.keyCode = -1;
             break a
-          }catch(E) {
+          }catch(F) {
             p = j
           }
         }
@@ -1915,18 +1915,18 @@ s.If = function(a, b, c) {
       if(v(c)) {
         h = {message:c, name:"Unknown error", lineNumber:"Not available", fileName:l, stack:"Not available"}
       }else {
-        var n, p, E = m;
+        var n, p, F = m;
         try {
           n = c.lineNumber || c.uh || "Not available"
         }catch(r) {
-          n = "Not available", E = j
+          n = "Not available", F = j
         }
         try {
           p = c.fileName || c.filename || c.sourceURL || l
         }catch(w) {
-          p = "Not available", E = j
+          p = "Not available", F = j
         }
-        h = E || !c.lineNumber || !c.fileName || !c.stack ? {message:c.message, name:c.name, lineNumber:n, fileName:p, stack:c.stack || "Not available"} : c
+        h = F || !c.lineNumber || !c.fileName || !c.stack ? {message:c.message, name:c.name, lineNumber:n, fileName:p, stack:c.stack || "Not available"} : c
       }
       e = "Message: " + D(h.message) + '\nUrl: <a href="view-source:' + h.fileName + '" target="_new">' + h.fileName + "</a>\nLine: " + h.lineNumber + "\n\nBrowser stack:\n" + D(h.stack + "-> ") + "[end]\n\nJS stack traversal:\n" + D(sd(g) + "-> ")
     }catch(B) {
@@ -2939,9 +2939,9 @@ function qf(a, b) {
         n = ""
       }else {
         if(!(-1 == n.indexOf("./") && -1 == n.indexOf("/."))) {
-          for(var l = 0 == n.lastIndexOf("/", 0), n = n.split("/"), p = [], E = 0;E < n.length;) {
-            var r = n[E++];
-            "." == r ? l && E == n.length && p.push("") : ".." == r ? ((1 < p.length || 1 == p.length && "" != p[0]) && p.pop(), l && E == n.length && p.push("")) : (p.push(r), l = j)
+          for(var l = 0 == n.lastIndexOf("/", 0), n = n.split("/"), p = [], F = 0;F < n.length;) {
+            var r = n[F++];
+            "." == r ? l && F == n.length && p.push("") : ".." == r ? ((1 < p.length || 1 == p.length && "" != p[0]) && p.pop(), l && F == n.length && p.push("")) : (p.push(r), l = j)
           }
           n = p.join("/")
         }
@@ -2954,7 +2954,8 @@ function qf(a, b) {
   e = g.toString();
   g = ("" + t.location).match(qe)[3] || k;
   h = e.match(qe)[3] || k;
-  g == h ? (c.a.info("No need to make a real XDRFrame for " + H(b)), c = cd(new nf(t, e, [b], k))) : (g = X("minerva-elements"), h = new Tc, c.qd.set(d, [h, e, b]), c.a.info("Creating new XDRFrame " + H(d) + "for " + H(b)), c = bf("iframe", {id:"minerva-xdrframe-" + d, style:"visibility: hidden; height: 0; width: 0; border: 0; margin: 0;", src:e + "xdrframe/?domain=" + document.domain + "&id=" + d}), g.appendChild(c), c = h);
+  g == h ? (c.a.info("No need to make a real XDRFrame for " + H(b)), c = cd(new nf(t, e, [b], k))) : ((g = X("minerva-elements")) || f(Error('makeWindowForUrl_: Page is missing an empty div with id "minerva-elements"; please add one.')), h = new Tc, c.qd.set(d, [h, e, b]), c.a.info("Creating new XDRFrame " + H(d) + "for " + H(b)), c = bf("iframe", {id:"minerva-xdrframe-" + d, style:"visibility: hidden; height: 0; width: 0; border: 0; margin: 0;", src:e + "xdrframe/?domain=" + document.domain + "&id=" + 
+  d}), g.appendChild(c), c = h);
   return c
 }
 of.prototype.tg = function(a) {
@@ -3305,7 +3306,7 @@ s.reset = function(a) {
 function Zf(a, b, c, d) {
   var e;
   e = a.kd;
-  for(var g = a.Tf, h = a.Sf, l = [], n = m, p = 0, E = c.length;p < E;p++) {
+  for(var g = a.Tf, h = a.Sf, l = [], n = m, p = 0, F = c.length;p < F;p++) {
     var r = c[p], w = r[0], r = r[1];
     if(w == e.Ra + 1) {
       e.Ra += 1;
@@ -3465,12 +3466,12 @@ function bg(a, b, c) {
         var l = g.Fa, n = h.Ya, c = m;
         n > l.Ka && (c = j);
         for(var p = Ob(l).concat(), d = 0;d < p.length;d++) {
-          var E = p[d];
-          if(E > n) {
+          var F = p[d];
+          if(F > n) {
             break
           }
-          var r = l.T.get(E)[1];
-          l.T.remove(E);
+          var r = l.T.get(F)[1];
+          l.T.remove(F);
           l.Q -= r
         }
         for(d = 0;d < h.Ua.length;d++) {
@@ -5168,9 +5169,11 @@ function Sh(a) {
   var b = new sh("/httpface/FlashConnector.swf?cb=4bdfc178fc0e508c0cd5efc3fdb09920");
   b.Vd = "#777777";
   th(b, 300, 30);
-  var c = X("FlashConnectorSwf");
-  c || f(Error("no FlashConnectorSwf?"));
-  return wh(a.H, b, c)
+  var c = X("minerva-elements");
+  c || f(Error('loadFlashConnector: Page is missing an empty div with id "minerva-elements"; please add one.'));
+  var d = X("minerva-elements-FlashConnectorSwf");
+  d || (d = bf("div", {id:"minerva-elements-FlashConnectorSwf"}), c.appendChild(d));
+  return wh(a.H, b, d)
 }
 function Th(a, b, c) {
   var d = new W(document.location);
