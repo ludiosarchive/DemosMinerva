@@ -1993,7 +1993,7 @@ function Rd(a, b, c) {
   "frames" == b ? (a = a.Ea, Sd(a.G), Td(a.G, c)) : "stillreceiving" == b ? (c = a.Ea, T(c.a, "onstillreceiving"), Sd(c.G)) : "connect" == b ? (c = a.Ea, c.a.info("onconnect"), Sd(c.G), a = c.yb, c.yb = k, a.length && (T(c.a, "onconnect: Writing " + a.length + " buffered frame(s)."), c.Gc.bc(a))) : "close" == b ? (a.mb = m, a.b()) : "ioerror" == b ? (a.mb = m, b = a.Ea, R(b.a, "onioerror: " + H(c)), Ud(b.G, m), a.b()) : "securityerror" == b ? (a.mb = m, b = a.Ea, R(b.a, "onsecurityerror: " + H(c)), 
   Ud(b.G, m), a.b()) : f(Error("bad event: " + b))
 }
-function Vd(a) {
+function Wd(a) {
   a.Wc = j;
   a.mb = m;
   a.b()
@@ -2002,7 +2002,7 @@ s.Uc = function(a, b) {
   try {
     var c = this.Ia.CallFunction(jd("__FC_connect", this.fa, a, b, "<int32/>\n"))
   }catch(d) {
-    return Q(this.a, "connect: could not call __FC_connect; Flash probably crashed. Disposing now. Error was: " + d.message), Vd(this)
+    return Q(this.a, "connect: could not call __FC_connect; Flash probably crashed. Disposing now. Error was: " + d.message), Wd(this)
   }
   '"OK"' != c && f(Error("__FC_connect failed? ret: " + c))
 };
@@ -2010,7 +2010,7 @@ s.bc = function(a) {
   try {
     var b = this.Ia.CallFunction(jd("__FC_writeFrames", this.fa, a))
   }catch(c) {
-    return Q(this.a, "writeFrames: could not call __FC_writeFrames; Flash probably crashed. Disposing now. Error was: " + c.message), Vd(this)
+    return Q(this.a, "writeFrames: could not call __FC_writeFrames; Flash probably crashed. Disposing now. Error was: " + c.message), Wd(this)
   }
   '"OK"' != b && ('"no such instance"' == b ? (R(this.a, "Flash no longer knows of " + this.fa + "; disposing."), this.b()) : f(Error("__FC_writeFrames failed? ret: " + b)))
 };
@@ -3816,8 +3816,8 @@ function xg(a, b, c) {
                 if(c.length) {
                   wg(a, c);
                   if(!u(c)) {
-                    for(var Wd = c.length - 1;0 <= Wd;Wd--) {
-                      delete c[Wd]
+                    for(var Vd = c.length - 1;0 <= Vd;Vd--) {
+                      delete c[Vd]
                     }
                   }
                   c.length = 0
@@ -5198,25 +5198,20 @@ function Th() {
 Th.prototype.je = function() {
   return Boolean(Number((new W(document.location)).L.get("httpStreaming", "0"))) ? 2 : 1
 };
-function Uh() {
-  var a = (new W(document.location)).L, b = "http" != a.get("mode"), c = Boolean(Number(a.get("useSub", "1"))), a = new W(document.location);
-  b ? b = new Zf("/httpface/", a.X, t.__demo_mainSocketPort) : (c ? (b = t.__demo_shared_domain, a = a.H(), ve(a, "_____random_____." + b)) : a = a.H(), xe(a, "/httpface/"), ye(a, "", i), b = new ag(a.toString().replace("_____random_____", "%random%")));
-  return dd(b)
-}
-;var Vh = U("ljstream.logger");
+var Uh = U("ljstream.logger");
 window.onerror = function(a, b, c) {
-  Q(Vh, "window.onerror: message: " + H(a) + "\nURL: " + b + "\nLine Number: " + c)
+  Q(Uh, "window.onerror: message: " + H(a) + "\nURL: " + b + "\nLine Number: " + c)
 };
-function Xh() {
+function Vh() {
   this.Qe = new tb
 }
-Xh.prototype.kg = function(a, b) {
-  Vh.info("streamReset: reasonString=" + H(a) + ", applicationLevel=" + b);
-  Yh("Disconnected from server.  Try reloading this page.");
-  Zh = k
+Vh.prototype.kg = function(a, b) {
+  Uh.info("streamReset: reasonString=" + H(a) + ", applicationLevel=" + b);
+  Xh("Disconnected from server.  Try reloading this page.");
+  Yh = k
 };
-function $h(a) {
-  Vh.info("Sending preferences to server");
+function Zh(a) {
+  Uh.info("Sending preferences to server");
   var b;
   b = new Cg;
   b.n[1] = X("include_russian_posts").checked;
@@ -5224,7 +5219,7 @@ function $h(a) {
   b = a.Qe.Wb(b);
   lg(a.D, [(new wb(i)).Wb([2, b])])
 }
-Xh.prototype.lg = function(a) {
+Vh.prototype.lg = function(a) {
   var a = vb(a), b = a[1];
   if(1 == a[0]) {
     var c = this.Qe.Zc(Bg.Hb(), b), a = mb(c, 1), b = mb(c, 2), c = mb(c, 3);
@@ -5240,32 +5235,32 @@ Xh.prototype.lg = function(a) {
       c = d
     }
     a = cf("span", {}, cf("a", {href:b, "class":"ljpost-title-link"}, a), cf("span", {}, "\u00a0"), c);
-    ai(a)
+    $h(a)
   }
 };
-Xh.prototype.reset = function(a) {
-  Vh.info("resetting with reason: " + a);
+Vh.prototype.reset = function(a) {
+  Uh.info("resetting with reason: " + a);
   this.D.reset(a)
 };
-var Zh = k, bi = new fd(t.window);
-function Yh(a) {
+var Yh = k, ai = new fd(t.window);
+function Xh(a) {
   a = cf("span", {"class":"important-message"}, a);
-  ai(a)
+  $h(a)
 }
-function ci() {
-  Zh && (Zh.reset("idle timeout fired"), Zh = k, Yh("No key/mouse activity, stopping stream to save everyone's bandwidth."))
+function bi() {
+  Yh && (Yh.reset("idle timeout fired"), Yh = k, Xh("No key/mouse activity, stopping stream to save everyone's bandwidth."))
 }
-var di = k;
-function ei() {
-  di != k && bi.I.clearTimeout(di);
-  Zh && (di = bi.I.setTimeout(ci, 6E5))
+var ci = k;
+function di() {
+  ci != k && ai.I.clearTimeout(ci);
+  Yh && (ci = ai.I.setTimeout(bi, 6E5))
 }
-O(window, ["click", "focus", "keydown", "keypress"], ei, j);
-var bf = new Xe, fi = 0;
-function ai(a) {
-  a = cf("div", {"class":"row-" + (0 == fi % 2 ? "even" : "odd")}, cf("nobr", {}, a));
+O(window, ["click", "focus", "keydown", "keypress"], di, j);
+var bf = new Xe, ei = 0;
+function $h(a) {
+  a = cf("div", {"class":"row-" + (0 == ei % 2 ? "even" : "odd")}, cf("nobr", {}, a));
   X("ljstream-container-inner").appendChild(a);
-  fi += 1;
+  ei += 1;
   var b;
   if(b = Ag) {
     var c = a, a = c.offsetTop;
@@ -5277,29 +5272,12 @@ function ai(a) {
   }
   b && (a = af().height, window.scrollBy(0, Math.round(a / 2) + 80))
 }
-function gi() {
-  var a = new Th;
-  Zh = new Xh;
-  ei();
-  $c(Uh(), function(b) {
-    Zh || f(Error("lastProto falsy?"));
-    var b = new fg(b, a, bi), c = Zh;
-    b.zd = y(c.lg, c);
-    b.onreset = y(c.kg, c);
-    Zh.D = b;
-    c = Zh;
-    lg(c.D, ["subprotocol:ljstream"]);
-    $h(c);
-    b.start();
-    return k
-  })
-}
-function hi() {
+function fi() {
   O(t, "load", function() {
     window.scrollTo(0, 0)
   });
   O(X("include_russian_posts"), "click", function() {
-    $h(Zh)
+    Zh(Yh)
   });
   Ag = j;
   O(X("automatic_scroll"), "click", function(a) {
@@ -5318,20 +5296,34 @@ function hi() {
   var b = cf("div", {id:"ljstream-container-inner"});
   a.appendChild(b)
 }
-function ii() {
+function gi() {
   Pd().rb(Hd);
   if("1" == (new W(document.location)).L.get("logging")) {
     var a = new Tg("main");
     a.Ec(j);
     a.Pa()
   }
-  Vh.info("Logger works.");
-  hi();
-  gi()
+  Uh.info("Logger works.");
+  fi();
+  a = new Th;
+  Yh = new Vh;
+  di();
+  var b = (new W(document.location)).L, c = "http" != b.get("mode");
+  var d = Boolean(Number(b.get("useSub", "1"))), b = new W(document.location);
+  c ? c = new Zf("/httpface/", b.X, t.__demo_mainSocketPort) : (d ? (c = t.__demo_shared_domain, b = b.H(), ve(b, "_____random_____." + c)) : b = b.H(), xe(b, "/httpface/"), ye(b, "", i), c = new ag(b.toString().replace("_____random_____", "%random%")));
+  a = new fg(c, a, ai);
+  c = Yh;
+  a.zd = y(c.lg, c);
+  a.onreset = y(c.kg, c);
+  Yh.D = a;
+  c = Yh;
+  lg(c.D, ["subprotocol:ljstream"]);
+  Zh(c);
+  a.start()
 }
-var ji = "__ljstream_init".split("."), ki = t;
-!(ji[0] in ki) && ki.execScript && ki.execScript("var " + ji[0]);
-for(var li;ji.length && (li = ji.shift());) {
-  !ji.length && ga(ii) ? ki[li] = ii : ki = ki[li] ? ki[li] : ki[li] = {}
+var hi = "__ljstream_init".split("."), ii = t;
+!(hi[0] in ii) && ii.execScript && ii.execScript("var " + hi[0]);
+for(var ji;hi.length && (ji = hi.shift());) {
+  !hi.length && ga(gi) ? ii[ji] = gi : ii = ii[ji] ? ii[ji] : ii[ji] = {}
 }
 ;})();

@@ -201,19 +201,13 @@ whiteboard.startStream = function() {
 	var streamPolicy = new cw.net.demo.DemoStreamPolicy();
 	whiteboard.lastProto = new whiteboard.WhiteboardProtocol();
 	whiteboard.activityDetected(null);
-	var endpointD = cw.net.demo.getEndpointByQueryArgs(whiteboard.callQueue);
-	endpointD.addCallback(function(endpoint) {
-		if(!whiteboard.lastProto) {
-			throw Error("lastProto falsy?");
-		}
-		var stream = new cw.net.ClientStream(
-			 endpoint, streamPolicy, whiteboard.callQueue);
-		stream.bindToProtocol(whiteboard.lastProto);
-		whiteboard.lastProto.setStream(stream);
-		whiteboard.lastProto.sendInitialStrings();
-		stream.start();
-		return null;
-	});
+	var endpoint = cw.net.demo.getEndpointByQueryArgs(whiteboard.callQueue);
+	var stream = new cw.net.ClientStream(
+		 endpoint, streamPolicy, whiteboard.callQueue);
+	stream.bindToProtocol(whiteboard.lastProto);
+	whiteboard.lastProto.setStream(stream);
+	whiteboard.lastProto.sendInitialStrings();
+	stream.start();
 };
 
 
