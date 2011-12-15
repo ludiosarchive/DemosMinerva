@@ -5085,7 +5085,7 @@ Zh.prototype.hf = function() {
   return Boolean(Number((new He(document.location)).$.get("httpStreaming", "0"))) ? 2 : 1
 };
 function $h(a) {
-  var b = new yh("/compiled_client/FlashConnector.swf?cb=4bdfc178fc0e508c0cd5efc3fdb09920");
+  var b = new yh("/httpface/FlashConnector.swf?cb=4bdfc178fc0e508c0cd5efc3fdb09920");
   b.Qe = "#777777";
   b.fa(300, 30);
   var c = S("FlashConnectorSwf");

@@ -5165,7 +5165,7 @@ Rh.prototype.ie = function() {
   return Boolean(Number((new W(document.location)).L.get("httpStreaming", "0"))) ? 2 : 1
 };
 function Sh(a) {
-  var b = new sh("/compiled_client/FlashConnector.swf?cb=4bdfc178fc0e508c0cd5efc3fdb09920");
+  var b = new sh("/httpface/FlashConnector.swf?cb=4bdfc178fc0e508c0cd5efc3fdb09920");
   b.Vd = "#777777";
   th(b, 300, 30);
   var c = X("FlashConnectorSwf");
