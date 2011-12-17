@@ -1233,7 +1233,7 @@ function O(a, b, c, d, e) {
     }else {
       n = h[l] = [], h.f++
     }
-    g = Ic();
+    g = Hc();
     g.src = a;
     h = new rc;
     h.Pa(c, g, a, b, d, e);
@@ -1248,7 +1248,7 @@ function O(a, b, c, d, e) {
   }
   f(Error("Invalid event type"))
 }
-function Ic() {
+function Hc() {
   var a = Jc, b = uc ? function(c) {
     return a.call(b.src, b.key, c)
   } : function(c) {
@@ -3679,7 +3679,7 @@ s.start = function() {
       }else {
         var a = Ve(this.C, this.u.ia), c = this;
         ad(a, function(a) {
-          Nb = new Qe(c.C, a);
+          Nb || (Nb = new Qe(c.C, a));
           return k
         });
         ad(a, y(this.he, this))
@@ -3842,9 +3842,9 @@ function Cg(a, b, c) {
                   c.length = 0
                 }
                 if(d instanceof mf) {
-                  var Hc = a.D;
-                  Hc.onreset && Hc.onreset.call(Hc.vb, d.Qb, d.xb);
-                  Hc.b();
+                  var Ic = a.D;
+                  Ic.onreset && Ic.onreset.call(Ic.vb, d.Qb, d.xb);
+                  Ic.b();
                   return j
                 }
                 f(Error(a.q() + " had unexpected state in framesReceived_."))

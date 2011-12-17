@@ -1577,7 +1577,7 @@ q.bc = function(a) {
   kd(this);
   id(this, m, a)
 };
-function od(a, b) {
+function nd(a, b) {
   pd(a, b, k, i)
 }
 function pd(a, b, c, d) {
@@ -2718,7 +2718,7 @@ function nf(a, b) {
   var e = O("minerva-elements-FlashConnectorSwf");
   e || (e = Jd("div", {id:"minerva-elements-FlashConnectorSwf"}), d.appendChild(e));
   Xb = af(a.P, c, e);
-  od(Xb, mf);
+  nd(Xb, mf);
   return lf()
 }
 ;function pf() {
@@ -3440,7 +3440,7 @@ ng.prototype.bc = function(a) {
 };
 function og(a) {
   a = new ng(a, m, j);
-  od(a, function(a) {
+  nd(a, function(a) {
     return Xa(a, function(a) {
       return a[1]
     })
@@ -3797,18 +3797,18 @@ q.start = function() {
   this.h = 2;
   if(this.C instanceof yg) {
     var a = ig(this.C.Aa, this), b = ig(this.C.Ya, this), a = og([a, b]);
-    od(a, w(this.Ag, this))
+    nd(a, w(this.Ag, this))
   }else {
     if(this.C instanceof wg) {
       if(Yb) {
         this.ef()
       }else {
         var a = nf(this.K, this.C.Aa), c = this;
-        od(a, function(a) {
-          Yb = new hf(c.K, a);
+        nd(a, function(a) {
+          Yb || (Yb = new hf(c.K, a));
           return k
         });
-        od(a, w(this.ef, this))
+        nd(a, w(this.ef, this))
       }
     }else {
       Sg(this)
@@ -3960,9 +3960,9 @@ function Ug(a, b, c) {
               }else {
                 c.length && (Tg(a, c), ab(c));
                 if(d instanceof Ff) {
-                  var nd = a.I;
-                  nd.onreset && nd.onreset.call(nd.Qb, d.nc, d.Tb);
-                  nd.g();
+                  var od = a.I;
+                  od.onreset && od.onreset.call(od.Qb, d.nc, d.Tb);
+                  od.g();
                   return j
                 }
                 f(Error(a.v() + " had unexpected state in framesReceived_."))
