@@ -224,9 +224,9 @@ function Fa(a) {
 }
 function Ga(a, b) {
   for(var c = 0, d = wa("" + a).split("."), e = wa("" + b).split("."), g = Math.max(d.length, e.length), h = 0;0 == c && h < g;h++) {
-    var l = d[h] || "", n = e[h] || "", p = RegExp("(\\d*)(\\D*)", "g"), F = RegExp("(\\d*)(\\D*)", "g");
+    var l = d[h] || "", n = e[h] || "", p = RegExp("(\\d*)(\\D*)", "g"), G = RegExp("(\\d*)(\\D*)", "g");
     do {
-      var r = p.exec(l) || ["", "", ""], w = F.exec(n) || ["", "", ""];
+      var r = p.exec(l) || ["", "", ""], w = G.exec(n) || ["", "", ""];
       if(0 == r[0].length && 0 == w[0].length) {
         break
       }
@@ -740,13 +740,13 @@ function yb(a, b) {
     c.pop()
   }
 }
-function G(a, b, c) {
+function F(a, b, c) {
   c || (c = []);
   Bb(a, b, c)
 }
 function H(a) {
   var b = [];
-  G(a, b, i);
+  F(a, b, i);
   return b.join("")
 }
 ;function Cb(a) {
@@ -959,7 +959,7 @@ Ob.prototype.k = function(a) {
 };
 Ob.prototype.p = function(a, b) {
   a.push("new SACK(", "" + this.Ya, ", ");
-  G(this.Ua, a, b);
+  F(this.Ua, a, b);
   a.push(")")
 };
 function Pb() {
@@ -1390,7 +1390,7 @@ function Jc(a, b) {
           try {
             g.keyCode = -1;
             break a
-          }catch(F) {
+          }catch(G) {
             p = j
           }
         }
@@ -2293,18 +2293,18 @@ s.Jf = function(a, b, c) {
       if(v(c)) {
         h = {message:c, name:"Unknown error", lineNumber:"Not available", fileName:l, stack:"Not available"}
       }else {
-        var n, p, F = m;
+        var n, p, G = m;
         try {
           n = c.lineNumber || c.vh || "Not available"
         }catch(r) {
-          n = "Not available", F = j
+          n = "Not available", G = j
         }
         try {
           p = c.fileName || c.filename || c.sourceURL || l
         }catch(w) {
-          p = "Not available", F = j
+          p = "Not available", G = j
         }
-        h = F || !c.lineNumber || !c.fileName || !c.stack ? {message:c.message, name:c.name, lineNumber:n, fileName:p, stack:c.stack || "Not available"} : c
+        h = G || !c.lineNumber || !c.fileName || !c.stack ? {message:c.message, name:c.name, lineNumber:n, fileName:p, stack:c.stack || "Not available"} : c
       }
       e = "Message: " + D(h.message) + '\nUrl: <a href="view-source:' + h.fileName + '" target="_new">' + h.fileName + "</a>\nLine: " + h.lineNumber + "\n\nBrowser stack:\n" + D(h.stack + "-> ") + "[end]\n\nJS stack traversal:\n" + D(ce(g) + "-> ")
     }catch(B) {
@@ -2519,7 +2519,7 @@ s = Qe.prototype;
 s.a = W("cw.net.FlashSocketTracker");
 s.p = function(a, b) {
   a.push("<FlashSocketTracker instances=");
-  G(this.gb, a, b);
+  F(this.gb, a, b);
   a.push(">")
 };
 s.Xc = function(a) {
@@ -2697,7 +2697,7 @@ bf.prototype.k = function(a, b) {
 };
 bf.prototype.p = function(a, b) {
   a.push("<HelloFrame properties=");
-  G(cf(this), a, b);
+  F(cf(this), a, b);
   a.push(">")
 };
 function cf(a) {
@@ -2733,7 +2733,7 @@ ef.prototype.k = function(a) {
 };
 ef.prototype.p = function(a, b) {
   a.push("new StringFrame(");
-  G(this.tb, a, b);
+  F(this.tb, a, b);
   a.push(")")
 };
 ef.prototype.S = af;
@@ -2748,7 +2748,7 @@ ff.prototype.k = function(a) {
 };
 ff.prototype.p = function(a, b) {
   a.push("new CommentFrame(");
-  G(this.ec, a, b);
+  F(this.ec, a, b);
   a.push(")")
 };
 ff.prototype.S = af;
@@ -2804,7 +2804,7 @@ df.prototype.k = function(a, b) {
 };
 df.prototype.p = function(a, b) {
   a.push("new SackFrame(");
-  G(this.aa, a, b);
+  F(this.aa, a, b);
   a.push(")")
 };
 df.prototype.S = af;
@@ -2821,7 +2821,7 @@ jf.prototype.k = function(a, b) {
 };
 jf.prototype.p = function(a, b) {
   a.push("new StreamStatusFrame(");
-  G(this.Mb, a, b);
+  F(this.Mb, a, b);
   a.push(")")
 };
 jf.prototype.S = af;
@@ -2863,7 +2863,7 @@ mf.prototype.k = function(a) {
 };
 mf.prototype.p = function(a, b) {
   a.push("new ResetFrame(");
-  G(this.Qb, a, b);
+  F(this.Qb, a, b);
   a.push(", ", "" + this.xb, ")")
 };
 mf.prototype.S = af;
@@ -2879,7 +2879,7 @@ of.prototype.k = function(a) {
 };
 of.prototype.p = function(a, b) {
   a.push("new TransportKillFrame(");
-  G(this.reason, a, b);
+  F(this.reason, a, b);
   a.push(")")
 };
 of.prototype.S = af;
@@ -3197,11 +3197,11 @@ function Nf(a, b, c, d) {
 }
 Nf.prototype.p = function(a, b) {
   a.push("<XDRFrame frameId=");
-  G(this.Hf, a, b);
+  F(this.Hf, a, b);
   a.push(", expandedUrl=");
-  G(this.hc, a, b);
+  F(this.hc, a, b);
   a.push(", streams=");
-  G(this.Md, a, b);
+  F(this.Md, a, b);
   a.push(">")
 };
 function Of() {
@@ -3245,9 +3245,9 @@ function Qf(a, b) {
         n = ""
       }else {
         if(!(-1 == n.indexOf("./") && -1 == n.indexOf("/."))) {
-          for(var l = 0 == n.lastIndexOf("/", 0), n = n.split("/"), p = [], F = 0;F < n.length;) {
-            var r = n[F++];
-            "." == r ? l && F == n.length && p.push("") : ".." == r ? ((1 < p.length || 1 == p.length && "" != p[0]) && p.pop(), l && F == n.length && p.push("")) : (p.push(r), l = j)
+          for(var l = 0 == n.lastIndexOf("/", 0), n = n.split("/"), p = [], G = 0;G < n.length;) {
+            var r = n[G++];
+            "." == r ? l && G == n.length && p.push("") : ".." == r ? ((1 < p.length || 1 == p.length && "" != p[0]) && p.pop(), l && G == n.length && p.push("")) : (p.push(r), l = j)
           }
           n = p.join("/")
         }
@@ -3443,9 +3443,9 @@ function gg(a, b) {
 }
 gg.prototype.p = function(a, b) {
   a.push("<HttpEndpoint primaryUrl=");
-  G(this.ia, a, b);
+  F(this.ia, a, b);
   a.push(", secondaryUrl=");
-  G(this.Ha, a, b);
+  F(this.Ha, a, b);
   a.push(">")
 };
 function hg(a, b, c, d) {
@@ -3461,9 +3461,9 @@ function hg(a, b, c, d) {
 }
 hg.prototype.p = function(a, b) {
   a.push("<ExpandedHttpEndpoint_ primaryUrl=");
-  G(this.ia, a, b);
+  F(this.ia, a, b);
   a.push(", secondaryUrl=");
-  G(this.Ha, a, b);
+  F(this.Ha, a, b);
   a.push(">")
 };
 var ig = new ff(";)]}");
@@ -3475,7 +3475,7 @@ function kg(a) {
 }
 kg.prototype.p = function(a, b) {
   a.push("<UserContext for ");
-  G(this.ig, a, b);
+  F(this.ig, a, b);
   a.push(">")
 };
 function lg(a, b, c) {
@@ -3513,14 +3513,14 @@ s.Re = 0;
 s.af = 0;
 s.p = function(a, b) {
   a.push("<ClientStream id=");
-  G(this.Zb, a, b);
+  F(this.Zb, a, b);
   a.push(", state=", "" + this.d);
   a.push(", primary=");
-  G(this.h, a, b);
+  F(this.h, a, b);
   a.push(", secondary=");
-  G(this.A, a, b);
+  F(this.A, a, b);
   a.push(", resetting=");
-  G(this.Rb, a, b);
+  F(this.Rb, a, b);
   a.push(">")
 };
 function mg(a) {
@@ -3618,7 +3618,7 @@ s.reset = function(a) {
 function zg(a, b, c, d) {
   var e;
   e = a.kd;
-  for(var g = a.Uf, h = a.Tf, l = [], n = m, p = 0, F = c.length;p < F;p++) {
+  for(var g = a.Uf, h = a.Tf, l = [], n = m, p = 0, G = c.length;p < G;p++) {
     var r = c[p], w = r[0], r = r[1];
     if(w == e.Ra + 1) {
       e.Ra += 1;
@@ -3795,12 +3795,12 @@ function Cg(a, b, c) {
         var l = g.Fa, n = h.Ya, c = m;
         n > l.Ka && (c = j);
         for(var p = Qb(l).concat(), d = 0;d < p.length;d++) {
-          var F = p[d];
-          if(F > n) {
+          var G = p[d];
+          if(G > n) {
             break
           }
-          var r = l.T.get(F)[1];
-          l.T.remove(F);
+          var r = l.T.get(G)[1];
+          l.T.remove(G);
           l.Q -= r
         }
         for(d = 0;d < h.Ua.length;d++) {
@@ -5212,25 +5212,26 @@ Wh.prototype.c = function() {
 var Xh = new Wh;
 t.__XHRSlave_makeRequest = y(Xh.Sf, Xh);
 t.__XHRSlave_dispose = y(Xh.yf, Xh);
-function Yh() {
+var Yh = W("cw.net.demo");
+function Zh() {
 }
-Yh.prototype.je = function() {
+Zh.prototype.je = function() {
   return Boolean(Number((new Y(document.location)).L.get("httpStreaming", "0"))) ? 2 : 1
 };
-var Zh = W("ljstream.logger");
+var $h = W("ljstream.logger");
 window.onerror = function(a, b, c) {
-  S(Zh, "window.onerror: message: " + H(a) + "\nURL: " + b + "\nLine Number: " + c)
+  S($h, "window.onerror: message: " + H(a) + "\nURL: " + b + "\nLine Number: " + c)
 };
-function $h() {
+function bi() {
   this.Qe = new tb
 }
-$h.prototype.kg = function(a, b) {
-  Zh.info("streamReset: reasonString=" + H(a) + ", applicationLevel=" + b);
-  bi("Disconnected from server.  Try reloading this page.");
-  ci = k
+bi.prototype.kg = function(a, b) {
+  $h.info("streamReset: reasonString=" + H(a) + ", applicationLevel=" + b);
+  ci("Disconnected from server.  Try reloading this page.");
+  di = k
 };
-function di(a) {
-  Zh.info("Sending preferences to server");
+function ei(a) {
+  $h.info("Sending preferences to server");
   var b;
   b = new Hg;
   b.n[1] = P("include_russian_posts").checked;
@@ -5238,7 +5239,7 @@ function di(a) {
   b = a.Qe.Wb(b);
   rg(a.D, [(new wb(i)).Wb([2, b])])
 }
-$h.prototype.lg = function(a) {
+bi.prototype.lg = function(a) {
   var a = vb(a), b = a[1];
   if(1 == a[0]) {
     var c = this.Qe.Zc(Gg.Hb(), b), a = mb(c, 1), b = mb(c, 2), c = mb(c, 3);
@@ -5254,32 +5255,32 @@ $h.prototype.lg = function(a) {
       c = d
     }
     a = yd("span", {}, yd("a", {href:b, "class":"ljpost-title-link"}, a), yd("span", {}, "\u00a0"), c);
-    ei(a)
+    fi(a)
   }
 };
-$h.prototype.reset = function(a) {
-  Zh.info("resetting with reason: " + a);
+bi.prototype.reset = function(a) {
+  $h.info("resetting with reason: " + a);
   this.D.reset(a)
 };
-var ci = k, fi = new gd(t.window);
-function bi(a) {
+var di = k, gi = new gd(t.window);
+function ci(a) {
   a = yd("span", {"class":"important-message"}, a);
-  ei(a)
+  fi(a)
 }
-function gi() {
-  ci && (ci.reset("idle timeout fired"), ci = k, bi("No key/mouse activity, stopping stream to save everyone's bandwidth."))
+function hi() {
+  di && (di.reset("idle timeout fired"), di = k, ci("No key/mouse activity, stopping stream to save everyone's bandwidth."))
 }
-var hi = k;
-function ii() {
-  hi != k && fi.I.clearTimeout(hi);
-  ci && (hi = fi.I.setTimeout(gi, 6E5))
+var ii = k;
+function ji() {
+  ii != k && gi.I.clearTimeout(ii);
+  di && (ii = gi.I.setTimeout(hi, 6E5))
 }
-O(window, ["click", "focus", "keydown", "keypress"], ii, j);
-var xd = new sd, ji = 0;
-function ei(a) {
-  a = yd("div", {"class":"row-" + (0 == ji % 2 ? "even" : "odd")}, yd("nobr", {}, a));
+O(window, ["click", "focus", "keydown", "keypress"], ji, j);
+var xd = new sd, ki = 0;
+function fi(a) {
+  a = yd("div", {"class":"row-" + (0 == ki % 2 ? "even" : "odd")}, yd("nobr", {}, a));
   P("ljstream-container-inner").appendChild(a);
-  ji += 1;
+  ki += 1;
   var b;
   if(b = Fg) {
     var c = a, a = c.offsetTop;
@@ -5291,12 +5292,12 @@ function ei(a) {
   }
   b && (a = wd().height, window.scrollBy(0, Math.round(a / 2) + 80))
 }
-function ki() {
+function li() {
   O(t, "load", function() {
     window.scrollTo(0, 0)
   });
   O(P("include_russian_posts"), "click", function() {
-    di(ci)
+    ei(di)
   });
   Fg = j;
   O(P("automatic_scroll"), "click", function(a) {
@@ -5315,34 +5316,37 @@ function ki() {
   var b = yd("div", {id:"ljstream-container-inner"});
   a.appendChild(b)
 }
-function li() {
+function mi() {
   ye().rb(qe);
   if("1" == (new Y(document.location)).L.get("logging")) {
     var a = new Yg("main");
     a.Ec(j);
     a.Pa()
   }
-  Zh.info("Logger works.");
-  ki();
-  a = new Yh;
-  ci = new $h;
-  ii();
+  $h.info("Logger works.");
+  li();
+  a = new Zh;
+  di = new bi;
+  ji();
   var b = (new Y(document.location)).L, c = "http" != b.get("mode");
-  var d = Boolean(Number(b.get("useSub", "1"))), b = new Y(document.location);
-  c ? c = new eg("/httpface/", b.X, t.__demo_mainSocketPort) : (d ? (c = t.__demo_shared_domain, b = b.H(), uf(b, "_____random_____." + c)) : b = b.H(), wf(b, "/httpface/"), xf(b, "", i), c = new gg(b.toString().replace("_____random_____", "%random%")));
-  a = new lg(c, a, fi);
-  c = ci;
+  if((b = Boolean(Number(b.get("useSubdomains", "0")))) && !t.__demo_shared_domain) {
+    T(Yh, "You requested subdomains, but I cannot use them because you did not specify a domain.  Proceeding without subdomains."), b = m
+  }
+  var d = b, b = new Y(document.location);
+  c ? c = new eg("/httpface/", b.X, t.__demo_mainSocketPort) : (d ? (c = t.__demo_shared_domain, v(c) || f(Error("domain was " + H(c) + "; expected a string.")), b = b.H(), uf(b, "_____random_____." + c)) : b = b.H(), wf(b, "/httpface/"), xf(b, "", i), c = new gg(b.toString().replace("_____random_____", "%random%")));
+  a = new lg(c, a, gi);
+  c = di;
   a.zd = y(c.lg, c);
   a.onreset = y(c.kg, c);
-  ci.D = a;
-  c = ci;
+  di.D = a;
+  c = di;
   rg(c.D, ["subprotocol:ljstream"]);
-  di(c);
+  ei(c);
   a.start()
 }
-var mi = "__ljstream_init".split("."), ni = t;
-!(mi[0] in ni) && ni.execScript && ni.execScript("var " + mi[0]);
-for(var oi;mi.length && (oi = mi.shift());) {
-  !mi.length && ga(li) ? ni[oi] = li : ni = ni[oi] ? ni[oi] : ni[oi] = {}
+var ni = "__ljstream_init".split("."), oi = t;
+!(ni[0] in oi) && oi.execScript && oi.execScript("var " + ni[0]);
+for(var pi;ni.length && (pi = ni.shift());) {
+  !ni.length && ga(mi) ? oi[pi] = mi : oi = oi[pi] ? oi[pi] : oi[pi] = {}
 }
 ;})();
