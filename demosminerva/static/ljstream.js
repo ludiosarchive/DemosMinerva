@@ -5189,7 +5189,7 @@ s.rd = function(a, b, c) {
   this.o = new Mh;
   O(this.o, "readystatechange", y(this.ag, this));
   O(this.o, "complete", y(this.Pf, this));
-  this.o.send(a, b, c, {"Content-Type":"application/octet-stream"});
+  this.o.send(a + "io/", b, c, {"Content-Type":"application/octet-stream"});
   this.ce = new Yf(this.o.i, 1048576)
 };
 s.c = function() {

@@ -5033,7 +5033,7 @@ q.je = function(a, b, c) {
   this.s = new Qh;
   M(this.s, "readystatechange", w(this.dh, this));
   M(this.s, "complete", w(this.Og, this));
-  this.s.send(a, b, c, {"Content-Type":"application/octet-stream"});
+  this.s.send(a + "io/", b, c, {"Content-Type":"application/octet-stream"});
   this.Ze = new qg(this.s.k, 1048576)
 };
 q.c = function() {
