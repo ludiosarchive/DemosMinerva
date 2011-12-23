@@ -69,6 +69,8 @@ class WhiteboardProtocol(object):
 
 	def _handleNewCircle(self, point):
 		# TODO: use json-schema validation
+		if not isinstance(point, dict):
+			raise ValueError("point was a %r; should be a dict" % (type(point),))
 		if not isinstance(point['x'], (int, long)):
 			raise ValueError("point['x'] was a %r, should be an int or long" % (type(point['x']),))
 		if not isinstance(point['y'], (int, long)):

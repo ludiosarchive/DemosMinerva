@@ -14,12 +14,7 @@ from webmagic.untwist import BetterResource
 from minerva.mutils import (
 	MinervaBootstrap, strictSecureDecodeJson, StrictDecodeError)
 
-from protojson.pbliteserializer import PbLiteSerializer
-from protojson.error import PbDecodeError
-
 from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
-
-from demosminerva import ljstream_messages_pb2 as ljm
 
 try:
 	from brequire import requireFile, requireFiles
@@ -281,13 +276,15 @@ class LjStreamProtocol(object):
 		del self.stream
 
 
-	def _setPreferences(self, body):
-		try:
-			sp = ljm.SetPreferences()
-			self.factory.serializer.deserialize(sp, body)
-		except PbDecodeError:
-			1/0 # TODO
-		self.includeRussianPosts = sp.include_russian_posts
+	def _setPreferences(self, preferences):
+		# TODO: use json-schema validation
+		if not isinstance(preferences, dict):
+			raise ValueError("preferences was a %r; should be a dict" % (type(preferences),))
+		if not isinstance(preferences['include_russian_posts'], bool):
+			raise ValueError("preferences['include_russian_posts'] "
+				"was a %r, should be a bool" % (type(preferences['include_russian_posts']),))
+
+		self.includeRussianPosts = preferences['include_russian_posts']
 
 
 	def stringReceived(self, s):
@@ -296,7 +293,7 @@ class LjStreamProtocol(object):
 			if len(payload) == 2:
 				msgType = payload[0]
 				body = payload[1]
-				if msgType == 2: # SetPreferences
+				if msgType == "SetPreferences":
 					self._setPreferences(body)
 		except:
 			log.err()
@@ -309,7 +306,6 @@ class LjStreamFactory(object):
 		self._reactor = reactor
 		self._clock = clock
 		self.protos = set()
-		self.serializer = PbLiteSerializer()
 		self.dlFactory = DownloaderFactory(self._clock, self.broadcastPost)
 
 
@@ -353,8 +349,9 @@ class LjStreamFactory(object):
 			if proto.stream.queue.getMaxConsumption() > 2 * 1024 * 1024:
 				proto.stream.reset("> 2MB outgoing")
 				continue
-			proto.stream.sendStrings([simplejson.dumps(
-				[1, self.serializer.serialize(ljm.NewPost(**post))])])
+			proto.stream.sendStrings([
+				simplejson.dumps(["NewPost", post])
+			])
 
 
 	def buildProtocol(self):
