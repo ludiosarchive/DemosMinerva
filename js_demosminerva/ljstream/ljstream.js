@@ -9,7 +9,6 @@ goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.json');
 goog.require('goog.string');
-goog.require('goog.proto2.PbLiteSerializer');
 goog.require('goog.ui.CustomButton');
 goog.require('goog.Uri');
 goog.require('cw.eventual');
@@ -22,8 +21,6 @@ goog.require('cw.repr');
 goog.require('cw.string');
 goog.require('cw.linkify');
 
-goog.require('ljstream.NewPost');
-goog.require('ljstream.SetPreferences');
 
 
 ljstream.logger = goog.debug.Logger.getLogger('ljstream.logger');
@@ -39,7 +36,6 @@ window.onerror = function(msg, url, lineNumber) {
  * @constructor
  */
 ljstream.LjClientProtocol = function() {
-	this.pbLiteSerializer_ = new goog.proto2.PbLiteSerializer();
 };
 
 ljstream.LjClientProtocol.prototype.setStream = function(stream) {
@@ -67,34 +63,24 @@ ljstream.LjClientProtocol.prototype.handleString_ = function(s) {
 		ljstream.logger.severe('Could not handle string: ' + cw.repr.repr(s));
 	}
 
-	// TODO: handle error?
+	// TODO: handle errors?
 	var payload = goog.json.parse(s);
 	var msgType = payload[0];
 	var body = payload[1];
 
-	if(msgType == 1) { // NewPost
-		// TODO: handle error?
-		var post = this.pbLiteSerializer_.deserialize(
-			ljstream.NewPost.getDescriptor(), body);
-		ljstream.appendPost(post.getTitle(), post.getUrl(), post.getBody());
+	if(msgType == "NewPost") {
+		// TODO: handle errors?
+		var post = body;
+		ljstream.appendPost(post['title'], post['url'], post['body']);
 	}
-};
-
-/**
- * @param {boolean} includeRussianPosts
- * @return {!Array}
- */
-ljstream.LjClientProtocol.prototype.makePreferences_ = function(includeRussianPosts) {
-	var prefs = new ljstream.SetPreferences();
-	prefs.setIncludeRussianPosts(includeRussianPosts);
-	return this.pbLiteSerializer_.serialize(prefs);
 };
 
 ljstream.LjClientProtocol.prototype.sendPreferences = function() {
 	ljstream.logger.info('Sending preferences to server');
 	var includeRussianPosts = ljstream.getIncludeRussianPosts();
-	var prefsArray = this.makePreferences_(includeRussianPosts);
-	this.stream_.sendStrings([goog.json.serialize([2, prefsArray])]);
+	this.stream_.sendStrings([goog.json.serialize(
+		["SetPreferences", {"include_russian_posts": includeRussianPosts}]
+	)]);
 };
 
 /**

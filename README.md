@@ -18,8 +18,6 @@ You'll need to install:
 
 *	Googstyle: https://github.com/ludios/Googstyle
 
-*	Protojson: https://github.com/ludios/Protojson
-
 *	BeautifulSoup: http://www.crummy.com/software/BeautifulSoup/ (I use the 3.0 series)
 
 To start the server, run:
@@ -47,16 +45,11 @@ If you want to recompile the compiled-JavaScript and .css files, you also need:
 
 *	Closure Compiler: http://code.google.com/p/closure-compiler/
 
-*	Protocol Buffers: http://code.google.com/p/protobuf/
-
-*	protobuf-plugin-closure: http://code.google.com/p/protobuf-plugin-closure/
-
 *	Sass: http://sass-lang.com/
 
 Then run:
 
 ```
-./build_pb2.sh
 ./build_compiled_js.sh
 ./build_css.sh
 ```
