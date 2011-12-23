@@ -16,7 +16,6 @@ goog.require('goog.events.EventType');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.graphics');
 goog.require('goog.json');
-goog.require('goog.proto2.PbLiteSerializer');
 goog.require('goog.style');
 goog.require('goog.net.cookies');
 goog.require('goog.ui.Component.EventType');
@@ -31,8 +30,6 @@ goog.require('cw.net.HttpStreamingMode');
 goog.require('cw.net.demo.getEndpointByQueryArgs');
 goog.require('cw.repr');
 goog.require('cw.string');
-goog.require('whiteboard.Point');
-goog.require('whiteboard.ClearBoard');
 
 
 whiteboard.logger = goog.debug.Logger.getLogger('whiteboard.logger');
@@ -48,7 +45,6 @@ window.onerror = function(msg, url, lineNumber) {
  * @constructor
  */
 whiteboard.WhiteboardProtocol = function() {
-	this.pbLiteSerializer_ = new goog.proto2.PbLiteSerializer();
 };
 
 whiteboard.WhiteboardProtocol.prototype.setStream = function(stream) {
@@ -77,17 +73,16 @@ whiteboard.WhiteboardProtocol.prototype.handleString_ = function(s) {
 		whiteboard.logger.severe('Could not handle string: ' + cw.repr.repr(s));
 	}
 
-	// TODO: handle error?
+	// TODO: handle errors?
 	var payload = goog.json.parse(s);
 	var msgType = payload[0];
 	var body = payload[1];
 
-	if(msgType == 1) { // Point
-		// TODO: handle error?
-		var point = this.pbLiteSerializer_.deserialize(
-			whiteboard.Point.getDescriptor(), body);
-		whiteboard.drawCircleAt(point.getX(), point.getY(), point.getColor());
-	} else if(msgType == 2) { // ClearBoard
+	if(msgType == "Point") {
+		// TODO: handle errors?
+		var point = body;
+		whiteboard.drawCircleAt(point['x'], point['y'], point['color']);
+	} else if(msgType == "ClearBoard") {
 		whiteboard.clearMyBoard();
 	} else {
 		whiteboard.logger.warning('Strange message from server: ' +
@@ -117,25 +112,13 @@ whiteboard.WhiteboardProtocol.prototype.reset = function(reason) {
 /**
  * @param {number} x
  * @param {number} y
- * @param {string} color
- * @private
- */
-whiteboard.WhiteboardProtocol.prototype.makePoint_ = function(x, y, color) {
-	var point = new whiteboard.Point();
-	point.setX(x);
-	point.setY(y);
-	point.setColor(color);
-	return this.pbLiteSerializer_.serialize(point);
-};
-
-/**
- * @param {number} x
- * @param {number} y
  */
 whiteboard.WhiteboardProtocol.prototype.sendCircle = function(x, y, color) {
 	whiteboard.logger.info('Telling server about circle at: ' +
 		x + ', ' + y + ' with color ' + color);
-	this.stream_.sendStrings([goog.json.serialize([1, this.makePoint_(x, y, color)])]);
+	this.stream_.sendStrings([goog.json.serialize(
+		["Point", {"x": x, "y": y, "color": color}]
+	)]);
 };
 
 /**
@@ -143,8 +126,9 @@ whiteboard.WhiteboardProtocol.prototype.sendCircle = function(x, y, color) {
  */
 whiteboard.WhiteboardProtocol.prototype.sendClearBoard = function() {
 	whiteboard.logger.info('Telling server to clear the board.');
-	this.stream_.sendStrings([goog.json.serialize([2,
-		this.pbLiteSerializer_.serialize(new whiteboard.ClearBoard())])]);
+	this.stream_.sendStrings([goog.json.serialize(
+		["ClearBoard", null]
+	)]);
 };
 
 

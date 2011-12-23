@@ -8,11 +8,6 @@ from webmagic.untwist import BetterResource
 from minerva.mutils import (
 	MinervaBootstrap, strictSecureDecodeJson, StrictDecodeError)
 
-from protojson.pbliteserializer import PbLiteSerializer
-from protojson.error import PbDecodeError
-
-from demosminerva import whiteboard_messages_pb2 as wm
-
 try:
 	from brequire import requireFile, requireFiles
 except ImportError:
@@ -53,9 +48,9 @@ class WhiteboardProtocol(object):
 		"""
 		strings = []
 		for x, y, color in self.factory.circles:
-			strings.append(simplejson.dumps(
-				[1, self.factory.serializer.serialize(wm.Point(
-					x=x, y=y, color=color))]))
+			strings.append(
+				simplejson.dumps(["Point", dict(x=x, y=y, color=color)])
+			)
 		self.stream.sendStrings(strings)
 
 
@@ -72,13 +67,20 @@ class WhiteboardProtocol(object):
 		del self.stream
 
 
-	def _handleNewCircle(self, body):
+	def _handleNewCircle(self, point):
+		# TODO: use json-schema validation
+		if not isinstance(point['x'], (int, long)):
+			raise ValueError("point['x'] was a %r, should be an int or long" % (type(point['x']),))
+		if not isinstance(point['y'], (int, long)):
+			raise ValueError("point['y'] was a %r, should be an int or long" % (type(point['y']),))
+		if not isinstance(point['color'], (str, unicode)):
+			raise ValueError("point['color'] was a %r, should be a str or unicode" % (type(point['color']),))
 		try:
-			point = wm.Point()
-			self.factory.serializer.deserialize(point, body)
-		except PbDecodeError:
-			1/0 # TODO
-		self.factory.addCircle(point.x, point.y, point.color, dontTell=(self,))
+			color = point['color'].encode('ascii')
+		except UnicodeEncodeError:
+			raise ValueError("point['color'] should contain only ascii, was %r" % (point['color'],))
+
+		self.factory.addCircle(point['x'], point['y'], color, dontTell=(self,))
 
 
 	def stringReceived(self, s):
@@ -87,9 +89,9 @@ class WhiteboardProtocol(object):
 			if len(payload) == 2:
 				msgType = payload[0]
 				body = payload[1]
-				if msgType == 1: # new circle
+				if msgType == "Point":
 					self._handleNewCircle(body)
-				elif msgType == 2: # reset
+				elif msgType == "ClearBoard":
 					self.factory.clearBoard(dontTell=(self,))
 		except:
 			log.err()
@@ -104,7 +106,6 @@ class WhiteboardFactory(object):
 		self.counter = 0
 		self.protos = set()
 		self.circles = set()
-		self.serializer = PbLiteSerializer()
 		self._idleDc = None
 		self.resetIdle()
 
@@ -117,9 +118,9 @@ class WhiteboardFactory(object):
 				# Client who told us about this circle already drew it,
 				# no need to echo it back to them.
 				continue
-			proto.stream.sendStrings([simplejson.dumps(
-				[1, self.serializer.serialize(wm.Point(
-					x=x, y=y, color=color))])])
+			proto.stream.sendStrings([
+				simplejson.dumps(["Point", dict(x=x, y=y, color=color)])
+			])
 
 
 	def clearBoard(self, dontTell=()):
@@ -131,8 +132,9 @@ class WhiteboardFactory(object):
 			if proto.stream.queue.getMaxConsumption() > 2 * 1024 * 1024:
 				proto.stream.reset("> 2MB outgoing")
 				continue
-			proto.stream.sendStrings([simplejson.dumps(
-				[2, self.serializer.serialize(wm.ClearBoard())])])
+			proto.stream.sendStrings([
+				simplejson.dumps(["ClearBoard", None])
+			])
 
 
 	def _cancelIdleDc(self):
