@@ -8,7 +8,7 @@ from twisted.application import service, strports
 
 from webmagic.filecache import FileCache
 
-from minerva import website
+from minerva import mutils
 from demosminerva import demosminerva_site
 
 
@@ -22,9 +22,9 @@ class Options(usage.Options):
 	synopsis = "[demosminerva_site options]"
 
 	optParameters = [
-		website.optParameterHttpServer("http", "t"),
-		website.optParameterMinervaSocket("minerva", "m"),
-		website.optParameterDomain("domain", "d"),
+		mutils.optParameterHttpServer("http", "t"),
+		mutils.optParameterMinervaSocket("minerva", "m"),
+		mutils.optParameterDomain("domain", "d"),
 
 		["closure-library", "c", _defaultClosureLibrary,
 			'Path to closure-library'],
@@ -36,7 +36,7 @@ class Options(usage.Options):
 
 	longdesc = """\
 This starts the DemosMinerva server (demosminerva_site), from which you can
-try a few demo applications that use Minerva.""" + website.strportsInfo()
+try a few demo applications that use Minerva.""" + mutils.strportsInfo()
 
 	def __init__(self):
 		usage.Options.__init__(self)
@@ -66,10 +66,10 @@ def makeService(config):
 	multi = service.MultiService()
 
 	domain = config['domain']
-	website.maybeWarnAboutDomain(reactor, domain)
+	mutils.maybeWarnAboutDomain(reactor, domain)
 
 	closureLibrary = FilePath(config['closure-library'])
-	website.maybeWarnAboutClosureLibrary(reactor, closureLibrary)
+	mutils.maybeWarnAboutClosureLibrary(reactor, closureLibrary)
 
 	socketPorts = []
 	for minervaStrport in config['minerva']:
@@ -78,7 +78,7 @@ def makeService(config):
 
 	doReloading = bool(int(os.environ.get('PYRELOADING', '0')))
 	fileCache = FileCache(lambda: reactor.seconds(), 0.1 if doReloading else -1)
-	socketFace, httpSite = demosminerva_site.makeMinervaAndHttp(
+	stf, httpSite = demosminerva_site.makeMinervaAndHttp(
 		reactor, fileCache, socketPorts, domain, closureLibrary)
 	httpSite.displayTracebacks = not config["no-tracebacks"]
 
@@ -87,10 +87,10 @@ def makeService(config):
 		httpServer.setServiceParent(multi)
 
 	for minervaStrport in config['minerva']:
-		minervaServer = strports.service(minervaStrport, socketFace)
+		minervaServer = strports.service(minervaStrport, stf)
 		minervaServer.setServiceParent(multi)
 
 	if doReloading:
-		website.enablePyquitter(reactor)
+		mutils.enablePyquitter(reactor)
 
 	return multi

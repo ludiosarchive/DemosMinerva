@@ -11,7 +11,7 @@ from twisted.internet import protocol
 from twisted.python import log
 
 from webmagic.untwist import BetterResource
-from minerva.website import (
+from minerva.mutils import (
 	MinervaBootstrap, strictSecureDecodeJson, StrictDecodeError)
 
 from protojson.pbliteserializer import PbLiteSerializer

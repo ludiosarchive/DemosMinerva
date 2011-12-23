@@ -2,8 +2,8 @@ import os
 
 from twisted.python.filepath import FilePath
 
-from minerva.newlink import (
-	SubprotocolFactory, StreamTracker, HttpFace, SocketFace)
+from minerva.mserver import (
+	SubprotocolFactory, StreamTracker, WebPort, ServerTransportFactory)
 
 from demosminerva.whiteboard import WhiteboardResource, WhiteboardDevResource, WhiteboardFactory
 from demosminerva.ljstream import LjStreamResource, LjStreamDevResource, LjStreamFactory
@@ -27,7 +27,7 @@ requireFiles([f.path for f in FilePath(__file__).sibling('static').child('thumbn
 
 class DemosMinervaRoot(BetterResource):
 
-	def __init__(self, httpFace, fileCache, mainSocketPort, domain, closureLibrary):
+	def __init__(self, webPort, fileCache, mainSocketPort, domain, closureLibrary):
 		import coreweb
 		import minerva
 		import demosminerva
@@ -68,7 +68,7 @@ class DemosMinervaRoot(BetterResource):
 		self.putChild('goog-images', BetterFile(
 			FilePath(googstyle.__file__).sibling('goog-images').path,
 			responseCacheOptions=responseCacheOptions))
-		self.putChild('httpface', httpFace)
+		self.putChild('_minerva', webPort)
 		commonArgs = (fileCache, mainSocketPort, domain, responseCacheOptions)
 		self.putChild('whiteboard', WhiteboardResource(*commonArgs))
 		self.putChild('whiteboard_dev', WhiteboardDevResource(*commonArgs))
@@ -100,11 +100,11 @@ def makeMinervaAndHttp(reactor, fileCache, socketPorts, domain, closureLibrary):
 	if domain:
 		allowedDomains.append(domain)
 
-	httpFace = HttpFace(clock, tracker, fileCache, allowedDomains)
-	socketFace = SocketFace(clock, tracker, policyString=policyString)
+	webPort = WebPort(clock, tracker, fileCache, allowedDomains)
+	stf = ServerTransportFactory(clock, tracker, policyString=policyString)
 
 	mainSocketPort = socketPorts[0] if socketPorts else None
-	root = DemosMinervaRoot(httpFace, fileCache, mainSocketPort, domain, closureLibrary)
+	root = DemosMinervaRoot(webPort, fileCache, mainSocketPort, domain, closureLibrary)
 	httpSite = ConnectionTrackingSite(root, timeout=75)
 
-	return (socketFace, httpSite)
+	return (stf, httpSite)

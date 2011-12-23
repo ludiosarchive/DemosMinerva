@@ -5,7 +5,7 @@ from twisted.python.filepath import FilePath
 
 from webmagic.untwist import BetterResource
 
-from minerva.website import (
+from minerva.mutils import (
 	MinervaBootstrap, strictSecureDecodeJson, StrictDecodeError)
 
 from protojson.pbliteserializer import PbLiteSerializer
