@@ -70,8 +70,6 @@ setup(
 		,'Coreweb >= 11.6.17'
 		,'Webmagic >= 11.12.18'
 		,'Googstyle >= 11.6.12'
-		,'Protojson >= 11.5.9'
-		# Also needs protobuf >= 2.3, but it's not installable with pip.
 	],
 )
 
