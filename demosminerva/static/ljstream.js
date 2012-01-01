@@ -3739,8 +3739,15 @@ s.Lc = function(a, b) {
   return this.ma[c] = d
 };
 s.gd = function(a, b, c) {
-  var b = Sa(b), d = this.ma[a];
-  d ? d.gd(b, c) : V(this.a, "onframes_: no master for " + P(a))
+  if(Mb) {
+    for(var d = [], e = 0, g = b.length;e < g;e++) {
+      d[e] = b[e]
+    }
+    b = d
+  }else {
+    b = Sa(b)
+  }
+  (d = this.ma[a]) ? d.gd(b, c) : V(this.a, "onframes_: no master for " + P(a))
 };
 s.hd = function(a, b) {
   var c = this.ma[a];
