@@ -10,3 +10,7 @@ right: null
 
 0 error(s), 1 warning(s), 97.2% typed
 ../closure-library/closure/bin/build/closurebuilder.py: JavaScript compilation succeeded.
+Used closure-compiler r1697
+Used closure-library r1495
+Used Coreweb 9a37eadda668bb4f15d9b8791d5a4e2f2713b4fe | 2012-01-01 | Make build_compiled_js write the versions of closure-compiler/closure-library that it used
+Used Minerva 9e2bb7db25f4615f93bf2f50080d7a9033b5b629 | 2012-01-01 | Make build_compiled_js write the versions of closure-compiler/closure-library/Coreweb that it used
