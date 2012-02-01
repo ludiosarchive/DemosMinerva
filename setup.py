@@ -66,8 +66,8 @@ setup(
 		 'Twisted >= 8.2.0'
 		,'simplejson >= 2.1'
 		,'BeautifulSoup'
-		,'Minerva >= 11.12.23'
-		,'Coreweb >= 11.6.17'
+		,'Minerva >= 12.2.1'
+		,'Coreweb >= 12.2.1'
 		,'Webmagic >= 11.12.18'
 		,'Googstyle >= 11.6.12'
 	],
