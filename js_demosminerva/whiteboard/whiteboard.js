@@ -25,7 +25,7 @@ goog.require('goog.Uri');
 goog.require('cw.eventual');
 goog.require('cw.string');
 goog.require('cw.net.ClientStream');
-goog.require('cw.net.IMinervaProtocol');
+goog.require('cw.net.IStringProtocol');
 goog.require('cw.net.HttpStreamingMode');
 goog.require('cw.net.demo.getEndpointByQueryArgs');
 goog.require('cw.repr');
@@ -41,7 +41,7 @@ window.onerror = function(msg, url, lineNumber) {
 };
 
 /**
- * @implements {cw.net.IMinervaProtocol}
+ * @implements {cw.net.IStringProtocol}
  * @constructor
  */
 whiteboard.WhiteboardProtocol = function() {
