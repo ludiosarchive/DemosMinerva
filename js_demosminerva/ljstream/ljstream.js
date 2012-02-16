@@ -244,7 +244,6 @@ ljstream.appendPost = function(title, url, body) {
 			d('span', {}, '\u00a0' /* nbsp */),
 			linkifiedBodyFrag);
 	ljstream.appendRow(post);
-
 };
 
 
@@ -276,13 +275,11 @@ ljstream.reconnectStream = function() {
 };
 
 
-
 ljstream.setupDebug = function() {
 	var debugWindow = new goog.debug.FancyWindow('main');
 	debugWindow.setEnabled(true);
 	debugWindow.init();
 };
-
 
 
 /**
@@ -297,7 +294,6 @@ ljstream.getIncludeRussianPosts = function() {
  * @constructor
  */
 ljstream.LjView = function() {
-
 };
 
 ljstream.LjView.prototype.setup = function() {
