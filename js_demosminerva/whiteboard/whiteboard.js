@@ -47,11 +47,8 @@ window.onerror = function(msg, url, lineNumber) {
 whiteboard.WhiteboardProtocol = function() {
 };
 
-whiteboard.WhiteboardProtocol.prototype.setStream = function(stream) {
+whiteboard.WhiteboardProtocol.prototype.streamStarted = function(stream) {
 	this.stream_ = stream;
-};
-
-whiteboard.WhiteboardProtocol.prototype.sendInitialStrings = function() {
 	this.stream_.sendStrings(['subprotocol:whiteboard']);
 };
 
@@ -189,8 +186,6 @@ whiteboard.startStream = function() {
 	var stream = new cw.net.ClientStream(
 		 endpoint, streamPolicy, whiteboard.callQueue);
 	stream.bindToProtocol(whiteboard.lastProto);
-	whiteboard.lastProto.setStream(stream);
-	whiteboard.lastProto.sendInitialStrings();
 	stream.start();
 };
 

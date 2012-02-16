@@ -38,11 +38,8 @@ window.onerror = function(msg, url, lineNumber) {
 ljstream.LjClientProtocol = function() {
 };
 
-ljstream.LjClientProtocol.prototype.setStream = function(stream) {
+ljstream.LjClientProtocol.prototype.streamStarted = function(stream) {
 	this.stream_ = stream;
-};
-
-ljstream.LjClientProtocol.prototype.sendInitialStrings = function() {
 	this.stream_.sendStrings(['subprotocol:ljstream']);
 	this.sendPreferences();
 };
@@ -259,8 +256,6 @@ ljstream.startStream = function() {
 	var stream = new cw.net.ClientStream(
 		endpoint, streamPolicy, ljstream.callQueue);
 	stream.bindToProtocol(ljstream.lastProto);
-	ljstream.lastProto.setStream(stream);
-	ljstream.lastProto.sendInitialStrings();
 	stream.start();
 };
 
