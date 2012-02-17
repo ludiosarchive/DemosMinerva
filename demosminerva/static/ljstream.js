@@ -846,7 +846,7 @@ s.handleEvent = function(a) {
 var bc = !D || Ya(), cc = !D || Ya(), dc = D && !F("8");
 !E || F("528");
 La && F("1.9b") || D && F("8") || Ka && F("9.5") || E && F("528");
-!La || F("8");
+La && !F("8") || D && F("9");
 var ec = {mg:"click", rg:"dblclick", Lg:"mousedown", Pg:"mouseup", Og:"mouseover", Ng:"mouseout", Mg:"mousemove", Zg:"selectstart", Gg:"keypress", Fg:"keydown", Hg:"keyup", kg:"blur", zg:"focus", sg:"deactivate", Ag:D ? "focusin" : "DOMFocusIn", Bg:D ? "focusout" : "DOMFocusOut", lg:"change", Yg:"select", $g:"submit", Eg:"input", Ug:"propertychange", wg:"dragstart", tg:"dragenter", vg:"dragover", ug:"dragleave", xg:"drop", eh:"touchstart", dh:"touchmove", bh:"touchend", ah:"touchcancel", og:"contextmenu", 
 yg:"error", Dg:"help", Ig:"load", Jg:"losecapture", Vg:"readystatechange", Wg:"resize", Xg:"scroll", gh:"unload", Cg:"hashchange", Qg:"pagehide", Rg:"pageshow", Tg:"popstate", pg:"copy", Sg:"paste", qg:"cut", hg:"beforecopy", ig:"beforecut", jg:"beforepaste", Kg:"message", ng:"connect", fh:E ? "webkitTransitionEnd" : Ka ? "oTransitionEnd" : "transitionend"};
 function L() {
