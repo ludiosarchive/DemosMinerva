@@ -12,5 +12,5 @@ right: null
 ../closure-library/closure/bin/build/closurebuilder.py: JavaScript compilation succeeded.
 Used closure-compiler r1780
 Used closure-library r1589
-Used Coreweb 066f239a24c25c18f7699a54655cc250434c086b | 2012-02-17 | Rebuild JS with newer Library/Compiler
-Used Minerva 24f7199b84dc1f0bb89767376a145023ff7d930a | 2012-02-21 | Change cw.net.QANProtocolWrapper arg dontThrowIntoWindow -> throwIntoWindow
+Used Coreweb 6b942896a367868c66018cf12fb3eba110d35265 | 2012-02-21 | Clarify CallQueue docstring
+Used Minerva 94cf21cf9a21ad3f9c492ceca2f080ce307ec271 | 2012-02-21 | Remove stream.sendStrings in JS Minerva.  (Use stream.sendString instead)
