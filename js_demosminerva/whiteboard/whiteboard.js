@@ -49,7 +49,7 @@ whiteboard.WhiteboardProtocol = function() {
 
 whiteboard.WhiteboardProtocol.prototype.streamStarted = function(stream) {
 	this.stream_ = stream;
-	this.stream_.sendStrings(['subprotocol:whiteboard']);
+	this.stream_.sendString('subprotocol:whiteboard');
 };
 
 whiteboard.WhiteboardProtocol.prototype.streamReset = function(reasonString, applicationLevel) {
@@ -113,9 +113,9 @@ whiteboard.WhiteboardProtocol.prototype.reset = function(reason) {
 whiteboard.WhiteboardProtocol.prototype.sendCircle = function(x, y, color) {
 	whiteboard.logger.info('Telling server about circle at: ' +
 		x + ', ' + y + ' with color ' + color);
-	this.stream_.sendStrings([goog.json.serialize(
+	this.stream_.sendString(goog.json.serialize(
 		["Point", {"x": x, "y": y, "color": color}]
-	)]);
+	));
 };
 
 /**
@@ -123,9 +123,9 @@ whiteboard.WhiteboardProtocol.prototype.sendCircle = function(x, y, color) {
  */
 whiteboard.WhiteboardProtocol.prototype.sendClearBoard = function() {
 	whiteboard.logger.info('Telling server to clear the board.');
-	this.stream_.sendStrings([goog.json.serialize(
+	this.stream_.sendString(goog.json.serialize(
 		["ClearBoard", null]
-	)]);
+	));
 };
 
 

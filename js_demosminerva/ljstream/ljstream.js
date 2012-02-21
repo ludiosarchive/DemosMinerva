@@ -40,7 +40,7 @@ ljstream.LjClientProtocol = function() {
 
 ljstream.LjClientProtocol.prototype.streamStarted = function(stream) {
 	this.stream_ = stream;
-	this.stream_.sendStrings(['subprotocol:ljstream']);
+	this.stream_.sendString('subprotocol:ljstream');
 	this.sendPreferences();
 };
 
@@ -75,9 +75,9 @@ ljstream.LjClientProtocol.prototype.handleString_ = function(s) {
 ljstream.LjClientProtocol.prototype.sendPreferences = function() {
 	ljstream.logger.info('Sending preferences to server');
 	var includeRussianPosts = ljstream.getIncludeRussianPosts();
-	this.stream_.sendStrings([goog.json.serialize(
+	this.stream_.sendString(goog.json.serialize(
 		["SetPreferences", {"include_russian_posts": includeRussianPosts}]
-	)]);
+	));
 };
 
 /**

@@ -705,11 +705,6 @@ q.append = function(a) {
   this.$a += 1;
   this.n += b
 };
-q.extend = function(a) {
-  for(var b = 0;b < a.length;b++) {
-    this.append(a[b])
-  }
-};
 q.N = function(a) {
   a.push("<Queue with ", "" + this.z.V(), " item(s), counter=#", "" + this.$a, ", size=", "" + this.n, ">")
 };
@@ -1513,9 +1508,9 @@ function hd(a, b) {
 }
 var id = {cellpadding:"cellPadding", cellspacing:"cellSpacing", colspan:"colSpan", rowspan:"rowSpan", valign:"vAlign", height:"height", width:"width", usemap:"useMap", frameborder:"frameBorder", maxlength:"maxLength", type:"type"};
 function jd(a, b, c) {
-  return kd(document, arguments)
+  return ld(document, arguments)
 }
-function kd(a, b) {
+function ld(a, b) {
   var c = b[0], d = b[1];
   if(!bd && d && (d.name || d.type)) {
     c = ["<", c];
@@ -1629,7 +1624,7 @@ q.b = function(a) {
   return v(a) ? this.p.getElementById(a) : a
 };
 q.i = function(a, b, c) {
-  return kd(this.p, arguments)
+  return ld(this.p, arguments)
 };
 q.createElement = function(a) {
   return this.p.createElement(a)
@@ -3015,13 +3010,6 @@ q.Gb = function(a) {
   }, this));
   this.wa = a
 };
-q.extend = function(a) {
-  for(var b = 0;b < arguments.length;b++) {
-    ob(arguments[b], function(a, b) {
-      this.add(b, a)
-    }, this)
-  }
-};
 function Rf(a, b, c, d) {
   this.contentWindow = a;
   this.tc = b;
@@ -3392,17 +3380,10 @@ q.Ng = function() {
 function ug(a, b) {
   var c;
   ga(c) || (c = j);
-  3 < a.h && e(Error("sendStrings: Can't send strings in state " + a.h));
-  if(b.length) {
-    if(c) {
-      for(c = 0;c < b.length;c++) {
-        var d = b[c];
-        /^([ -~]*)$/.test(d) || e(Error("sendStrings: string #" + c + " has illegal chars: " + G(d)))
-      }
-    }
-    a.Sa.extend(b);
-    qg(a)
-  }
+  3 < a.h && e(Error("sendString: Can't send in state " + a.h));
+  c && !/^([ -~]*)$/.test(b) && e(Error("sendString: string has illegal chars: " + G(b)));
+  a.Sa.append(b);
+  qg(a)
 }
 function tg(a, b) {
   var c;
@@ -3682,9 +3663,9 @@ function Fg(a, b, c) {
               }else {
                 c.length && (Eg(a, c), cb(c));
                 if(d instanceof qf) {
-                  var ld = a.C;
-                  ld.onreset && ld.onreset.call(ld.Kb, d.xf, d.we);
-                  ld.g();
+                  var kd = a.C;
+                  kd.onreset && kd.onreset.call(kd.Kb, d.xf, d.we);
+                  kd.g();
                   return j
                 }
                 e(Error(a.s() + " had unexpected state in framesReceived_."))
@@ -6018,7 +5999,7 @@ function oj() {
 }
 oj.prototype.Wg = function(a) {
   this.C = a;
-  ug(this.C, ["subprotocol:whiteboard"])
+  ug(this.C, "subprotocol:whiteboard")
 };
 oj.prototype.Vg = function(a, b) {
   nj.info("streamReset: reasonString=" + G(a) + ", applicationLevel=" + b);
@@ -6048,14 +6029,14 @@ function vj() {
   qj();
   var a = pj;
   nj.info("Telling server to clear the board.");
-  ug(a.C, [za(["ClearBoard", k])])
+  ug(a.C, za(["ClearBoard", k]))
 }
 function wj(a) {
   var b = new kc(a), a = b.offsetX, b = b.offsetY;
   ij.rc(a, b, 5, 5, new ki, new ji(jj), h);
   var c = pj, d = jj;
   nj.info("Telling server about circle at: " + a + ", " + b + " with color " + d);
-  ug(c.C, [za(["Point", {x:a, y:b, color:d}])])
+  ug(c.C, za(["Point", {x:a, y:b, color:d}]))
 }
 function qj() {
   var a;

@@ -12,5 +12,5 @@ right: null
 ../closure-library/closure/bin/build/closurebuilder.py: JavaScript compilation succeeded.
 Used closure-compiler r1780
 Used closure-library r1589
-Used Coreweb 3172a36ca90870ceb8b73bc290a67d2f652dd20a | 2012-02-14 | Rebuild JS with newer Library/Compiler
-Used Minerva a7e944bd7f21e539967fa412a663b0bfc4b41117 | 2012-02-17 | Add some missing @types
+Used Coreweb 066f239a24c25c18f7699a54655cc250434c086b | 2012-02-17 | Rebuild JS with newer Library/Compiler
+Used Minerva 24f7199b84dc1f0bb89767376a145023ff7d930a | 2012-02-21 | Change cw.net.QANProtocolWrapper arg dontThrowIntoWindow -> throwIntoWindow

@@ -811,13 +811,6 @@ s.jb = function(a) {
   }, this));
   this.ea = a
 };
-s.extend = function(a) {
-  for(var b = 0;b < arguments.length;b++) {
-    yb(arguments[b], function(a, b) {
-      this.add(b, a)
-    }, this)
-  }
-};
 function Zb() {
   return j
 }
@@ -2054,7 +2047,7 @@ function Td(a, b) {
   a || f(Error("Invalid class name " + a));
   x(b) || f(Error("Invalid decorator function " + b))
 }
-var Wd = {};
+var Vd = {};
 function Xd(a, b, c, d, e) {
   if(!D && (!E || !F("525"))) {
     return j
@@ -2201,7 +2194,7 @@ function S(a, b, c) {
   if(!b) {
     for(var b = this.constructor, d;b;) {
       d = ka(b);
-      if(d = Wd[d]) {
+      if(d = Vd[d]) {
         break
       }
       b = b.e ? b.e.constructor : k
@@ -2385,7 +2378,7 @@ s.Nc = function(a) {
 x(S) || f(Error("Invalid component class " + S));
 x(Pd) || f(Error("Invalid renderer class " + Pd));
 var ke = ka(S);
-Wd[ke] = Pd;
+Vd[ke] = Pd;
 Ud("goog-control", function() {
   return new S(k)
 });
@@ -2555,21 +2548,15 @@ Ae.prototype.F = function(a, b) {
 function Be() {
   this.R = new J
 }
-s = Be.prototype;
-s.Ha = -1;
-s.N = 0;
-s.append = function(a) {
+Be.prototype.Ha = -1;
+Be.prototype.N = 0;
+Be.prototype.append = function(a) {
   var b = xe(a);
   this.R.set(this.Ha + 1, [a, b]);
   this.Ha += 1;
   this.N += b
 };
-s.extend = function(a) {
-  for(var b = 0;b < a.length;b++) {
-    this.append(a[b])
-  }
-};
-s.F = function(a) {
+Be.prototype.F = function(a) {
   a.push("<Queue with ", "" + this.R.s(), " item(s), counter=#", "" + this.Ha, ", size=", "" + this.N, ">")
 };
 function Ce(a) {
@@ -3831,17 +3818,10 @@ s.Mf = function() {
 function Ig(a, b) {
   var c;
   ga(c) || (c = j);
-  3 < a.d && f(Error("sendStrings: Can't send strings in state " + a.d));
-  if(b.length) {
-    if(c) {
-      for(c = 0;c < b.length;c++) {
-        var d = b[c];
-        /^([ -~]*)$/.test(d) || f(Error("sendStrings: string #" + c + " has illegal chars: " + P(d)))
-      }
-    }
-    a.Ba.extend(b);
-    Eg(a)
-  }
+  3 < a.d && f(Error("sendString: Can't send in state " + a.d));
+  c && !/^([ -~]*)$/.test(b) && f(Error("sendString: string has illegal chars: " + P(b)));
+  a.Ba.append(b);
+  Eg(a)
 }
 function Hg(a, b) {
   var c;
@@ -4122,8 +4102,8 @@ function Tg(a, b, c) {
                 if(c.length) {
                   Sg(a, c);
                   if(!u(c)) {
-                    for(var Vd = c.length - 1;0 <= Vd;Vd--) {
-                      delete c[Vd]
+                    for(var Wd = c.length - 1;0 <= Wd;Wd--) {
+                      delete c[Wd]
                     }
                   }
                   c.length = 0
@@ -4977,7 +4957,7 @@ function Th() {
 }
 Th.prototype.Xf = function(a) {
   this.A = a;
-  Ig(this.A, ["subprotocol:ljstream"]);
+  Ig(this.A, "subprotocol:ljstream");
   Vh(this)
 };
 Th.prototype.Wf = function(a, b) {
@@ -4987,7 +4967,7 @@ Th.prototype.Wf = function(a, b) {
 };
 function Vh(a) {
   Sh.info("Sending preferences to server");
-  Ig(a.A, [Wc(["SetPreferences", {include_russian_posts:Q("include_russian_posts").checked}])])
+  Ig(a.A, Wc(["SetPreferences", {include_russian_posts:Q("include_russian_posts").checked}]))
 }
 Th.prototype.Yf = function(a) {
   var a = Uc(a), b = a[1];
