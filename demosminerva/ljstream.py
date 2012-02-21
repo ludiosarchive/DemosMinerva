@@ -349,9 +349,7 @@ class LjStreamFactory(object):
 			if proto.stream.queue.getMaxConsumption() > 2 * 1024 * 1024:
 				proto.stream.reset("> 2MB outgoing")
 				continue
-			proto.stream.sendStrings([
-				simplejson.dumps(["NewPost", post])
-			])
+			proto.stream.sendString(simplejson.dumps(["NewPost", post]))
 
 
 	def buildProtocol(self):

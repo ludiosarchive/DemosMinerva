@@ -46,12 +46,9 @@ class WhiteboardProtocol(object):
 		"""
 		Send all existing circles to the client.
 		"""
-		strings = []
 		for x, y, color in self.factory.circles:
-			strings.append(
-				simplejson.dumps(["Point", dict(x=x, y=y, color=color)])
-			)
-		self.stream.sendStrings(strings)
+			self.stream.sendString(
+				simplejson.dumps(["Point", dict(x=x, y=y, color=color)]))
 
 
 	def streamStarted(self, stream):
@@ -120,9 +117,8 @@ class WhiteboardFactory(object):
 				# Client who told us about this circle already drew it,
 				# no need to echo it back to them.
 				continue
-			proto.stream.sendStrings([
-				simplejson.dumps(["Point", dict(x=x, y=y, color=color)])
-			])
+			proto.stream.sendString(
+				simplejson.dumps(["Point", dict(x=x, y=y, color=color)]))
 
 
 	def clearBoard(self, dontTell=()):
@@ -134,9 +130,8 @@ class WhiteboardFactory(object):
 			if proto.stream.queue.getMaxConsumption() > 2 * 1024 * 1024:
 				proto.stream.reset("> 2MB outgoing")
 				continue
-			proto.stream.sendStrings([
-				simplejson.dumps(["ClearBoard", None])
-			])
+			proto.stream.sendString(
+				simplejson.dumps(["ClearBoard", None]))
 
 
 	def _cancelIdleDc(self):
