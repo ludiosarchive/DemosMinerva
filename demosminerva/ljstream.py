@@ -22,7 +22,6 @@ except ImportError:
 	requireFile = requireFiles = lambda _: None
 
 
-
 htmlParser = HTMLParser.HTMLParser()
 
 RE_P = re.compile('(<p.*?>)|(<tr.*?>)', re.I)

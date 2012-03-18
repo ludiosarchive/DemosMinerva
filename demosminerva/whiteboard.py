@@ -14,7 +14,6 @@ except ImportError:
 	requireFile = requireFiles = lambda _: None
 
 
-
 requireFile(FilePath(__file__).sibling('whiteboard.html').path)
 requireFiles([f.path for f in FilePath(__file__).sibling('static').children() if not f.isdir()])
 
