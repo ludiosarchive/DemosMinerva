@@ -288,12 +288,9 @@ class LjStreamProtocol(object):
 
 
 	def stringReceived(self, s):
-		payload = strictSecureDecodeJson(s)
-		if len(payload) == 2:
-			msgType = payload[0]
-			body = payload[1]
-			if msgType == "SetPreferences":
-				self._setPreferences(body)
+		msgType, body = strictSecureDecodeJson(s)
+		if msgType == "SetPreferences":
+			self._setPreferences(body)
 
 
 

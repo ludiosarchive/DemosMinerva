@@ -83,14 +83,11 @@ class WhiteboardProtocol(object):
 
 
 	def stringReceived(self, s):
-		payload = strictSecureDecodeJson(s)
-		if len(payload) == 2:
-			msgType = payload[0]
-			body = payload[1]
-			if msgType == "Point":
-				self._handleNewCircle(body)
-			elif msgType == "ClearBoard":
-				self.factory.clearBoard(dontTell=(self,))
+		msgType, body = strictSecureDecodeJson(s)
+		if msgType == "Point":
+			self._handleNewCircle(body)
+		elif msgType == "ClearBoard":
+			self.factory.clearBoard(dontTell=(self,))
 
 
 
