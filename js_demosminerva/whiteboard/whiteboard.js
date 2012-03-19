@@ -15,7 +15,6 @@ goog.require('goog.events.Event');
 goog.require('goog.events.EventType');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.graphics');
-goog.require('goog.json');
 goog.require('goog.style');
 goog.require('goog.net.cookies');
 goog.require('goog.ui.Component.EventType');
@@ -24,6 +23,7 @@ goog.require('goog.ui.ColorPalette');
 goog.require('goog.Uri');
 goog.require('cw.eventual');
 goog.require('cw.string');
+goog.require('cw.json');
 goog.require('cw.net.ClientStream');
 goog.require('cw.net.IStringProtocol');
 goog.require('cw.net.HttpStreamingMode');
@@ -71,7 +71,7 @@ whiteboard.WhiteboardProtocol.prototype.handleString_ = function(s) {
 	}
 
 	// TODO: handle errors?
-	var payload = goog.json.parse(s);
+	var payload = cw.json.parse(s);
 	var msgType = payload[0];
 	var body = payload[1];
 
@@ -113,7 +113,7 @@ whiteboard.WhiteboardProtocol.prototype.reset = function(reason) {
 whiteboard.WhiteboardProtocol.prototype.sendCircle = function(x, y, color) {
 	whiteboard.logger.info('Telling server about circle at: ' +
 		x + ', ' + y + ' with color ' + color);
-	this.stream_.sendString(goog.json.serialize(
+	this.stream_.sendString(cw.json.asciify(
 		["Point", {"x": x, "y": y, "color": color}]
 	));
 };
@@ -123,7 +123,7 @@ whiteboard.WhiteboardProtocol.prototype.sendCircle = function(x, y, color) {
  */
 whiteboard.WhiteboardProtocol.prototype.sendClearBoard = function() {
 	whiteboard.logger.info('Telling server to clear the board.');
-	this.stream_.sendString(goog.json.serialize(
+	this.stream_.sendString(cw.json.asciify(
 		["ClearBoard", null]
 	));
 };

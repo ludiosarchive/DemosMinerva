@@ -7,12 +7,12 @@ goog.require('goog.debug.LogManager');
 goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
-goog.require('goog.json');
 goog.require('goog.string');
 goog.require('goog.ui.CustomButton');
 goog.require('goog.Uri');
 goog.require('cw.eventual');
 goog.require('cw.string');
+goog.require('cw.json');
 goog.require('cw.net.ClientStream');
 goog.require('cw.net.IStringProtocol');
 goog.require('cw.net.HttpStreamingMode');
@@ -61,7 +61,7 @@ ljstream.LjClientProtocol.prototype.handleString_ = function(s) {
 	}
 
 	// TODO: handle errors?
-	var payload = goog.json.parse(s);
+	var payload = cw.json.parse(s);
 	var msgType = payload[0];
 	var body = payload[1];
 
@@ -75,7 +75,7 @@ ljstream.LjClientProtocol.prototype.handleString_ = function(s) {
 ljstream.LjClientProtocol.prototype.sendPreferences = function() {
 	ljstream.logger.info('Sending preferences to server');
 	var includeRussianPosts = ljstream.getIncludeRussianPosts();
-	this.stream_.sendString(goog.json.serialize(
+	this.stream_.sendString(cw.json.asciify(
 		["SetPreferences", {"include_russian_posts": includeRussianPosts}]
 	));
 };
