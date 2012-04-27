@@ -10,7 +10,7 @@ right: null
 
 0 error(s), 1 warning(s), 97.7% typed
 ../closure-library/closure/bin/build/closurebuilder.py: JavaScript compilation succeeded.
-Used closure-compiler r1871
-Used closure-library r1721
-Used Coreweb 0215ed14fcfaffd282d91fa9319a2eab477b6587 | 2012-04-08 | Rebuild JS with newer Library/Compiler
-Used Minerva 3d47896f6759b95c771272a4c2eec15a95686e6d | 2012-04-08 | Rebuild JS with newer Library/Compiler
+Used closure-compiler r1923
+Used closure-library r1780
+Used Coreweb 2d2203fb7f474e8f268b8d99ca2e6c5d6fff9ec1 | 2012-04-27 | Rebuild JS with newer Library/Compiler
+Used Minerva 67a1cbec82a1bb3ee6344142809b3e6d4fb1b764 | 2012-04-26 | Fix a standalone_ filename
