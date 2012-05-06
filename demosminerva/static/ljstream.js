@@ -1,4 +1,5 @@
-(function(){function e(a) {
+(function() {
+function e(a) {
   throw a;
 }
 var i = void 0, j = !0, k = null, m = !1;
@@ -17,7 +18,8 @@ function r(a) {
     return a
   }
 }
-var s, ba = ba || {}, t = this;
+var s;
+var ba = ba || {}, t = this;
 function ca(a) {
   for(var a = a.split("."), b = t, c;c = a.shift();) {
     if(b[c] != k) {
@@ -5095,4 +5097,5 @@ var Jh = ["__ljstream_init"], Kh = t;
 for(var Lh;Jh.length && (Lh = Jh.shift());) {
   !Jh.length && u(Ih) ? Kh[Lh] = Ih : Kh = Kh[Lh] ? Kh[Lh] : Kh[Lh] = {}
 }
-;})();
+;
+})();

@@ -1,4 +1,5 @@
-(function(){function e(a) {
+(function() {
+function e(a) {
   throw a;
 }
 var h = void 0, j = !0, k = null, m = !1;
@@ -17,7 +18,8 @@ function q(a) {
     return a
   }
 }
-var r, ba = ba || {}, t = this;
+var r;
+var ba = ba || {}, t = this;
 function ca(a) {
   for(var a = a.split("."), b = t, c;c = a.shift();) {
     if(b[c] != k) {
@@ -6172,4 +6174,5 @@ var ej = ["__whiteboard_init"], fj = t;
 for(var gj;ej.length && (gj = ej.shift());) {
   !ej.length && u(dj) ? fj[gj] = dj : fj = fj[gj] ? fj[gj] : fj[gj] = {}
 }
-;})();
+;
+})();
