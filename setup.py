@@ -67,7 +67,7 @@ setup(
 		,'simplejson >= 2.1'
 		,'BeautifulSoup'
 		,'Minerva >= 12.3.9'
-		,'Coreweb >= 12.3.19'
+		,'Coreweb >= 12.5.6'
 		,'Webmagic >= 11.12.18'
 		,'Googstyle >= 11.6.12'
 	],
