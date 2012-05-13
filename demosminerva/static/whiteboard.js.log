@@ -5,8 +5,8 @@ right: null
 	if(whiteboard.idleTimeout != null) {
 	   ^
 
-0 error(s), 1 warning(s), 97.8% typed
-Used closure-compiler r1954
-Used closure-library r1809
-Used Coreweb d8d2d3e3a49a1349cd3e795e17abb10a0c6a96c9 | 2012-05-06 | _closurebuild: Add support for writing out extra log lines
-Used Minerva 193806e5eb4c0cd03ccaa2bccab4cc7350722196 | 2012-05-06 | Add missing 'import build_depsjs' to regenerate deps.js first
+0 error(s), 1 warning(s), 97.7% typed
+Used closure-compiler r1966
+Used closure-library r1850
+Used Coreweb 6f45b6618d6848cf5dafab45fca21109ce9341d6 | 2012-05-13 | Rebuild JS with newer Library/Compiler
+Used Minerva 692d39398f93fbd542f78aee8b8cb0d49aafdf6d | 2012-05-13 | Rebuild JS with newer Library/Compiler
