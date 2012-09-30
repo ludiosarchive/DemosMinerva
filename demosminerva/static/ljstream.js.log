@@ -5,8 +5,8 @@ right: null
 	if(ljstream.idleTimeout != null) {
 	   ^
 
-0 error(s), 1 warning(s), 97.4% typed
-Used closure-compiler r2115
-Used closure-library r2073
-Used Coreweb 0d93d937716d1ba92b01c8615f5ca9f96f5b6f61 | 2012-08-02 | Rebuild JS with newer Library/Compiler
-Used Minerva 1361a7c01b08bc30785a7a7888049606a0928673 | 2012-08-02 | Rebuild JS with newer Library/Compiler
+0 error(s), 1 warning(s), 97.5% typed
+Used closure-compiler r2226
+Used closure-library r2192
+Used Coreweb 4f2b7b82250529a0f238eff13c2c11ce0f3b0eed | 2012-09-09 | Mention that pip uninstall bug is now fixed
+Used Minerva 9a413a545150578492f8590555e33032abde07d8 | 2012-09-29 | Whitespace change to test github bot in ##minerva
