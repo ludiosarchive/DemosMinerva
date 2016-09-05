@@ -1,5 +1,5 @@
-DemosMinerva overview
-=====================
+DemosMinerva
+============
 
 DemosMinerva has demos that show off Minerva.  Right now it has:
 
@@ -9,8 +9,7 @@ DemosMinerva has demos that show off Minerva.  Right now it has:
 
 
 
-Intial setup
-============
+## Intial setup
 
 You'll need to install:
 
@@ -38,8 +37,7 @@ Then, navigate to `http://127.0.0.1:7111/` in your browser.
 
 
 
-Recompiling the compiled .js and .css files
-===========================================
+## Recompiling the compiled .js and .css files
 
 If you want to recompile the compiled-JavaScript and .css files, you also need:
 
@@ -53,12 +51,3 @@ Then run:
 ./build_compiled_js.sh
 ./build_css.sh
 ```
-
-
-
-Contributing
-============
-
-Patches and pull requests are welcome.
-
-This coding standard applies: http://ludios.org/coding-standard/
